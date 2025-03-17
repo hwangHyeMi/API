@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="api.base.com.file.mapper.FileMapper">
+
+	<select id="selectListFile" parameterType="api.base.com.file.vo.FileVO" resultType="api.base.com.file.vo.FileDto">
+		/* FileMapper.selectFileList */
+			SELECT 
+			A.ATTACH_ID
+			,A.FILE_SEQ
+			,A.FILE_PATH
+			,A.FILE_TYPE
+			,A.ORIGIN_FILE_NAME
+			,A.FILE_SIZE
+			,A.CREATE_DATE
+			,A.EXTRACT_EXT
+			,A.ATTACH_KEY
+			FROM COM_FILE A
+			<where>
+				AND A.ATTACH_ID = #{attachId}
+			</where>
+	</select>
+	
+	<select id="selectDetailFile" parameterType="api.base.front.board.vo.BoardVO" resultType="api.base.com.file.vo.FileDto">
+		/* FileMapper.selectDetailFile */
+			SELECT 
+			A.ATTACH_ID
+			,A.FILE_SEQ
+			,A.FILE_PATH
+			,A.FILE_TYPE
+			,A.ORIGIN_FILE_NAME
+			,A.FILE_SIZE
+			,A.CREATE_DATE
+			,A.EXTRACT_EXT
+			,A.ATTACH_KEY
+			FROM COM_FILE A
+			<where>
+				<if test="@api.base.com.util.MybatisUtils@isNotEmpty(attachId)">
+				AND A.ATTACH_ID = #{attachId}
+				</if>
+				<if test="@api.base.com.util.MybatisUtils@isNotEmpty(fileSeq)">
+				AND A.FILE_SEQ = #{fileSeq}
+				</if>
+			</where>
+	</select>
+	
+	<select id="selectMaxFileSeq" parameterType="String" resultType="long">
+		/* FileMapper.selectMaxFileSeq 데이터없을때 MAX값 IFNULL적용안됨 */
+			SELECT IFNULL(MAX(A.FILE_SEQ),0)  AS FILE_SEQ  
+			FROM COM_FILE A    
+			WHERE A.ATTACH_ID = #{attachId} 
+	</select>
+	
+	<insert id="insertFile" parameterType="api.base.com.file.vo.FileDto">
+		/* FileMapper.insertFile */
+		INSERT INTO COM_FILE
+			(ATTACH_ID,FILE_SEQ,FILE_PATH, FILE_TYPE, ORIGIN_FILE_NAME, FILE_SIZE,CREATE_DATE,EXTRACT_EXT,ATTACH_KEY )
+		VALUES
+			(#{attachId},#{fileSeq}, #{filePath}, #{fileType}, #{originFileName},#{fileSize},current_timestamp(),#{extractExt},#{attachKey})
+	</insert>
+	
+	<delete id="deleteFile" parameterType="api.base.com.file.vo.FileDto">
+		/* FileMapper.deleteFile */
+		DELETE FROM COM_FILE
+		WHERE ATTACH_ID = #{attachId} AND FILE_SEQ = #{fileSeq}
+	</delete>
+	
+	<update id="updateNewFileUpLoadToBoardAttachId">
+		/* FileMapper.updateNewFileUpLoadToBoardAttachId */
+		UPDATE com_board SET attach_id = #{attachId} WHERE board_id = #{workKey}
+	</update>
+
+	<update id="updateNewFileUpLoadToTodoAttachId">
+		/* FileMapper.updateNewFileUpLoadToTodoAttachId */
+		UPDATE dev_todo SET attach_id = #{attachId} WHERE todo_seq = #{workKey}
+	</update>
+
+</mapper>

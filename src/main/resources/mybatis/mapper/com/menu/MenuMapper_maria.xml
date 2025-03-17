@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="api.base.com.menu.mapper.MenuMapper">
+
+	<select id="selectFrontTopMenuList" resultType="api.base.com.menu.vo.MenuDto">
+		/* MenuMapper.selectFrontTopMenuList */
+		SELECT
+			AGM.menu_seq AS menuSeq
+			, AGM.parent_menu_seq AS parentMenuSeq
+			, AGM.menu_seq AS topMenuSeq
+			, AGM.menu_nm AS menuNm
+			, AGM.menu_type AS menuType
+			, AGM.url AS url
+			, AGM.method_kind AS methodKind
+			, AGM.params
+			, AGM.view_nm AS viewNm
+		FROM 
+			com_authority_group_menu AGM
+			INNER JOIN com_authority_group AG
+				ON AGM.authority_group_seq = AG.authority_group_seq 
+			INNER JOIN com_group G
+				ON AG.group_seq = G.group_seq 
+			INNER JOIN com_authority A
+				ON AG.authority_seq = A.authority_seq 
+		WHERE
+			AGM.use_yn ='Y'
+			AND AGM.del_yn ='N'
+			AND AGM.menu_type = 'TOP'
+			AND AG.use_yn ='Y'
+			AND AG.del_yn ='N'
+			AND G.use_yn ='Y'
+			AND G.del_yn ='N'
+			AND A.use_yn ='Y'
+			AND A.del_yn ='N'
+		<if test="@api.base.com.util.MybatisUtils@isNotEmpty(userType)">
+			<if test='userType.equals("FRONT")'>
+				AND G.group_cd ='EVERY'
+			</if>
+			<if test='userType.equals("USER")'>
+				AND G.group_cd ='GROUP-CODE'
+				AND A.authority_cd ='USER'
+			</if>
+		</if>
+		ORDER BY AGM.menu_sort
+	</select>
+
+	<select id="selectFrontSubMenuList" resultType="api.base.com.menu.vo.MenuDto">
+		/* MenuMapper.selectFrontSubMenuList */
+		WITH RECURSIVE  MENUS AS (
+			<if test="@api.base.com.util.MybatisUtils@isEmpty(topMenuSeq)">
+			SELECT
+				0 AS menu_seq
+				, 0 AS parent_menu_seq
+				, 'HOME' AS menu_nm
+				, 'ROOT' AS menu_type
+				, NULL AS url
+				, NULL AS method_kind
+				, NULL AS params
+				, '' AS view_nm
+				, 0 AS level
+				, 0 AS top_menu_seq
+				, convert(0, varchar(1000)) as order_string
+			UNION ALL
+			</if>
+			SELECT
+				AGM.menu_seq
+				, AGM.parent_menu_seq
+				, AGM.menu_nm
+				, AGM.menu_type
+				, AGM.url
+				, AGM.method_kind
+				, AGM.params
+				, AGM.view_nm
+				, 1 AS LEVEL
+				, AGM.menu_seq as top_menu_seq
+				, CONCAT('0,', CAST(AGM.menu_sort AS CHAR)) as order_string
+			FROM 
+				com_authority_group_menu AGM
+				INNER JOIN com_authority_group AG
+					ON AGM.authority_group_seq = AG.authority_group_seq 
+				INNER JOIN com_group G
+					ON AG.group_seq = G.group_seq 
+				INNER JOIN com_authority A
+					ON AG.authority_seq = A.authority_seq 
+			WHERE
+				AGM.use_yn ='Y'
+				AND AGM.del_yn ='N'
+				AND AGM.menu_type = 'TOP'
+				AND AG.use_yn ='Y'
+				AND AG.del_yn ='N'
+				AND G.use_yn ='Y'
+				AND G.del_yn ='N'
+				AND A.use_yn ='Y'
+				AND A.del_yn ='N'
+			<if test="@api.base.com.util.MybatisUtils@isNotEmpty(topMenuSeq)">
+				AND AGM.menu_seq = #{topMenuSeq}
+			</if>
+			<if test="@api.base.com.util.MybatisUtils@isEmpty(topMenuSeq)">
+				AND AGM.parent_menu_seq = 1
+			</if>
+			<if test="@api.base.com.util.MybatisUtils@isNotEmpty(userType)">
+				<if test='userType.equals("FRONT")'>
+					AND G.group_cd ='EVERY'
+				</if>
+				<if test='userType.equals("USER")'>
+					AND G.group_cd ='GROUP-CODE'
+					AND A.authority_cd ='USER'
+				</if>
+			</if>
+			UNION all
+			SELECT
+				AGM.menu_seq
+				, AGM.parent_menu_seq
+				, AGM.menu_nm
+				, AGM.menu_type
+				, AGM.url
+				, AGM.method_kind
+				, AGM.params
+				, AGM.view_nm
+				, 1 + B.LEVEL AS LEVEL
+				, B.top_menu_seq
+				, CONCAT(B.order_string, ',', CAST(AGM.menu_sort AS CHAR)) as order_string
+			FROM 
+				com_authority_group_menu AGM
+				INNER JOIN com_authority_group AG
+					ON AGM.authority_group_seq = AG.authority_group_seq 
+				INNER JOIN com_group G
+					ON AG.group_seq = G.group_seq 
+				INNER JOIN com_authority A
+					ON AG.authority_seq = A.authority_seq 
+				 INNER JOIN MENUS B ON AGM.parent_menu_seq = B.menu_seq
+			WHERE
+				AGM.use_yn ='Y'
+				AND AGM.del_yn ='N'
+				AND AGM.menu_type != 'TOP'
+				AND AGM.menu_type != 'ROOT'
+				AND AG.use_yn ='Y'
+				AND AG.del_yn ='N'
+				AND G.use_yn ='Y'
+				AND G.del_yn ='N'
+				AND A.use_yn ='Y'
+				AND A.del_yn ='N'
+			<if test="@api.base.com.util.MybatisUtils@isNotEmpty(topMenuSeq)">
+				AND AGM.menu_seq != #{topMenuSeq}
+			</if>
+			<if test="@api.base.com.util.MybatisUtils@isEmpty(topMenuSeq)">
+				AND AGM.parent_menu_seq != 1
+			</if>
+			<if test="@api.base.com.util.MybatisUtils@isNotEmpty(userType)">
+				<if test='userType.equals("FRONT")'>
+					AND G.group_cd ='EVERY'
+				</if>
+				<if test='userType.equals("USER")'>
+					AND G.group_cd ='GROUP-CODE'
+					AND A.authority_cd ='USER'
+				</if>
+			</if>
+		)
+		SELECT DISTINCT
+			A.menu_seq AS menuSeq
+			, A.parent_menu_seq AS parentMenuSeq
+			, A.top_menu_seq AS topMenuSeq
+			, A.menu_nm AS menuNm
+			, A.menu_type AS menuType
+			, A.url AS url
+			, A.method_kind AS methodKind
+			, A.params
+			, A.view_nm AS viewNm
+			, A.LEVEL
+		FROM MENUS A
+		LEFT OUTER JOIN MENUS B ON B.parent_menu_seq = A.menu_seq
+		ORDER BY A.order_string
+	</select>
+
+</mapper>

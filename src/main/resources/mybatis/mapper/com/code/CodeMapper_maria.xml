@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="api.base.com.code.mapper.CodeMapper">
+
+	<select id="selectCodeGroupList" resultType="api.base.com.code.vo.CodeDto">
+		/* CodeMapper.selectCodeGroupList */
+		SELECT
+			code_group_seq AS codeGroupSeq
+			, code_group_cd AS codeGroupCd
+			, code_group_nm AS codeGroupNm
+			, code_group_description AS codeGroupDescription
+		FROM
+			com_code_group
+		WHERE
+			use_yn = 'Y'
+			AND del_yn = 'N'
+	</select>
+
+	<select id="selectCodeDetailList" resultType="api.base.com.code.vo.CodeDto">
+		/* CodeMapper.selectCodeDetailList */
+		SELECT
+			CD.code_detail_seq AS codeDetailSeq
+			, CD.code_group_seq AS codeGroupSeq
+			, CD.code_cd AS codeCd
+			, CD.code_nm AS codeNm
+			, CD.code_description AS codeDescription
+			, CD.code_refer1 AS codeRefer1
+			, CD.code_refer2 AS codeRefer2
+			, CD.code_refer3 AS codeRefer3
+			, CD.code_refer4 AS codeRefer4
+			, CD.code_refer5 AS codeRefer5
+			, CD.code_refer6 AS codeRefer6
+			, CD.code_refer7 AS codeRefer7
+			, CD.code_refer8 AS codeRefer8
+			, CD.code_refer9 AS codeRefer9
+			, CD.code_refer10 AS codeRefer10
+			, CG.code_group_cd AS codeGroupCd
+			, CG.code_group_nm AS codeGroupNm
+		FROM
+			com_code_group CG
+			INNER JOIN com_code_detail CD
+			ON CG.code_group_seq = CD.code_group_seq
+		WHERE
+			CG.use_yn = 'Y'
+			AND CG.del_yn = 'N'
+			AND CD.use_yn = 'Y'
+			AND CD.del_yn = 'N'
+			AND CG.code_group_cd = #{codeGroupCd}
+	</select>
+</mapper>

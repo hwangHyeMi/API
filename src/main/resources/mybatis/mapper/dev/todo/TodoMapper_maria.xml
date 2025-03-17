@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="api.base.dev.mapper.TodoMapper">
+
+	<select id="selectTodoList" resultType="Map">
+		/* TodoMapper.selectTodoList */
+		WITH RECURSIVE TODOS AS (
+			SELECT 
+				a.todo_seq
+				, a.parent_todo_seq
+				, a.todo_gb
+				, a.todo_nm
+				, a.todo_content
+				, a.todo_state
+				, a.todo_progress
+				, a.reg_dt
+				, a.end_dt
+				, a.req_mbr_seq
+				, a.res_mbr_seq
+				, a.attach_id
+				, 1 AS level
+				, CONVERT(ROW_NUMBER() OVER (ORDER BY a.todo_seq DESC), VARCHAR(1000)) AS order_string
+			FROM dev_todo a
+			WHERE
+				a.parent_todo_seq IS NULL
+				AND a.del_yn = 'N'
+				<if test="@api.base.com.util.MybatisUtils@isNotEmpty(searchTodoGb)">
+					AND a.todo_gb = #{searchTodoGb}
+				</if>
+				<if test="@api.base.com.util.MybatisUtils@isNotEmpty(searchKeyword)">
+					<if test="@api.base.com.util.MybatisUtils@isEmpty(searchCondition)">
+						AND (INSTR(a.todo_nm, #{searchKeyword}) or INSTR(a.todo_content, #{searchKeyword}) or INSTR(a.req_nm, #{searchKeyword}))
+					</if>
+					
+				</if>
+				<if test="@api.base.com.util.MybatisUtils@isNotEmpty(searchCondition)">
+					<if test='searchCondition.equals("1")'>
+						AND INSTR(a.todo_nm, #{searchKeyword})
+					</if>
+					<if test='searchCondition.equals("2")'>
+						AND INSTR(a.todo_content, #{searchKeyword})
+					</if>
+					<if test='searchCondition.equals("3")'>
+						AND INSTR(a.req_nm, #{searchKeyword})
+					</if>
+				</if>
+				<if test="@api.base.com.util.MybatisUtils@isNotEmpty(searchTodoState)">
+					AND a.todo_state = #{searchTodoState}
+				</if>
+				<if test="@api.base.com.util.MybatisUtils@isNotEmpty(searchRegDtFrom)">
+					<if test="@api.base.com.util.MybatisUtils@isNotEmpty(searchRegDtTo)">
+						AND DATE_FORMAT(a.reg_dt, '%Y-%m-%d' ) BETWEEN DATE_FORMAT(#{searchRegDtFrom}, '%Y-%m-%d') and DATE_FORMAT(#{searchRegDtTo}, '%Y-%m-%d')
+					</if>
+				</if>
+			UNION all
+			SELECT 
+				a.todo_seq
+				, a.parent_todo_seq
+				, a.todo_gb
+				, a.todo_nm
+				, a.todo_content
+				, a.todo_state
+				, a.todo_progress
+				, a.reg_dt
+				, a.end_dt
+				, a.req_mbr_seq
+				, a.res_mbr_seq
+				, a.attach_id
+				, 1 + B.LEVEL AS level
+				, CONCAT(B.order_string, ',', CAST(a.todo_seq AS CHAR)) AS order_string
+			FROM dev_todo a
+				INNER JOIN TODOS b ON a.parent_todo_seq = b.todo_seq
+			WHERE
+				a.parent_todo_seq is Not null
+				AND a.del_yn = 'N'
+			)
+			SELECT distinct
+				todo_seq
+				, parent_todo_seq
+				, todo_gb
+				, b.code_nm AS todo_gb_nm
+				, todo_nm
+				, todo_content
+				, todo_state
+				, c.code_nm AS todo_state_nm
+				, CASE WHEN parent_todo_seq IS NULL THEN IFNULL((SELECT SUM(IFNULL(s.todo_progress, 0)) FROM dev_todo s WHERE s.parent_todo_seq = a.todo_seq), 0) ELSE IFNULL(todo_progress, 0) END AS todo_progress
+				, DATE_FORMAT(reg_dt, '%Y-%m-%d일 %H시' ) AS reg_dt /*date_format(end_dt, '%Y-%m-%d %T' )*/
+				, DATE_FORMAT(end_dt, '%Y-%m-%d일 %H시' ) AS end_dt
+				, (SELECT mbr_nm FROM com_member WHERE mbr_seq = req_mbr_seq) AS req_nm
+				, (SELECT mbr_nm FROM com_member WHERE mbr_seq = res_mbr_seq) AS res_nm
+				, req_mbr_seq
+				, res_mbr_seq
+				, IFNULL(attach_id, '') AS attach_id
+				, level
+			FROM TODOS a
+				LEFT OUTER JOIN com_code_detail b on b.code_group_seq = 2 AND a.todo_gb = b.code_cd
+				LEFT OUTER JOIN com_code_detail c on c.code_group_seq = 3 AND a.todo_state = c.code_cd
+			ORDER BY order_string
+	</select>
+	<insert id="insertTodo" useGeneratedKeys="true" keyProperty="todoSeq" keyColumn="todo_seq">
+		/* TodoMapper.insertTodo */
+		INSERT INTO dev_todo
+			(parent_todo_seq, todo_gb, todo_nm, todo_content, todo_state, todo_progress, attach_id, reg_dt, end_dt, req_mbr_seq, res_mbr_seq, del_yn)
+		VALUES
+			(#{parentTodoSeq}, #{todoGb}, #{todoNm}, #{todoContent}, #{todoState}, #{todoProgress}, #{attachId}, current_timestamp(), CASE WHEN IFNULL(#{todoProgress}, 0) = 100 THEN current_timestamp() ELSE null END, #{reqMbrSeq}, #{resMbrSeq}, 'N');
+	</insert>
+	<update id="updateTodo">
+		/* TodoMapper.updateTodo */
+		UPDATE dev_todo 
+			SET
+				  todo_nm =       #{todoNm}
+				, todo_content =  #{todoContent}
+				, todo_state =    #{todoState}
+				, todo_progress = #{todoProgress}
+				, attach_id     = #{attachId}
+		WHERE
+			todo_seq = #{todoSeq}
+	</update>
+	<update id="deleteTodo">
+		/* TodoMapper.deleteTodo */
+		UPDATE dev_todo SET del_yn = 'Y' WHERE todo_seq = #{todoSeq}
+	</update>
+
+</mapper>

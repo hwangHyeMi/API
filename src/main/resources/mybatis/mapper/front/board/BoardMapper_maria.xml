@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="api.base.front.board.mapper.BoardMapper">
+
+	<sql id="selectListBoardCondition">
+		AND A.MBR_SEQ = B.MBR_SEQ
+		<if test="@api.base.com.util.MybatisUtils@isNotEmpty(searchKeyword)">
+			<if test="@api.base.com.util.MybatisUtils@isEmpty(searchCondition)">
+				AND (INSTR(A.TITLE, #{searchKeyword}) OR INSTR(A.CONTENT, #{searchKeyword}) OR INSTR(B.MBR_NM, #{searchKeyword}))
+			</if>
+			<if test="@api.base.com.util.MybatisUtils@isNotEmpty(searchCondition)">
+				<if test='searchCondition.equals("1")'>
+					AND INSTR(A.TITLE, #{searchKeyword})
+				</if>
+				<if test='searchCondition.equals("2")'>
+					AND INSTR(A.CONTENT, #{searchKeyword})
+				</if>
+				<if test='searchCondition.equals("3")'>
+					AND INSTR(B.MBR_NM, #{searchKeyword})
+				</if>
+			</if>
+		</if>
+	</sql>
+
+	<select id="selectListBoard" parameterType="api.base.front.board.vo.BoardVO" resultType="api.base.front.board.vo.BoardDto">
+		/* BoardMapper.selectListBoard */
+			SELECT 
+			A.BOARD_ID
+			,A.CREATE_DATE
+			,A.MODIFIED_DATE
+			,A.CONTENT
+			,A.TITLE
+			,A.VIEW_COUNT
+			,A.MBR_SEQ
+			,B.MBR_NM
+			,A.ATTACH_ID
+			FROM COM_BOARD A, COM_MEMBER B
+			WHERE 1=1
+			<include refid = "selectListBoardCondition"/>
+			<if test="@api.base.com.util.MybatisUtils@isNotEmpty(pageable.sort)">
+				ORDER BY
+				<foreach collection="pageable.sort" item="order" separator=",">
+					${order.property} ${order.direction}
+				</foreach>
+			</if>
+			OFFSET #{pageable.offset} ROWS FETCH NEXT #{pageable.pageSize} ROWS ONLY
+	</select>
+	
+	<select id="selectListBoardCount" parameterType="api.base.front.board.vo.BoardVO" resultType="int">
+		/* BoardMapper.selectListBoardCount */
+		SELECT COUNT(A.BOARD_ID) AS CNT
+		FROM COM_BOARD A, COM_MEMBER B
+		WHERE 1=1
+		<include refid = "selectListBoardCondition"/>
+	</select>
+	
+	<select id="selectDetailBoard" parameterType="api.base.front.board.vo.BoardVO" resultType="api.base.front.board.vo.BoardDto">
+		/* BoardMapper.selectDetailBoard */
+			SELECT 
+			A.BOARD_ID
+			,A.CREATE_DATE
+			,A.MODIFIED_DATE
+			,A.CONTENT
+			,A.TITLE
+			,A.VIEW_COUNT
+			,A.MBR_SEQ
+			,B.MBR_NM
+			,A.ATTACH_ID
+			FROM COM_BOARD A, COM_MEMBER B
+			WHERE A.MBR_SEQ = B.MBR_SEQ
+				<if test="@api.base.com.util.MybatisUtils@isNotEmpty(boardId)">
+					AND BOARD_ID = #{boardId}
+				</if>
+	</select>
+	
+	<insert id="insertBoard" useGeneratedKeys="true" keyProperty="boardId" keyColumn="board_id">
+		/* BoardMapper.insertBoard */
+		INSERT INTO COM_BOARD
+			(CREATE_DATE,  CONTENT, TITLE, VIEW_COUNT, MBR_SEQ , ATTACH_ID)
+		VALUES
+			(current_timestamp(), #{content}, #{title}, 0,#{mbrSeq},#{attachId})
+	</insert>
+	
+	<update id="updateBoard">
+		/* BoardMapper.updateBoard */
+		UPDATE COM_BOARD
+			SET
+			<if test="@api.base.com.util.MybatisUtils@isEmpty(viewYn)">
+				MODIFIED_DATE=current_timestamp()
+				<if test="@api.base.com.util.MybatisUtils@isNotEmpty(content)">
+				, CONTENT=#{content}
+				</if>
+				<if test="@api.base.com.util.MybatisUtils@isNotEmpty(title)">
+				, TITLE=#{title}
+				</if>
+			</if>
+			<if test="@api.base.com.util.MybatisUtils@isNotEmpty(viewYn)">
+				<if test='viewYn.equals("Y")'>
+					VIEW_COUNT= IFNULL(VIEW_COUNT, 0)+1
+				</if>
+			</if>
+		WHERE BOARD_ID = #{boardId}
+	</update>
+		
+	<delete id="deleteBoard">
+		/* BoardMapper.deleteBoard */
+		DELETE FROM COM_BOARD
+		WHERE BOARD_ID = #{boardId}
+	</delete>
+	
+</mapper>

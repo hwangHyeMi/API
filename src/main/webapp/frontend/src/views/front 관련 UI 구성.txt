@@ -1,0 +1,35 @@
+
+
+react-bootstrap docs
+https://react-bootstrap.netlify.app/docs/components/accordion
+
+
+react-bootstrap-icons
+https://www.npmjs.com/package/react-bootstrap-icons?activeTab=readme
+
+bootstrap icons - docs
+https://icons.getbootstrap.com/
+
+텍스트상 아이콘 : 깃모지
+https://kyung-mini.tistory.com/entry/%EA%B9%83%EB%AA%A8%EC%A7%80Gitmoji-%EC%82%AC%EC%9A%A9-%EB%B0%A9%EB%B2%95-%EC%82%AC%EC%9A%A9-%EC%9D%B4%EC%9C%A0
+
+
+
+https://github.com/ismamz/react-bootstrap-icons#readme
+
+npm install react-bootstrap-icons --save
+
+import * as Icon from 'react-bootstrap-icons';
+
+
+
+variants 컬러 종류(alerts 에 기술된 정보 참고)
+https://react-bootstrap.netlify.app/docs/components/alerts
+
+borders
+https://mdbootstrap.com/docs/react/utilities/borders/
+
+
+
+프로젝트 소스 압축 관련 추후 참고
+https://www.npmjs.com/package/compress-create-react-app

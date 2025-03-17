@@ -1,0 +1,116 @@
+spring:
+  profiles:
+    active: dev # default profile
+    group:
+      dev:
+        - common
+      prod:
+        - common
+
+---
+# prod와 dev에 중복 설정common 작성
+spring:
+  config:
+    activate:
+      on-profile: common
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    properties:
+      hibernate:
+        hibernate:
+        "[format_sql]": true            #SQL 보기 좋게 출력
+        "[user_sql_comments]": true     #SQL 생성시 주석 포함
+        "[highlight_sql]": true         #SQL 색깔
+        "[hbm2ddl.auto]": update
+    open-in-view: true
+    show-sql: true
+    #default 1MB
+
+  servlet:
+    multipart:
+      max-file-size: 1GB
+      max-request-size: 1GB
+
+mybatis:
+  config-location: classpath:mybatis/config/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/**/*_maria.xml
+
+logging:
+  config: classpath:config/logback-spring.xml
+
+#https://jwt.io/
+jwt:
+  header: "Authorization"
+  prefix: "Bearer "
+  #Secret Length 512 https://jwtsecret.com/generate
+  secret: 518c7d017fc78a7e9080da2428e4c7d230bef9848dd967a8c37d1593a7bb569935723d1409a442b75e3ac07d7774d1d826a4cbc5200f0666841f42d9971c669761a22226fd505eed2b03ec77000f9b321a08a7de92a6ec52615af0af7c98196cea013ce9266f705e90c49b444572ab0ee61f4bb36685e677ac0bb196c351f34dd035d9eac6e4a178b083baa2cd3b03bd62293dd0aad11431ca9eae36ac56ce8f3cce8f74355ecdbdb42951af5cbcbc7490c0421ef71fe31297010d660e9dc16a8669d0a65c5f1e1def015296021b52f9d8e47c9fadd72fb798105dfe187df1ee14229e7224f1ba19e7ad34673322e93fa7d59305bb27f7b496e7febac15280f324afd5b1f05ed3c492a2893816d46bfeb627076a5024ba57022035db988ca70ed69bc29d606393f50afdc1ab5b44ac2bd707d6b3eb99dab5f7ff9385dd58f06df684c53fa6663eabb21f5750acd5ccbc373fe4639c6dc2475f745502ab50fae9140ba381cb17c9ebf838437a7c912ca7396eae425a0983bb03eced6ea4f4b99ad8161db9caabb3db6efd7c9b1809d9d2cadb76b731bf53f6b26877bfd2027b5bc88a4ee9a604f012455cea646d5e6917812aba511581c536e4a7734d2030353ccf057f09fda15fe2c8efa2ed7c1da2b9d9ad065e6b6a1ef3544a849f0644ac4af36ca3796fd4a81694b227db8357f598b286b3fa8a23e7d3616779fefe67f452
+  tokenExpirationTime: 18000
+
+project:
+  folderPath: "D:\\dev\\upload-files"
+  boardFolder: "board"
+  mbrFolder: "mbr"
+  #[WEB/API]
+  kind: API
+  # 로그인 실패 최대 허용 횟수
+  login-fail-max-cnt: 5
+  # 로그인 mbrKey 발급 유예 시간(24H*30일)
+  login-mbr-key-time: 720
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  application:
+    name: API
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://gaja.iptime.org:36/db_hm
+    username: user_hm
+    password: hm_1234!@
+
+cors:
+  allow:
+    origins: http://localhost:3000
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+    encoding:
+      charset: utf-8
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  application:
+    name: Spring-Boot-MyBatis
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://gaja.iptime.org:36/db_hm
+    username: user_hm
+    password: hm_1234!@
+
+cors:
+  allow:
+    origins: http://jisub1.iptime.org:3000
+
+server:
+  port: 81
+  servlet:
+    context-path: /api
+    encoding:
+      charset: utf-8
+# //XXX War 배포용 시도... > 배포 결과 > 실패
+services:
+ tomcat:
+   container_name: tomcat
+   image: tomcat:9.0.102
+   ports:
+     - "9090:9090"

@@ -1,0 +1,29 @@
+{
+  "short_name": "hm-sj App",
+  "name": "hm-sj App",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "__start_url_(localhost)__": ".",
+  "__start_url_(sj-server)__": "http://gaja.iptime.org:91/hm/#",
+  "__start_url_(sj)__": "http://hm-sj.iptime.org:3000",
+  "__start_url_(hm)__": "http://jisub1.iptime.org:3000",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

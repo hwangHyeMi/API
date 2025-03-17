@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="api.base.com.mbr.mapper.MbrMapper">
+	<select id="selectMbrChk" resultType="api.base.com.mbr.vo.CustomUserDetails">
+		/* MbrMapper.selectMbrChk */
+		SELECT 
+			mbr_seq AS mbrSeq
+			, mbr_id AS mbrId
+			, mbr_pw AS password
+			, mbr_id AS username
+			, mbr_nm AS mbrNm
+			, role
+			, roles
+			, email
+			, mbr_login_fail_cnt AS mbrLoginFailCnt
+			, mbr_key AS mbrKey
+			, CASE WHEN mbr_key IS NULL THEN 0 ELSE DATE_FORMAT(current_timestamp(), '%Y%m%d%H') - DATE_FORMAT(NVL(mbr_key_dt, current_timestamp()), '%Y%m%d%H') END AS mbrKeyTm
+		FROM com_member
+		WHERE
+			use_yn = 'Y'
+			AND del_yn = 'N'
+			AND mbr_id = #{mbrId}
+	</select>
+	<select id="selectMbrSeq" resultType="api.base.com.mbr.vo.CustomUserDetails">
+		/* MbrMapper.selectMbrSeq */
+		SELECT 
+			MBR_SEQ AS mbrSeq
+		FROM com_member
+		WHERE
+			use_yn = 'Y'
+			AND del_yn = 'N'
+			AND mbr_id = #{mbrId}
+	</select>
+	<select id="selectMbrAuthorities" resultType="api.base.com.mbr.vo.MbrAuthoritieDto">
+		/* MbrMapper.selectMbrAuthorities */
+		SELECT 
+			agm.mbr_seq AS mbrSeq
+			, g.group_cd AS groupCd
+			, g.group_nm AS groupNm
+			, a.authority_cd AS authority
+			, a.authority_description AS authorityNm
+		FROM
+			com_authority A
+			INNER JOIN com_authority_group AG
+				ON A.authority_seq = AG.authority_seq
+			INNER JOIN com_group g
+				ON AG.group_seq = G.group_seq
+			INNER JOIN com_authority_group_member AGM
+				ON AG.authority_group_seq = AGM.authority_group_seq
+		WHERE
+			A.use_yn = 'Y'
+			AND A.del_yn = 'N'
+			AND AG.use_yn = 'Y'
+			AND AG.del_yn = 'N'
+			AND G.use_yn = 'Y'
+			AND G.del_yn = 'N'
+			AND AGM.del_yn = 'N'
+			AND G.group_cd = #{groupCd}
+			AND AGM.mbr_seq = #{mbrSeq}
+	</select>
+	<update id="updateMbrKey">
+		/* MbrMapper.updateMbrKey */
+		UPDATE com_member
+			SET
+				mbr_key=#{mbrKey}
+				, mbr_key_dt=current_timestamp()
+		WHERE mbr_seq = #{mbrSeq}
+	</update>
+	<update id="updateMbrLastLoginInfoSuccess">
+		/* MbrMapper.updateMbrLastLoginInfoSuccess */
+		UPDATE com_member
+			SET
+			  mbr_last_login_dt=current_timestamp()
+			, mbr_last_login_ip=#{mbrLoginIp}
+			, mbr_last_login_mac=#{mbrLoginMac}
+			, mbr_login_fail_cnt=0
+		WHERE mbr_seq = #{mbrSeq}
+	</update>
+	<update id="updateMbrLastLoginInfoFail">
+		/* MbrMapper.updateMbrLastLoginInfoFail */
+		UPDATE com_member
+			SET
+			  mbr_last_login_dt=current_timestamp()
+			, mbr_last_login_ip=#{mbrLoginIp}
+			, mbr_last_login_mac=#{mbrLoginMac}
+			, mbr_login_fail_cnt= IFNULL(mbr_login_fail_cnt, 0)+1
+		WHERE mbr_id = #{mbrId}
+	</update>
+	<insert id="insertMbrLoginHistory">
+		/* MbrMapper.insertMbrLoginHistory */
+		INSERT INTO com_member_login_history
+			(mbr_seq, mbr_id, mbr_login_dt, mbr_login_ip, mbr_login_mac, mbr_login_yn)
+		VALUES
+			(#{mbrSeq}, #{mbrId}, current_timestamp(), #{mbrLoginIp}, #{mbrLoginMac}, IFNULL(#{mbrLoginYn}, 'N'))
+	</insert>
+	
+	<select id="selectMemberLoginHistoryChart1" resultType="Map">
+		/* MbrMapper.selectMemberLoginHistoryChart1 */
+		SELECT 
+			a.h AS x
+			,IFNULL(b.y, 0) AS y
+		FROM com_times a
+			LEFT OUTER JOIN 
+			(
+				SELECT
+					 CAST(DATE_FORMAT(mbr_login_dt, '%H') AS UNSIGNED INTEGER) AS x
+					, COUNT(mbr_login_history_seq) AS y
+				FROM com_member_login_history
+				WHERE
+					DATE_FORMAT(mbr_login_dt, '%Y%m%d%') = DATE_FORMAT(current_timestamp(), '%Y%m%d%')
+					AND mbr_login_yn =#{mbrLoginYn}
+				GROUP BY DATE_FORMAT(mbr_login_dt, '%H')
+			) b
+			ON a.h = b.x
+	</select>
+	
+	<select id="selectMbrDetail" resultType="api.base.com.mbr.vo.MbrDto">
+		/* MbrMapper.selectMbrDetail */
+		SELECT
+			MBR_SEQ 
+			, MBR_ID
+			, MBR_NM
+			, MBR_PON
+			, MBR_LAST_LOGIN_DT
+			, MBR_LAST_LOGIN_IP
+			, MBR_LAST_LOGIN_MAC
+			, MBR_LOGIN_FAIL_CNT
+			, MBR_JOIN_DT
+			, ROLE
+			, ROLES
+			, EMAIL
+			, USE_YN
+			, DEL_YN
+			, ATTACH_ID
+		FROM COM_MEMBER
+		WHERE MBR_SEQ = #{mbrSeq}
+	</select>
+	
+	<update id="updateMbr">
+		/* MbrMapper.updateMbr */
+		UPDATE COM_MEMBER
+			SET MBR_ID = MBR_ID
+			<if test="@api.base.com.util.MybatisUtils@isNotEmpty(mbrNm)">
+			, MBR_NM=#{mbrNm}
+			</if>
+			<if test="@api.base.com.util.MybatisUtils@isNotEmpty(mbrPon)">
+			, MBR_PON=#{mbrPon}
+			</if>
+			<if test="@api.base.com.util.MybatisUtils@isNotEmpty(email)">
+			, EMAIL=#{email}
+			</if>
+			<if test="@api.base.com.util.MybatisUtils@isNotEmpty(attachId)">
+			, ATTACH_ID=#{attachId}
+			</if>
+		WHERE MBR_SEQ = #{mbrSeq}
+	</update>
+</mapper>
