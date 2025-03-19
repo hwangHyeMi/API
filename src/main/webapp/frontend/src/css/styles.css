@@ -43,6 +43,8 @@
   --bs-light: #f8f9fa;
   --bs-dark: #212529;
   --bs-primary-rgb: 13, 110, 253;
+  --bs-gray-400-rgb: 167, 169, 171;
+  --bs-secondary-rgb: 108, 117, 125;
   --bs-secondary-rgb: 108, 117, 125;
   --bs-success-rgb: 25, 135, 84;
   --bs-info-rgb: 13, 202, 240;
@@ -8480,6 +8482,10 @@ fieldset:disabled .btn {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity)) !important;
 }
+.bg-gray-400 {
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-gray-400-rgb), var(--bs-bg-opacity)) !important;
+}
 
 .bg-success {
   --bs-bg-opacity: 1;
@@ -8509,6 +8515,11 @@ fieldset:disabled .btn {
 .bg-dark {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+}
+
+.bg-gray600 {
+  --bs-bg-opacity: 0.2 !important;
+  background-color: rgba(var(--bs-gray), var(--bs-bg-opacity)) !important;
 }
 
 .bg-black {

@@ -34,6 +34,9 @@ const colorModeStore = create((set) => ({
     topNav.removeAttribute('class');
     topNav.setAttribute('class', 'sb-topnav navbar navbar-expand menus navbar-' + colorMode + ' bg-' + colorMode);
 
+    const layoutSidenav = document.getElementById('layoutSidenav');
+    layoutSidenav.setAttribute('class', '' + colorMode + ' bg-' + colorMode + ' text-bg-' + colorMode);
+
     const footer = document.getElementById('footer');
     footer.removeAttribute('class');
     footer.setAttribute('class', 'py-4 mt-auto bg-' + colorMode);

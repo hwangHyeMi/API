@@ -95,7 +95,6 @@ function Header(props) {
     topNav.setAttribute('class', 'sb-topnav navbar navbar-expand menus navbar-' + colorMode + ' bg-' + colorMode);
 
     const layoutSidenav = document.getElementById('layoutSidenav');
-    layoutSidenav.removeAttribute('class');
     layoutSidenav.setAttribute('class', '' + colorMode + ' bg-' + colorMode + ' text-bg-' + colorMode);
 
     const footer = document.getElementById('footer');
@@ -159,7 +158,7 @@ function Header(props) {
   return (
     <>
       <nav id="topNav" className="sb-topnav navbar navbar-expand navbar-dark bg-dark menus">
-        <button className="btn btn-link btn-sm" style={{ marginTop: '10px' }} id="sidebarToggle" onClick={onToggleClickHandler}>
+        <button className="btn btn-link btn-sm" style={{ marginTop: '0px', marginLeft: '5px' }} id="sidebarToggle" onClick={onToggleClickHandler}>
           <i className="fas fa-bars"></i>
         </button>
         <div className="navbar-brand ps-3" onClick={onLogoClickHandler}>
@@ -202,15 +201,7 @@ function Header(props) {
             </>
           )}
         </ul>
-        {/* <form className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-          <div className="input-group">
-            <input className="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-            <button className="btn btn-primary" id="btnNavbarSearch" type="button">
-              <i className="fas fa-search"></i>
-            </button>
-          </div>
-        </form> */}
-        <ul className="navbar-nav" style={{ width: '60px', marginRight: '25px' }}>
+        <ul className="navbar-nav" style={{ width: '60px', marginRight: '40px', display: 'flex' }}>
           <li className="nav-item">
             <Link
               className="nav-link"
@@ -251,6 +242,14 @@ function Header(props) {
             </Link>
           </li>
         </ul>
+        <form className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+          <div className="input-group">
+            <input className="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+            <button className="btn btn-primary" id="btnNavbarSearch" type="button">
+              <i className="fas fa-search"></i>
+            </button>
+          </div>
+        </form>
         <ul className="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
           <li className="nav-item dropdown">
             <Link className="nav-link dropdown-toggle" id="navbarDropdown" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

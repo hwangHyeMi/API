@@ -130,16 +130,13 @@ function DevSearchList() {
           </Row>
         </Form>
         <Row className="mb-2">
-          <Table striped bordered hover>
+          <Table striped bordered hover variant="secondary">
             <thead>
-              <tr>
-                <th>No.</th>
-                <th>ID</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>작성일</th>
-                <th>수정일</th>
-                <th>조회수</th>
+              <tr style={{ textAlign: 'center' }}>
+                <th className="bg-gray-400">No.</th>
+                <th className="bg-gray-400">제목</th>
+                <th className="bg-gray-400">작성자</th>
+                <th className="bg-gray-400">조회수</th>
               </tr>
             </thead>
             <tbody ref={tableBody}>
@@ -147,11 +144,8 @@ function DevSearchList() {
                 return (
                   <tr key={info.boardId} style={{ height: '50px' }}>
                     <td style={{ textAlign: 'center' }}>{i + 1}</td>
-                    <td>{info.boardId}</td>
                     <td>{info.title}</td>
                     <td>{info.mbrNm}</td>
-                    <td>{info.createDate}</td>
-                    <td>{info.modifiedDate}</td>
                     <td>{info.viewCount}</td>
                   </tr>
                 );

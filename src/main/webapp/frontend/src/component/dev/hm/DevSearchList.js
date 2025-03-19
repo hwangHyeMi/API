@@ -113,15 +113,15 @@ function DevSearchList() {
             </Col>
           </Row>
           <Row>
-            <Table striped bordered hover size="lg">
+            <Table striped bordered hover size="lg" variant="secondary">
               <thead>
                 <tr style={{ textAlign: 'center' }}>
-                  <th>No.</th>
-                  <th>제목</th>
-                  <th>작성자</th>
-                  <th>작성일</th>
-                  <th>수정일</th>
-                  <th>조회수</th>
+                  <th className="bg-gray-400">No.</th>
+                  <th className="bg-gray-400">제목</th>
+                  <th className="bg-gray-400">작성자</th>
+                  <th className="bg-gray-400">작성일</th>
+                  <th className="bg-gray-400">수정일</th>
+                  <th className="bg-gray-400">조회수</th>
                 </tr>
               </thead>
               <tbody>

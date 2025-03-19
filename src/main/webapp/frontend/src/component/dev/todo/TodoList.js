@@ -619,7 +619,7 @@ function TodoList(props) {
       <Bts.Form noValidate validated={searchValidated} onSubmit={searchSubmit} id="searchForm">
         {/* 세세한 UI 정렬 등은 추후 익숙 해지면 정리 하는 걸로... */}
         <Bts.Container fluid className="square border">
-          <Bts.Row className="m-1">
+          <Bts.Row className="m-3">
             <Bts.Col md="12">
               <Bts.Collapse in={openSearch} className="hstack">
                 <div id="collapseSearchGroup">
@@ -637,7 +637,7 @@ function TodoList(props) {
                     </Bts.Form.Select>
                   </Bts.Form.Group>
                   <Bts.Col md="1" className="hstack">
-                    <Bts.Form.Label style={{ width: '-webkit-fill-available' }}>발생일</Bts.Form.Label>
+                    <Bts.Form.Label style={{ width: '-webkit-fill-available' }}>&nbsp;&nbsp;&nbsp;&nbsp;발생일</Bts.Form.Label>
                   </Bts.Col>
                   <Bts.Col md="4" className="hstack myContainer">
                     {/* @ts-ignore*/}
@@ -648,7 +648,7 @@ function TodoList(props) {
                     <DatePicker showMonthDropdown showYearDropdown dropdownMode="scroll" locale={ko} className="myDatePicker" showIcon selected={searchRegDtTo} onChange={(date) => onChangeSearchRegDtTo(date)} dateFormat="yyyy-MM-dd" dateFormatCalendar="yyyy년 MM월" isClearable placeholderText="검색 종료 일자" selectsEnd startDate={searchRegDtFrom} endDate={searchRegDtTo} minDate={searchRegDtFrom} />
                   </Bts.Col>
                   <Bts.Form.Group as={Bts.Col} md="4" className="hstack" controlId="searchTodoState">
-                    <Bts.Form.Label style={{ width: '-webkit-fill-available' }}>Todo 상태</Bts.Form.Label>
+                    <Bts.Form.Label style={{ width: '-webkit-fill-available' }}>&nbsp;&nbsp;&nbsp;&nbsp;Todo 상태</Bts.Form.Label>
                     <Bts.Form.Select aria-label="Todo 상태" name="searchTodoState" onChange={onChangeSelectTodoState} value={selectedTodoState}>
                       <option value={''}>전체</option>
                       {devTodoStsCdlList.map((code, i) => {
@@ -677,7 +677,7 @@ function TodoList(props) {
               <Bts.Form.Control type="text" name="searchKeyword" placeholder="검색키워드" defaultValue={params.searchKeyword} />
             </Bts.Form.Group>
           </Bts.Row>
-          <Bts.Row className="m-1">
+          <Bts.Row className="m-3">
             <Bts.Col md="9" className="hstack" style={{ justifyContent: 'center' }}>
               <Bts.Button type="submit">검색</Bts.Button>
             </Bts.Col>
@@ -905,13 +905,13 @@ function TodoList(props) {
         <Bts.Table striped bordered hover variant="secondary">
           <thead>
             <tr style={{ textAlign: 'center' }}>
-              <th className="bg-warning">순번</th>
-              <th className="bg-warning">구분</th>
-              <th className="bg-warning">제목</th>
-              <th className="bg-warning">상태</th>
-              <th className="bg-warning">진척도</th>
-              <th className="bg-warning">이름</th>
-              <th className="bg-warning">일자</th>
+              <th className="bg-gray-400">순번</th>
+              <th className="bg-gray-400">구분</th>
+              <th className="bg-gray-400">제목</th>
+              <th className="bg-gray-400">상태</th>
+              <th className="bg-gray-400">진척도</th>
+              <th className="bg-gray-400">이름</th>
+              <th className="bg-gray-400">일자</th>
             </tr>
           </thead>
           <tbody>

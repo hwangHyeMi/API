@@ -47,16 +47,16 @@ function DevMain() {
       <Container>
         <Row style={{ justifyContent: 'left', display: 'flex' }}>
           <Col>
-            <Table striped bordered hover size="lg">
+            <Table striped bordered hover size="lg" variant="secondary">
               <thead>
                 <tr>
-                  <th className="col-auto">No</th>
-                  <th className="col-auto">url</th>
-                  <th className="col-auto">parameters</th>
-                  <th className="col-auto">method</th>
-                  <th className="col-auto">direction</th>
-                  <th className="col-auto">direction1</th>
-                  <th className="col-auto">direction2</th>
+                  <th className="col-auto bg-gray-400">No</th>
+                  <th className="col-auto bg-gray-400">url</th>
+                  <th className="col-auto bg-gray-400">parameters</th>
+                  <th className="col-auto bg-gray-400">method</th>
+                  <th className="col-auto bg-gray-400">direction</th>
+                  <th className="col-auto bg-gray-400">direction1</th>
+                  <th className="col-auto bg-gray-400">direction2</th>
                 </tr>
               </thead>
               <tbody style={{ textAlign: 'left' }}>
@@ -79,14 +79,14 @@ function DevMain() {
         </Row>
         <Row style={{ justifyContent: 'left', display: 'flex' }}>
           <Col>
-            <Table striped bordered hover size="lg">
+            <Table striped bordered hover size="lg" variant="secondary">
               <thead>
                 <tr>
-                  <th className="col-auto">No</th>
-                  <th className="col-auto">Code Group</th>
-                  <th className="col-auto">Code Name</th>
-                  <th className="col-auto">direction</th>
-                  <th className="col-auto">Detail Code Count</th>
+                  <th className="col-auto bg-gray-400">No</th>
+                  <th className="col-auto bg-gray-400">Code Group</th>
+                  <th className="col-auto bg-gray-400">Code Name</th>
+                  <th className="col-auto bg-gray-400">direction</th>
+                  <th className="col-auto bg-gray-400">Detail Code Count</th>
                 </tr>
               </thead>
               <tbody style={{ textAlign: 'left' }}>
@@ -107,25 +107,25 @@ function DevMain() {
         </Row>
         <Row style={{ justifyContent: 'left', display: 'flex' }}>
           <Col>
-            <Table striped bordered hover size="lg">
+            <Table striped bordered hover size="lg" variant="secondary">
               <thead>
                 <tr>
-                  <th className="col-auto">No</th>
-                  <th className="col-auto">Code Group</th>
-                  <th className="col-auto">Code Name</th>
-                  <th className="col-auto">Code</th>
-                  <th className="col-auto">Name</th>
-                  <th className="col-auto">direction</th>
-                  <th className="col-auto">codeRefer1</th>
-                  <th className="col-auto">codeRefer2</th>
-                  <th className="col-auto">codeRefer3</th>
-                  <th className="col-auto">codeRefer4</th>
-                  <th className="col-auto">codeRefer5</th>
-                  <th className="col-auto">codeRefer6</th>
-                  <th className="col-auto">codeRefer7</th>
-                  <th className="col-auto">codeRefer8</th>
-                  <th className="col-auto">codeRefer9</th>
-                  <th className="col-auto">codeRefer10</th>
+                  <th className="col-auto bg-gray-400">No</th>
+                  <th className="col-auto bg-gray-400">Code Group</th>
+                  <th className="col-auto bg-gray-400">Code Name</th>
+                  <th className="col-auto bg-gray-400">Code</th>
+                  <th className="col-auto bg-gray-400">Name</th>
+                  <th className="col-auto bg-gray-400">direction</th>
+                  <th className="col-auto bg-gray-400">codeRefer1</th>
+                  <th className="col-auto bg-gray-400">codeRefer2</th>
+                  <th className="col-auto bg-gray-400">codeRefer3</th>
+                  <th className="col-auto bg-gray-400">codeRefer4</th>
+                  <th className="col-auto bg-gray-400">codeRefer5</th>
+                  <th className="col-auto bg-gray-400">codeRefer6</th>
+                  <th className="col-auto bg-gray-400">codeRefer7</th>
+                  <th className="col-auto bg-gray-400">codeRefer8</th>
+                  <th className="col-auto bg-gray-400">codeRefer9</th>
+                  <th className="col-auto bg-gray-400">codeRefer10</th>
                 </tr>
               </thead>
               <tbody style={{ textAlign: 'left' }}>
