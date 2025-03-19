@@ -1,19 +1,19 @@
 import axios from 'axios';
 import { useState, useEffect, useRef } from 'react';
-import httpHeaderStore from 'interface/httpHeaderStore';
-import useLoginStore from 'interface/useLoginStore';
+import httpHeaderStore from 'store/httpHeaderStore';
+import useLoginStore from 'store/useLoginStore';
 
 import { Col, Row, Form, Button, Container, Image } from 'react-bootstrap';
 import * as Icon from 'react-bootstrap-icons';
 
-import defaultProfileImage from 'assets/image/default_profile_img.png';
-
 // Toast 관련
-import MyToast from 'component/com/MyToast';
+import MyToast from 'component/common/MyToast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 //          component (props) App.js확인         //
 function DevMypage(props) {
   const MBR_URL = `${process.env.REACT_APP_MBR_URL}`;
+  const defaultProfileImg = `${process.env.REACT_APP_PUBLIC_URL}` + '/assets/image/default_profile_img.png';
+
   const COM_API_URL = `${process.env.REACT_APP_API_URL}`;
   const { getHeaders } = httpHeaderStore((state) => {
     return state;
@@ -28,7 +28,7 @@ function DevMypage(props) {
   const fileInput = useRef(null);
 
   const [validated, setValidated] = useState(false);
-  const [ImageSrc, setImageSrc] = useState(defaultProfileImage);
+  const [ImageSrc, setImageSrc] = useState(defaultProfileImg);
   const [file, setFile] = useState([]);
   const [fileList, setFileList] = useState([]);
   const [mbrDetail, setMbrDetail] = useState({
@@ -133,7 +133,7 @@ function DevMypage(props) {
       setFile(e.target.files[0]);
     } else {
       //업로드 취소할 시
-      setImageSrc(defaultProfileImage);
+      setImageSrc(defaultProfileImg);
       return;
     }
     //화면에 프로필 사진 표시

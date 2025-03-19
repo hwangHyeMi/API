@@ -6,7 +6,7 @@ import * as Bts from 'react-bootstrap';
 
 import { useNavigate } from 'react-router-dom';
 
-import useLoginStore from 'interface/useLoginStore';
+import useLoginStore from 'store/useLoginStore';
 
 //          component: Login 컴포넌트          //
 function Login(props) {

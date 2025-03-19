@@ -12,13 +12,13 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom'; // path 접근시 active 처리 자동화
 import { useParams } from 'react-router-dom';
 
-import httpHeaderStore from 'interface/httpHeaderStore';
-import useLoginStore from 'interface/useLoginStore';
-import codeStore from 'interface/codeStore';
-import fileStore from 'interface/fileStore';
+import httpHeaderStore from 'store/httpHeaderStore';
+import useLoginStore from 'store/useLoginStore';
+import codeStore from 'store/codeStore';
+import fileStore from 'store/fileStore';
 
 // Toast 관련
-import MyToast from 'component/com/MyToast';
+import MyToast from 'component/common/MyToast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 
 function TodoList(props) {

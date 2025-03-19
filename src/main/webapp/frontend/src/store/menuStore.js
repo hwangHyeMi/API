@@ -12,7 +12,7 @@ const setMenuDatas = async () => {
         headers: headers,
       })
       .then((resp) => {
-        //console.log(resp.data);
+        console.log(resp.data);
         if (resp && resp.data) {
           localStorage.setItem('allMenus', JSON.stringify(resp.data));
         }

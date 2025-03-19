@@ -1,34 +1,34 @@
-import React, { useEffect, useState } from 'react';
-
-import { Route, Routes, BrowserRouter, HashRouter } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 
 import './App.css';
 import './css/styles.css';
 
 // Modal.Dialog 관련
-import MyModialog from 'component/com/MyModialog';
+import MyModialog from 'component/common/MyModialog';
 // Alert 관련
-import MyAlert from 'component/com/MyAlert';
-import PrivateRoute from 'component/com/PrivateRoute';
+import MyAlert from 'component/common/MyAlert';
+import PrivateRoute from 'component/common/PrivateRoute';
 
 // description : Store import Start
-import useLoginStore from 'interface/useLoginStore';
-import menuStore from 'interface/menuStore';
-import codeStore from 'interface/codeStore';
-import colorModeStore from 'interface/colorModeStore';
+import codeStore from 'store/codeStore';
+import colorModeStore from 'store/colorModeStore';
+import menuStore from 'store/menuStore';
+import useLoginStore from 'store/useLoginStore';
 // description : Store import End
 
 // description : layout import Start
+import Footer from 'component/layout/Footer';
 import Header from 'component/layout/Header';
 import Sidebar from 'component/layout/Sidebar';
-import Footer from 'component/layout/Footer';
 // description : layout import End
 
 // description : bootstrap 연동할 화면 import Start
 //import Home from 'component/Home';
-import Login from 'component/Login';
 import Join from 'component/Join';
+import Login from 'component/Login';
+import Home from 'component/Home';
 import Dashboard from 'views/main/Dashboard';
 // description : bootstrap 연동할 화면 import End
 
@@ -40,22 +40,19 @@ import DivInfoList from 'views/dev/sj/DivInfoList';
 import DivInfoList2 from 'views/dev/sj/DivInfoList2';
 
 import DevSjAssembl from 'views/dev/sj/DevAssembl';
-import DevSjTables from 'views/dev/sj/DevTables';
-import DevSjMessage from 'views/dev/sj/DevMessage';
-import DevSjModals from 'views/dev/sj/DevModals';
 import DevSjButtons from 'views/dev/sj/DevButtons';
 import DevSjCalendar from 'views/dev/sj/DevCalendar';
-import DevSjSearchList from 'views/dev/sj/DevSearchList';
 import DevSjListScroll from 'views/dev/sj/DevListScroll';
+import DevSjMessage from 'views/dev/sj/DevMessage';
+import DevSjModals from 'views/dev/sj/DevModals';
+import DevSjSearchList from 'views/dev/sj/DevSearchList';
+import DevSjTables from 'views/dev/sj/DevTables';
 
-// 작업 메뉴 협의 후 작업 후 제거 할 건 제거 하고 머지 작업은 추후 진행
-
-//hm
 import DevHmAssembl from 'views/dev/hm/DevAssembl';
-import DevHmSearchList from 'views/dev/hm/DevSearchList';
-import DevHmWrite from 'views/dev/hm/DevWrite';
 import DevHmDetail from 'views/dev/hm/DevDetail';
 import DevHmMypage from 'views/dev/hm/DevMypage';
+import DevHmSearchList from 'views/dev/hm/DevSearchList';
+import DevHmWrite from 'views/dev/hm/DevWrite';
 
 // description : 메뉴와 연동할 화면 import End
 
@@ -261,7 +258,7 @@ function App() {
                 <div className="container-fluid px-4">
                   <Routes>
                     {/* // description : 로그인과 무관 접근 가능 Start */}
-                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/" element={<Home />} />
                     <Route path="/bootstrap/Dashboard" element={<Dashboard />} />
                     <Route path="/:topMenuSeq/devList/DivInfoList" element={<DivInfoList />} />
                     <Route path="/:topMenuSeq/devList/DivInfoList2" element={<DivInfoList2 />} />
@@ -327,7 +324,7 @@ function App() {
                 <div className="container-fluid px-4">
                   <Routes>
                     {/* // description : 로그인과 무관 접근 가능 Start */}
-                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/" element={<Home />} />
                     <Route path="/bootstrap/Dashboard" element={<Dashboard />} />
                     <Route path="/:topMenuSeq/devList/DivInfoList" element={<DivInfoList />} />
                     <Route path="/:topMenuSeq/devList/DivInfoList2" element={<DivInfoList2 />} />

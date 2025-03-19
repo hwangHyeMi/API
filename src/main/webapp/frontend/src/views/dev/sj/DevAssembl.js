@@ -10,7 +10,7 @@ import Row from 'react-bootstrap/Row';
 import * as Icon from 'react-bootstrap-icons';
 
 // Toast 관련
-import MyToast from 'component/com/MyToast';
+import MyToast from 'component/common/MyToast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 
 function DevAssembl(props) {

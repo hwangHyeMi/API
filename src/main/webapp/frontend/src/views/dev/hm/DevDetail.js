@@ -1,5 +1,5 @@
 import axios from 'axios';
-import httpHeaderStore from 'interface/httpHeaderStore';
+import httpHeaderStore from 'store/httpHeaderStore';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -7,7 +7,7 @@ import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import * as Icon from 'react-bootstrap-icons';
 
 // Toast 관련
-import MyToast from 'component/com/MyToast';
+import MyToast from 'component/common/MyToast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 
 //          component (props) App.js확인         //

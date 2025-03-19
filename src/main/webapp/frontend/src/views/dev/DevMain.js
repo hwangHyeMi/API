@@ -1,18 +1,9 @@
 import axios from 'axios';
-import { useState, useEffect } from 'react';
-
-import useLoginStore from 'interface/useLoginStore';
-import codeStore from 'interface/codeStore';
-
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-// https://react-bootstrap.netlify.app/docs/layout/grid/
-//import Container from 'react-bootstrap/Container';
-//import Row from 'react-bootstrap/Row';
-//import Col from 'react-bootstrap/Col';
-
+import { useEffect, useState } from 'react';
+import codeStore from 'store/codeStore';
+import useLoginStore from 'store/useLoginStore';
 import Table from 'react-bootstrap/Table';
-
+//          component: DevMain 컴포넌트          //
 function DevMain() {
   //로그인상태
   const { islogIn, storeLogout, storeLogin, getMbrId } = useLoginStore((state) => {
@@ -31,8 +22,7 @@ function DevMain() {
   const loginTest = () => {
     let data = {
       mbrId: '임시 테스트',
-      token:
-        'eyJhbGciOiJIUzUxMiJ9.eyJtYnJTZXEiOjMsImdyb3VwQ29kZSI6IkdST1VQLUNPREUiLCJtYnJBdXRob3JpdGllcyI6W3sibWJyU2VxIjozLCJhdXRob3JpdHkiOiJVU0VSIiwiYXV0aG9yaXR5Tm0iOiLsnbzrsJgg7ZqM7JuQLeyEpOuqhSIsImdyb3VwQ2QiOiJHUk9VUC1DT0RFIiwiZ3JvdXBObSI6Iuq3uOujuSDtg4DsnoUifV0sInN1YiI6InVzZXIiLCJpYXQiOjE3NDAxOTE2ODUsImV4cCI6MTc0MDIwOTY4NX0.dLNp-ZVkn8OTXSSG_VywB6_NCN65PXdySknMbg3rqvuIClMHY9JguKB1LcMaviVYgJm9ahJbaMDZurreWSO0RA',
+      token: 'eyJhbGciOiJIUzUxMiJ9.eyJtYnJTZXEiOjMsImdyb3VwQ29kZSI6IkdST1VQLUNPREUiLCJtYnJBdXRob3JpdGllcyI6W3sibWJyU2VxIjozLCJhdXRob3JpdHkiOiJVU0VSIiwiYXV0aG9yaXR5Tm0iOiLsnbzrsJgg7ZqM7JuQLeyEpOuqhSIsImdyb3VwQ2QiOiJHUk9VUC1DT0RFIiwiZ3JvdXBObSI6Iuq3uOujuSDtg4DsnoUifV0sInN1YiI6InVzZXIiLCJpYXQiOjE3NDAxOTE2ODUsImV4cCI6MTc0MDIwOTY4NX0.dLNp-ZVkn8OTXSSG_VywB6_NCN65PXdySknMbg3rqvuIClMHY9JguKB1LcMaviVYgJm9ahJbaMDZurreWSO0RA',
       mbrSeq: -999,
       mbrNm: '임시 테스트',
       groupCode: '',

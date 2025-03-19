@@ -15,6 +15,7 @@
 			, AGM.method_kind AS methodKind
 			, AGM.params
 			, AGM.view_nm AS viewNm
+			, A.authority_cd AS authorityCd
 		FROM 
 			com_authority_group_menu AGM
 			INNER JOIN com_authority_group AG
@@ -39,7 +40,7 @@
 			</if>
 			<if test='userType.equals("USER")'>
 				AND G.group_cd ='GROUP-CODE'
-				AND A.authority_cd ='USER'
+				AND A.authority_cd NOT IN ('EVERY')
 			</if>
 		</if>
 		ORDER BY AGM.menu_sort
@@ -61,6 +62,7 @@
 				, 0 AS level
 				, 0 AS top_menu_seq
 				, convert(0, varchar(1000)) as order_string
+				, 'USER' AS authority_cd
 			UNION ALL
 			</if>
 			SELECT
@@ -75,6 +77,7 @@
 				, 1 AS LEVEL
 				, AGM.menu_seq as top_menu_seq
 				, CONCAT('0,', CAST(AGM.menu_sort AS CHAR)) as order_string
+			, A.authority_cd
 			FROM 
 				com_authority_group_menu AGM
 				INNER JOIN com_authority_group AG
@@ -105,7 +108,7 @@
 				</if>
 				<if test='userType.equals("USER")'>
 					AND G.group_cd ='GROUP-CODE'
-					AND A.authority_cd ='USER'
+				AND A.authority_cd NOT IN ('EVERY')
 				</if>
 			</if>
 			UNION all
@@ -121,6 +124,7 @@
 				, 1 + B.LEVEL AS LEVEL
 				, B.top_menu_seq
 				, CONCAT(B.order_string, ',', CAST(AGM.menu_sort AS CHAR)) as order_string
+				, A.authority_cd
 			FROM 
 				com_authority_group_menu AGM
 				INNER JOIN com_authority_group AG
@@ -153,7 +157,7 @@
 				</if>
 				<if test='userType.equals("USER")'>
 					AND G.group_cd ='GROUP-CODE'
-					AND A.authority_cd ='USER'
+				AND A.authority_cd NOT IN ('EVERY')
 				</if>
 			</if>
 		)
@@ -168,6 +172,7 @@
 			, A.params
 			, A.view_nm AS viewNm
 			, A.LEVEL
+			, A.authority_cd AS authorityCd
 		FROM MENUS A
 		LEFT OUTER JOIN MENUS B ON B.parent_menu_seq = A.menu_seq
 		ORDER BY A.order_string

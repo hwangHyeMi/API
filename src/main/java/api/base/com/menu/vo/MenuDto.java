@@ -18,5 +18,6 @@ public class MenuDto implements Serializable {
 	private String params;
 	private String viewNm;
 	private int level;
+	private String authorityCd;
 
 }

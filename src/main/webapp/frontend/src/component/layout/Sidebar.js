@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom'; // path 접근시 active 처리 자동화
 // import { IconName } from 'react-icons/fa';
-import useLoginStore from 'interface/useLoginStore';
-import menuStore from 'interface/menuStore';
-import colorModeStore from 'interface/colorModeStore';
+import useLoginStore from 'store/useLoginStore';
+import menuStore from 'store/menuStore';
+import colorModeStore from 'store/colorModeStore';
 //import Icons from 'bootstrap-icons';
 
 function Sidebar() {
   //로그인상태
-  const { islogIn } = useLoginStore((state) => {
+  const { islogIn, getMbrRoles } = useLoginStore((state) => {
     return state;
   });
   const { isMenuData, getMenuList } = menuStore((state) => {
@@ -17,7 +17,8 @@ function Sidebar() {
   const { getColor } = colorModeStore((state) => {
     return state;
   });
-
+  //다중권한
+  const [roles, setRoles] = useState('EVERY');
   const [liftMenuList, setLiftMenuList] = useState([]);
   //1 뎁스 path 세팅
   const [depth1path, setDepth1path] = useState('');
@@ -60,6 +61,7 @@ function Sidebar() {
       let all_menu_list = getMenuList();
 
       if (islogIn) {
+        setRoles(getMbrRoles());
         if (all_menu_list && all_menu_list.userMenuList) setLiftMenuList(all_menu_list.userMenuList);
       } else {
         if (all_menu_list && all_menu_list.frontMenuList) setLiftMenuList(all_menu_list.frontMenuList);
@@ -97,7 +99,7 @@ function Sidebar() {
         <div className="sb-sidenav-menu">
           <div className="nav">
             {liftMenuList
-              .filter((data) => data.level === 1) // 1뎁스 (Top level)
+              .filter((data) => data.level === 1 && roles.includes(data.authorityCd)) // 1뎁스 (Top level)
               .map((topMenu, i) => {
                 return (
                   <div key={topMenu.menuSeq} className="collapse show" id={'Menus_' + topMenu.topMenuSeq} aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionTopLevel">
@@ -107,7 +109,7 @@ function Sidebar() {
                           <div className="sb-nav-link-icon">
                             <i className="fas fa-folder-open"></i>
                           </div>
-                          {topMenu.menuNm}
+                          {topMenu.menuNm} {topMenu.authorityCd}
                           <div className="sb-sidenav-collapse-arrow">
                             <i className="fas fa-angle-down"></i>
                           </div>
@@ -199,7 +201,7 @@ function Sidebar() {
           <div className="nav">
             {/* // description : topMenuSeq 그룹({topMenuSeq} + Menus) */}
             {liftMenuList
-              .filter((data) => data.level === 1) // 1뎁스 (Top level)
+              .filter((data) => data.level === 1 && roles.includes(data.authorityCd)) // 1뎁스 (Top level)
               .map((topMenu, i) => {
                 return (
                   // description : className 'show' 노출 제어
@@ -207,7 +209,7 @@ function Sidebar() {
                     <nav className="nav">
                       {liftMenuList
                         .filter((data1) => {
-                          if (data1.level === 2 && topMenu.topMenuSeq === data1.topMenuSeq) {
+                          if (data1.level === 2 && topMenu.topMenuSeq === data1.topMenuSeq && roles.includes(data1.authorityCd)) {
                             // 2뎁스
                             return true;
                           } else {
@@ -232,7 +234,7 @@ function Sidebar() {
                                   <nav className="sb-sidenav-menu-nested nav">
                                     {liftMenuList
                                       .filter((data2) => {
-                                        if (data2.level === 3 && menu1.menuSeq === data2.parentMenuSeq) {
+                                        if (data2.level === 3 && menu1.menuSeq === data2.parentMenuSeq && roles.includes(data2.authorityCd)) {
                                           // 3뎁스
                                           return true;
                                         } else {
@@ -275,9 +277,6 @@ function Sidebar() {
                 );
               })}
           </div>
-        </div>
-        <div className="sb-sidenav-footer">
-          <div className="small"></div>
         </div>
       </nav>
     </div>

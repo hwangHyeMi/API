@@ -74,7 +74,7 @@ spring:
 
 cors:
   allow:
-    origins: http://localhost:3000
+    origins: http://jisub1.iptime.org:3000
 
 server:
   port: 8080

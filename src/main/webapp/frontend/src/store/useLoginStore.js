@@ -1,9 +1,9 @@
 import { create } from 'zustand';
-
 const getToken = () => {
   const token = localStorage.getItem('com_access_token');
   return token;
 };
+
 /*
 브라우저 f12 > 애플리케이션 > 로컬저장소 확인(브라우저 닫았다 다시 열어도 값 유지) 
 토큰유효시간?? 이런거 고려요망
@@ -13,12 +13,22 @@ const getToken = () => {
 3.쿠키       (httpOnly설정하면 웹취약성도 괜찮으나 공격가능)?? 잘 모름
 */
 const setAuth = (data) => {
+  let authorityCd = '';
   localStorage.setItem('mbrId', data.mbrId);
   localStorage.setItem('com_access_token', data.token);
   localStorage.setItem('mbrSeq', data.mbrSeq);
   localStorage.setItem('mbrNm', data.mbrNm);
   localStorage.setItem('groupCode', data.groupCode);
   localStorage.setItem('mbrAuthorities', JSON.stringify(data.mbrAuthorities)); //멀티권한 맵
+  console.log(data);
+  data.mbrAuthorities.forEach((i) => {
+    if (authorityCd != '') {
+      authorityCd = authorityCd + ',' + i.authority;
+    } else {
+      authorityCd = i.authority;
+    }
+  });
+  localStorage.setItem('mbrRoles', authorityCd);
   localStorage.setItem('mbrLoginFailCnt', data.mbrLoginFailCnt);
   localStorage.setItem('role', data.role);
 };
@@ -30,6 +40,7 @@ const removeAuth = () => {
   localStorage.removeItem('mbrNm');
   localStorage.removeItem('groupCode');
   localStorage.removeItem('mbrAuthorities');
+  localStorage.removeItem('mbrRoles');
   localStorage.removeItem('mbrLoginFailCnt');
   localStorage.removeItem('role');
 };
@@ -53,6 +64,9 @@ const useLoginStore = create((set) => ({
   },
   getMbrSeq: () => {
     return localStorage.getItem('mbrSeq');
+  },
+  getMbrRoles: () => {
+    return localStorage.getItem('mbrRoles');
   },
 }));
 
