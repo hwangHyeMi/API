@@ -611,7 +611,7 @@ function TodoList(props) {
 
   return (
     <div style={{ margin: '5px' }} className="row">
-      <div aria-live="polite" aria-atomic="true" className="bg-dark position-relative" style={{ minHeight: '5px', margin: '5px' }}>
+      <div aria-live="polite" aria-atomic="true" className="bg-dark position-relative" style={{ minHeight: '0px', margin: '5px' }}>
         <ToastContainer position="top-end" className="p-3" style={{ zIndex: 1 }}>
           {MyToast(MyToast_show, MyToast_variant, MyToast_title, MyToast_small, MyToast_msg, setMyToastShow, MyToast_delay)}
         </ToastContainer>

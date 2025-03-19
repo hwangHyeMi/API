@@ -74,7 +74,7 @@ spring:
 
 cors:
   allow:
-    origins: http://jisub1.iptime.org:3000
+    origins: http://localhost:3000,http://jisub1.iptime.org:3000
 
 server:
   port: 8080
@@ -93,9 +93,9 @@ spring:
     name: Spring-Boot-MyBatis
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://gaja.iptime.org:36/db_hm
-    username: user_hm
-    password: hm_1234!@
+    url: jdbc:mariadb://localhost:4306/database_sushikooya
+    username: dbuser_sushikooya
+    password: go4868203@
 
 cors:
   allow:

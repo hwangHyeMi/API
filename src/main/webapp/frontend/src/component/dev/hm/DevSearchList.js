@@ -80,9 +80,9 @@ function DevSearchList() {
   }, []);
 
   return (
-    <div className="m-3">
+    <div style={{ margin: '5px' }} className="row">
       <Form noValidate validated={validated} onSubmit={formSubmitHandler} method="post" name="submitForm">
-        <Container>
+        <Container fluid className="square">
           <Row className="m-4">
             <Col>
               <Form.Group controlId="searchCondition">
@@ -135,7 +135,7 @@ function DevSearchList() {
                     >
                       <td style={{ textAlign: 'center' }}>{info.boardId}</td>
                       <td>{info.title}</td>
-                      <td style={{ textAlign: 'center' }}>{info.mbrNm}</td>
+                      <td>{info.mbrNm}</td>
                       <td style={{ textAlign: 'center' }}>{info.createDate}</td>
                       <td style={{ textAlign: 'center' }}>{info.modifiedDate}</td>
                       <td style={{ textAlign: 'center' }}>{info.viewCount}</td>

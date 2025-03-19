@@ -4,14 +4,6 @@ const getToken = () => {
   return token;
 };
 
-/*
-브라우저 f12 > 애플리케이션 > 로컬저장소 확인(브라우저 닫았다 다시 열어도 값 유지) 
-토큰유효시간?? 이런거 고려요망
-<방법>
-1.로컬저장소 (현재되어있는방식)
-2.세션저장소 (해당탭에서만유지)
-3.쿠키       (httpOnly설정하면 웹취약성도 괜찮으나 공격가능)?? 잘 모름
-*/
 const setAuth = (data) => {
   let authorityCd = '';
   localStorage.setItem('mbrId', data.mbrId);
@@ -66,7 +58,7 @@ const useLoginStore = create((set) => ({
     return localStorage.getItem('mbrSeq');
   },
   getMbrRoles: () => {
-    return localStorage.getItem('mbrRoles');
+    return localStorage.getItem('mbrRoles'); // ADMIN,USER OR USER
   },
 }));
 

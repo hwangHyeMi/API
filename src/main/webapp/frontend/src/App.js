@@ -1,108 +1,72 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
-import axios from 'axios';
-
-import './App.css';
+import './css/App.css';
 import './css/styles.css';
 
-// Modal.Dialog 관련
+// description : Modal.Dialog  Alert
 import MyModialog from 'component/common/MyModialog';
-// Alert 관련
 import MyAlert from 'component/common/MyAlert';
 import PrivateRoute from 'component/common/PrivateRoute';
 
-// description : Store import Start
+// description : store
 import codeStore from 'store/codeStore';
 import colorModeStore from 'store/colorModeStore';
 import menuStore from 'store/menuStore';
 import useLoginStore from 'store/useLoginStore';
-// description : Store import End
 
-// description : layout import Start
+// description : layout
 import Footer from 'component/layout/Footer';
 import Header from 'component/layout/Header';
 import Sidebar from 'component/layout/Sidebar';
-// description : layout import End
 
-// description : bootstrap 연동할 화면 import Start
-//import Home from 'component/Home';
-import Join from 'component/Join';
-import Login from 'component/Login';
-import Home from 'component/Home';
-import Dashboard from 'views/main/Dashboard';
-// description : bootstrap 연동할 화면 import End
+// description : component/main
+import Dashboard from 'component/main/Dashboard';
+//import Home from 'component/main/Home';
 
-// description : 메뉴와 연동할 화면 import Start
-import DevMain from 'views/dev/DevMain';
-import TodoList from 'views/dev/todo/TodoList';
-// sj
-import DivInfoList from 'views/dev/sj/DivInfoList';
-import DivInfoList2 from 'views/dev/sj/DivInfoList2';
+// description : component/member
+import Join from 'component/member/Join';
+import Login from 'component/member/Login';
+import Profile from 'component/member/Profile';
 
-import DevSjAssembl from 'views/dev/sj/DevAssembl';
-import DevSjButtons from 'views/dev/sj/DevButtons';
-import DevSjCalendar from 'views/dev/sj/DevCalendar';
-import DevSjListScroll from 'views/dev/sj/DevListScroll';
-import DevSjMessage from 'views/dev/sj/DevMessage';
-import DevSjModals from 'views/dev/sj/DevModals';
-import DevSjSearchList from 'views/dev/sj/DevSearchList';
-import DevSjTables from 'views/dev/sj/DevTables';
+// description : component/dev
+import DevMain from 'component/dev/DevMain';
+import TodoList from 'component/dev/todo/TodoList';
+import DevDetail from 'component/dev/hm/DevDetail';
+import DevMypage from 'component/dev/hm/DevMypage';
+import DevSearchList from 'component/dev/hm/DevSearchList';
+import DevWrite from 'component/dev/hm/DevWrite';
+import DevAssembl from 'component/dev/sj/DevAssembl';
+import DevCalendar from 'component/dev/sj/DevCalendar';
+import DevListScroll from 'component/dev/sj/DevListScroll';
+import DevSjSearchList from 'component/dev/sj/DevSearchList';
 
-import DevHmAssembl from 'views/dev/hm/DevAssembl';
-import DevHmDetail from 'views/dev/hm/DevDetail';
-import DevHmMypage from 'views/dev/hm/DevMypage';
-import DevHmSearchList from 'views/dev/hm/DevSearchList';
-import DevHmWrite from 'views/dev/hm/DevWrite';
-
-// description : 메뉴와 연동할 화면 import End
-
+//          component App       //
 function App() {
   const APP_GB = `${process.env.REACT_APP_GB}`;
   const HOME_PATH = `${process.env.REACT_APP_HOME_PATH}`;
-  const [maskShow, setMaskShow] = useState(false);
-  // Modal.Dialog 관련
-  const [modialogShow, setModialogShow] = useState(false);
-  // btnNm2 빈값은 버튼 비 노출
-  // backdrop:'static' == backdrop or backdrop:''
-  const [myModialogInfo, setMyModialogInfo] = useState({
-    modialogShow: modialogShow,
-    backdrop: '',
-    modialogTitle: '',
-    modialogBody: '',
-    setModialogShow: setModialogShow,
-    btnNm1: 'Close',
-    btnNm2: '',
-    callbackFn1: null,
-    callbackFn2: null,
-    callbackCd: '',
-  });
-  const setMyModialogClose = () => {
-    setModialogShow(false);
-  };
-  // Alert 관련
-  const [alertShow, setAlertShow] = useState(false);
-  const [myAlertInfo, setMyAlertInfo] = useState({ alertShow: alertShow, alertVariant: 'info', alertHeading: '', alertMsg: '', setAlertShow: setAlertShow, setMaskShow: setMaskShow, callbackFn: null, callbackCd: '' });
 
+  // axios
   axios.defaults.baseURL = `${process.env.REACT_APP_API_URL}`;
   axios.interceptors.response.use(
-    (response) => {
+    // @ts-ignore
+    (resp) => {
       //console.log('response:', response);
       //console.log('response status:', response.data.status);
       //console.log('response resultMsg:', response.data.resultMsg);
       //console.log('response divisionCode:', response.data.divisionCode);
-      if (response && response.request && response.request.responseURL) {
-        const responseURL = response.request.responseURL;
-        if (responseURL && responseURL.indexOf('/mbr/login') === -1 && response.data.status) {
+      if (resp && resp.request && resp.request.responseURL) {
+        const responseURL = resp.request.responseURL;
+        if (responseURL && responseURL.indexOf('/mbr/login') === -1 && resp.data.status) {
           return new Promise((resolve, reject) => {
             resolve('OK');
           })
             .then((result) => {
-              //throw new Error(response.data.resultMsg);
-              if (400 <= response.data.status && 500 > response.data.status) {
+              if (400 <= resp.data.status && 500 > resp.data.status) {
                 // 정상 통신 내 메세지 처리.
-                throw new Error(response.data.resultMsg + '[' + response.data.divisionCode + ']');
+                throw new Error(resp.data.resultMsg + '[' + resp.data.divisionCode + ']');
               } else {
-                throw new Error('시스템 관라자에게 문의 바랍니다.[' + response.data.divisionCode + ']');
+                throw new Error('시스템 관라자에게 문의 바랍니다.[' + resp.data.divisionCode + ']');
               }
             })
             .catch((error) => {
@@ -111,7 +75,7 @@ function App() {
             });
         } else {
           // 요청이 성공했을 때 실행될 로직
-          return response;
+          return resp;
         }
       }
     },
@@ -173,6 +137,29 @@ function App() {
       return Promise.reject(error);
     }
   );
+
+  // Modal dialog
+  const [maskShow, setMaskShow] = useState(false);
+  const [modialogShow, setModialogShow] = useState(false);
+  const [myModialogInfo, setMyModialogInfo] = useState({
+    modialogShow: modialogShow,
+    backdrop: '',
+    modialogTitle: '',
+    modialogBody: '',
+    setModialogShow: setModialogShow,
+    btnNm1: 'Close',
+    btnNm2: '',
+    callbackFn1: null,
+    callbackFn2: null,
+    callbackCd: '',
+  });
+  const setMyModialogClose = () => {
+    setModialogShow(false);
+  };
+  // Alert
+  const [alertShow, setAlertShow] = useState(false);
+  const [myAlertInfo, setMyAlertInfo] = useState({ alertShow: alertShow, alertVariant: 'info', alertHeading: '', alertMsg: '', setAlertShow: setAlertShow, setMaskShow: setMaskShow, callbackFn: null, callbackCd: '' });
+
   const { islogIn, storeLogout } = useLoginStore((state) => {
     return state;
   });
@@ -204,21 +191,22 @@ function App() {
       storeLogout();
     }
   };
-  // Alert 관련
 
-  localStorage.setItem('sb|sidebar-toggle', 'true');
-
+  //          effect          //
   useEffect(() => {
-    //console.log(window.location.hostname);
+    //토글 저장
+    localStorage.setItem('sb|sidebar-toggle', 'true');
+
+    //개발자 호스트 확인
     let chk_hostname = window.location.hostname;
     if ('localhost' !== chk_hostname) {
       if (`${process.env.REACT_APP_API_URL}`.indexOf(chk_hostname) === -1) {
-        //alert('[개발자 확인!]\n개발 환경 세팅 확인\n[접근 hostname, API hostname 다름]\nREACT_APP_API_URL 체킹');
         setMyAlerts('warning', '개발자 확인!!', '개발 환경 세팅 확인\n[접근 hostname, API hostname 다름]\nREACT_APP_API_URL 체킹', '');
       }
     }
-
+    //color모드
     initColorMode();
+
     // 개발자 업데이트 고지용
     let chkVersion = localStorage.getItem('chkVersion');
     let appVersion = `${process.env.REACT_APP_VERSION}`;
@@ -227,8 +215,6 @@ function App() {
       initMenuData();
       initCodData();
       alert(`${process.env.REACT_APP_VERSION_MSG}`);
-      // codeStore, menuStore 데이터 연계 후 리로드
-      // localStorage 생성 setTimeout
       setTimeout(() => window.location.replace(HOME_PATH + '/'), 1000);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -236,11 +222,10 @@ function App() {
 
   return (
     <>
+      {/* // description : 개발 BrowserRouter 운영 HashRouter 모든 url 시작에 # 자동으로 붙인다. */}
       {APP_GB === 'DEV' ? (
         <BrowserRouter>
-          {/* // description : 개발 환경 BrowserRouter > HashRouter 와 다르게 모든 url 시작에 # 자동으로 붙이지 않는다. */}
           <div className="masked" style={{ display: maskShow ? 'block' : 'none' }}></div>
-
           <div className={modialogShow ? 'modal show' : 'modal'} style={{ display: modialogShow ? 'block' : 'none', position: 'initial' }}>
             {MyModialog(modialogShow, myModialogInfo.backdrop, myModialogInfo.modialogTitle, myModialogInfo.modialogBody, setModialogShow, myModialogInfo.btnNm1, myModialogInfo.btnNm2, myModialogInfo.callbackFn1, myModialogInfo.callbackFn2, myModialogInfo.callbackCd, setMyModialogClose)}
           </div>
@@ -251,50 +236,30 @@ function App() {
           <div id="layoutSidenav">
             <Sidebar />
             <div id="layoutSidenav_content">
-              {/* <div id='layoutSidenav_content' className='py-4 bg-dark'>*/}
-              {/* <div id='layoutSidenav_content' / <main> 최상위 App.js 로 끄러 올려서 내부에선 재 선언 하지 않게 해봄. 아이디가 Route 안에서 중복으로 사용이 어떻게 될지도 모른상황이라 일단 위로 올려 봄.*/}
-              {/* [bg-dark, bg-white, ...] 컬러 모드 변경 적용은 조금더 연구 후 적용 */}
-              <main>
+              <main id="main">
                 <div className="container-fluid px-4">
                   <Routes>
-                    {/* // description : 로그인과 무관 접근 가능 Start */}
-                    <Route path="/" element={<Home />} />
+                    {/* // description : 로그인과 무관 접근 가능 */}
+                    <Route path="/" element={<Dashboard />} />
                     <Route path="/bootstrap/Dashboard" element={<Dashboard />} />
-                    <Route path="/:topMenuSeq/devList/DivInfoList" element={<DivInfoList />} />
-                    <Route path="/:topMenuSeq/devList/DivInfoList2" element={<DivInfoList2 />} />
-                    {/* // description : 로그인과 무관 접근 가능 End */}
-
-                    {/* // description : 로그인 시에만 접근 가능 Start */}
-                    <Route element={<PrivateRoute userAuthentication={true} setMyAlerts={setMyAlerts} />}>
-                      {/* // description : 메뉴와 연동할 화면 선언 Start */}
-                      <Route path="/:topMenuSeq/dev/DevMain" element={<DevMain />} />
-                      <Route path="/:topMenuSeq/dev/TodoList" element={<TodoList myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} setMaskShow={setMaskShow} />} />
-                      <Route path="/:topMenuSeq/dev/TodoList/:compressParams" element={<TodoList myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} setMaskShow={setMaskShow} />} />
-
-                      <Route path="/:topMenuSeq/sj/DevAssembl" element={<DevSjAssembl myAlertInfo={myAlertInfo} setMyAlertInfo={setMyAlertInfo} myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} />} />
-                      <Route path="/:topMenuSeq/sj/DevTables" element={<DevSjTables />} />
-                      <Route path="/:topMenuSeq/sj/DevMessage" element={<DevSjMessage />} />
-                      <Route path="/:topMenuSeq/sj/DevModals" element={<DevSjModals />} />
-                      <Route path="/:topMenuSeq/sj/DevButtons" element={<DevSjButtons />} />
-                      <Route path="/:topMenuSeq/sj/DevCalendar" element={<DevSjCalendar />} />
-                      <Route path="/:topMenuSeq/sj/DevSearchList" element={<DevSjSearchList />} />
-                      <Route path="/:topMenuSeq/sj/DevListScroll" element={<DevSjListScroll />} />
-                      {/* hm */}
-                      <Route path="/:topMenuSeq/hm/DevSearchList" element={<DevHmSearchList />} />
-                      <Route path="/:topMenuSeq/hm/DevAssembl" element={<DevHmAssembl />} />
-                      <Route path="/:topMenuSeq/hm/DevDetail/:boardId" element={<DevHmDetail myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} />} />
-                      <Route path="/:topMenuSeq/hm/DevWrite" element={<DevHmWrite myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} />} />
-                      {/* // description : 메뉴와 연동할 화면 선언 End */}
-                      <Route path="/hm/DevMypage" element={<DevHmMypage myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} />} />
-                    </Route>
-                    {/* // description : 로그인 시에만 접근 가능 End */}
-
-                    {/* // description : 비 로그인 시에만 접근 가능 Start */}
                     <Route element={<PrivateRoute userAuthentication={false} setMyAlerts={setMyAlerts} />}>
                       <Route path="/Login" element={<Login myAlertInfo={myAlertInfo} setMyAlertInfo={setMyAlertInfo} />} />
                       <Route path="/Join" element={<Join />} />
                     </Route>
-                    {/* // description : 비 로그인 시에만 접근 가능 End */}
+                    {/* // description : 로그인 시에만 접근 가능 */}
+                    <Route element={<PrivateRoute userAuthentication={true} setMyAlerts={setMyAlerts} />}>
+                      <Route path="/:topMenuSeq/dev/DevMain" element={<DevMain />} />
+                      <Route path="/:topMenuSeq/dev/TodoList" element={<TodoList myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} setMaskShow={setMaskShow} />} />
+                      <Route path="/:topMenuSeq/dev/TodoList/:compressParams" element={<TodoList myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} setMaskShow={setMaskShow} />} />
+                      <Route path="/:topMenuSeq/sj/DevAssembl" element={<DevAssembl myAlertInfo={myAlertInfo} setMyAlertInfo={setMyAlertInfo} myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} />} />
+                      <Route path="/:topMenuSeq/sj/DevCalendar" element={<DevCalendar />} />
+                      <Route path="/:topMenuSeq/sj/DevSearchList" element={<DevSjSearchList />} />
+                      <Route path="/:topMenuSeq/sj/DevListScroll" element={<DevListScroll />} />
+                      <Route path="/:topMenuSeq/hm/DevSearchList" element={<DevSearchList />} />
+                      <Route path="/:topMenuSeq/hm/DevDetail/:boardId" element={<DevDetail myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} />} />
+                      <Route path="/:topMenuSeq/hm/DevWrite" element={<DevWrite myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} />} />
+                      <Route path="/Profile" element={<Profile myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} />} />
+                    </Route>
                   </Routes>
                 </div>
               </main>
@@ -304,9 +269,7 @@ function App() {
         </BrowserRouter>
       ) : (
         <HashRouter>
-          {/* // description : 운영 배포용 HashRouter > 모든 url 시작에 # 자동으로 붙인다. */}
           <div className="masked" style={{ display: maskShow ? 'block' : 'none' }}></div>
-
           <div className={modialogShow ? 'modal show' : 'modal'} style={{ display: modialogShow ? 'block' : 'none', position: 'initial' }}>
             {MyModialog(modialogShow, myModialogInfo.backdrop, myModialogInfo.modialogTitle, myModialogInfo.modialogBody, setModialogShow, myModialogInfo.btnNm1, myModialogInfo.btnNm2, myModialogInfo.callbackFn1, myModialogInfo.callbackFn2, myModialogInfo.callbackCd, setMyModialogClose)}
           </div>
@@ -317,50 +280,30 @@ function App() {
           <div id="layoutSidenav">
             <Sidebar />
             <div id="layoutSidenav_content">
-              {/* <div id='layoutSidenav_content' className='py-4 bg-dark'>*/}
-              {/* <div id='layoutSidenav_content' / <main> 최상위 App.js 로 끄러 올려서 내부에선 재 선언 하지 않게 해봄. 아이디가 Route 안에서 중복으로 사용이 어떻게 될지도 모른상황이라 일단 위로 올려 봄.*/}
-              {/* [bg-dark, bg-white, ...] 컬러 모드 변경 적용은 조금더 연구 후 적용 */}
               <main>
                 <div className="container-fluid px-4">
                   <Routes>
-                    {/* // description : 로그인과 무관 접근 가능 Start */}
-                    <Route path="/" element={<Home />} />
+                    {/* // description : 로그인과 무관 접근 가능 */}
+                    <Route path="/" element={<Dashboard />} />
                     <Route path="/bootstrap/Dashboard" element={<Dashboard />} />
-                    <Route path="/:topMenuSeq/devList/DivInfoList" element={<DivInfoList />} />
-                    <Route path="/:topMenuSeq/devList/DivInfoList2" element={<DivInfoList2 />} />
-                    {/* // description : 로그인과 무관 접근 가능 End */}
-
-                    {/* // description : 로그인 시에만 접근 가능 Start */}
-                    <Route element={<PrivateRoute userAuthentication={true} setMyAlerts={setMyAlerts} />}>
-                      {/* // description : 메뉴와 연동할 화면 선언 Start */}
-                      <Route path="/:topMenuSeq/dev/DevMain" element={<DevMain />} />
-                      <Route path="/:topMenuSeq/dev/TodoList" element={<TodoList myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} setMaskShow={setMaskShow} />} />
-                      <Route path="/:topMenuSeq/dev/TodoList/:compressParams" element={<TodoList myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} setMaskShow={setMaskShow} />} />
-
-                      <Route path="/:topMenuSeq/sj/DevAssembl" element={<DevSjAssembl myAlertInfo={myAlertInfo} setMyAlertInfo={setMyAlertInfo} myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} />} />
-                      <Route path="/:topMenuSeq/sj/DevTables" element={<DevSjTables />} />
-                      <Route path="/:topMenuSeq/sj/DevMessage" element={<DevSjMessage />} />
-                      <Route path="/:topMenuSeq/sj/DevModals" element={<DevSjModals />} />
-                      <Route path="/:topMenuSeq/sj/DevButtons" element={<DevSjButtons />} />
-                      <Route path="/:topMenuSeq/sj/DevCalendar" element={<DevSjCalendar />} />
-                      <Route path="/:topMenuSeq/sj/DevSearchList" element={<DevSjSearchList />} />
-                      <Route path="/:topMenuSeq/sj/DevListScroll" element={<DevSjListScroll />} />
-                      {/* hm */}
-                      <Route path="/:topMenuSeq/hm/DevSearchList" element={<DevHmSearchList />} />
-                      <Route path="/:topMenuSeq/hm/DevAssembl" element={<DevHmAssembl />} />
-                      <Route path="/:topMenuSeq/hm/DevDetail/:boardId" element={<DevHmDetail myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} />} />
-                      <Route path="/:topMenuSeq/hm/DevWrite" element={<DevHmWrite myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} />} />
-                      {/* // description : 메뉴와 연동할 화면 선언 End */}
-                      <Route path="/hm/DevMypage" element={<DevHmMypage myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} />} />
-                    </Route>
-                    {/* // description : 로그인 시에만 접근 가능 End */}
-
-                    {/* // description : 비 로그인 시에만 접근 가능 Start */}
                     <Route element={<PrivateRoute userAuthentication={false} setMyAlerts={setMyAlerts} />}>
                       <Route path="/Login" element={<Login myAlertInfo={myAlertInfo} setMyAlertInfo={setMyAlertInfo} />} />
                       <Route path="/Join" element={<Join />} />
                     </Route>
-                    {/* // description : 비 로그인 시에만 접근 가능 End */}
+                    {/* // description : 로그인 시에만 접근 가능 */}
+                    <Route element={<PrivateRoute userAuthentication={true} setMyAlerts={setMyAlerts} />}>
+                      <Route path="/:topMenuSeq/dev/DevMain" element={<DevMain />} />
+                      <Route path="/:topMenuSeq/dev/TodoList" element={<TodoList myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} setMaskShow={setMaskShow} />} />
+                      <Route path="/:topMenuSeq/dev/TodoList/:compressParams" element={<TodoList myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} setMaskShow={setMaskShow} />} />
+                      <Route path="/:topMenuSeq/sj/DevAssembl" element={<DevAssembl myAlertInfo={myAlertInfo} setMyAlertInfo={setMyAlertInfo} myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} />} />
+                      <Route path="/:topMenuSeq/sj/DevCalendar" element={<DevCalendar />} />
+                      <Route path="/:topMenuSeq/sj/DevSearchList" element={<DevSjSearchList />} />
+                      <Route path="/:topMenuSeq/sj/DevListScroll" element={<DevListScroll />} />
+                      <Route path="/:topMenuSeq/hm/DevSearchList" element={<DevSearchList />} />
+                      <Route path="/:topMenuSeq/hm/DevDetail/:boardId" element={<DevDetail myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} />} />
+                      <Route path="/:topMenuSeq/hm/DevWrite" element={<DevWrite myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} />} />
+                      <Route path="/Profile" element={<Profile myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} />} />
+                    </Route>
                   </Routes>
                 </div>
               </main>
@@ -372,5 +315,4 @@ function App() {
     </>
   );
 }
-
 export default App;
