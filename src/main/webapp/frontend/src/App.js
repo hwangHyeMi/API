@@ -22,7 +22,7 @@ import Sidebar from 'component/layout/Sidebar';
 
 // description : component/main
 import Dashboard from 'component/main/Dashboard';
-//import Home from 'component/main/Home';
+import Home from 'component/main/Home';
 
 // description : component/member
 import Join from 'component/member/Join';
@@ -240,7 +240,7 @@ function App() {
                 <div className="container-fluid px-4">
                   <Routes>
                     {/* // description : 로그인과 무관 접근 가능 */}
-                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/" element={<Home />} />
                     <Route path="/bootstrap/Dashboard" element={<Dashboard />} />
                     <Route element={<PrivateRoute userAuthentication={false} setMyAlerts={setMyAlerts} />}>
                       <Route path="/Login" element={<Login myAlertInfo={myAlertInfo} setMyAlertInfo={setMyAlertInfo} />} />

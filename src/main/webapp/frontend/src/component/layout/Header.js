@@ -78,7 +78,7 @@ function Header(props) {
     }
   };
   //모드변경
-  const onClickModeBtn = (colorMode, event) => {
+  const onClickModeBtn = (colorMode) => {
     setColor(colorMode);
     // sb-sidenav : react-bootstrap 패턴이 아닌 bootstrap 패턴이라 추가 작업 > 추후 변경 고민
     // sidenavAccordion 에 [sb-sidenav-light, sb-sidenav-dark] 토글 처리
@@ -201,61 +201,60 @@ function Header(props) {
             </>
           )}
         </ul>
-        <ul className="navbar-nav" style={{ width: '60px', marginRight: '40px', display: 'flex' }}>
-          <li className="nav-item">
-            <Link
-              className="nav-link"
-              to="#"
-              onClick={(e) => {
-                onClickResetStore();
-              }}
-            >
-              <div className="sb-nav-link-icon">
-                <i className="fas fa-tools"></i>
-              </div>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link
-              className="nav-link"
-              to="#"
-              onClick={(e) => {
-                onClickModeBtn('light', e);
-              }}
-            >
-              <div className="sb-nav-link-icon">
-                <i className="fas fa-sun"></i>
-              </div>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link
-              className="nav-link"
-              to="#"
-              onClick={(e) => {
-                onClickModeBtn('dark', e);
-              }}
-            >
-              <div className="sb-nav-link-icon">
-                <i className="fas fa-moon"></i>
-              </div>
-            </Link>
-          </li>
-        </ul>
+
         <form className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
           <div className="input-group">
             <input className="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
             <button className="btn btn-primary" id="btnNavbarSearch" type="button">
-              <i className="fas fa-search"></i>
+              <i className="fas fa-search" />
             </button>
           </div>
         </form>
-        <ul className="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        <ul className="navbar-nav ms-auto ms-md-0">
           <li className="nav-item dropdown">
             <Link className="nav-link dropdown-toggle" id="navbarDropdown" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i className="fas fa-user fa-fw"></i>
+              <i className="fas fa-gear fa-fw"></i>
             </Link>
             <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <li onClick={onClickResetStore}>
+                <Link className="dropdown-item" to="#">
+                  <i className="fas fa-tools" />
+                  {'  '}Config Reset
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="dropdown-item"
+                  to="#"
+                  onClick={(e) => {
+                    onClickModeBtn('light');
+                  }}
+                >
+                  <i className="fas fa-sun" />
+                  {'  '}Light Mode
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="dropdown-item"
+                  to="#"
+                  onClick={(e) => {
+                    onClickModeBtn('dark');
+                  }}
+                >
+                  <i className="fas fa-moon" />
+                  {'  '}Dark Mode
+                </Link>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <ul className="navbar-nav ms-auto ms-md-0 me-3">
+          <li className="nav-item dropdown">
+            <Link className="nav-link dropdown-toggle" id="navbarDropdown2" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i className="fas fa-user fa-fw"></i>
+            </Link>
+            <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown2">
               {!islogIn && (
                 <>
                   <li onClick={onClickLogInButton}>
