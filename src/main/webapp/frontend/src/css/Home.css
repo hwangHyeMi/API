@@ -1,0 +1,80 @@
+header {
+  height: 34vw;
+  margin: 30px auto;
+  background: url('../../public/assets/image/home.png') no-repeat;
+  background-size: cover;
+  position: relative;
+  border-radius: 24px;
+}
+.header-contents {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 1.5vw;
+  max-width: 50%;
+  bottom: 10%;
+  left: 6vw;
+  animation: fadeIn 3s;
+}
+
+.header-contents h2 {
+  font-weight: 500;
+  color: #fff;
+  font-size: max(3.9vw, 22px);
+  text-shadow: 4px 4px 4px #00000030;
+}
+
+.header-contents p {
+  text-align: justify;
+  color: #fff;
+  font-size: 1vw;
+  text-shadow: 2px 2px 2px #00000030;
+}
+
+.header-contents button {
+  border: none;
+  border-radius: 50px;
+  color: var(--gray);
+  font-weight: 500;
+  font-size: max(1vw, 13px);
+  padding: 1vw 2.3vw;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+@media (max-width: 1050px) {
+  header {
+    height: 40vw;
+  }
+
+  .header-contents {
+    max-width: 45%;
+  }
+}
+@media (max-width: 750px) {
+  header {
+    border-radius: 16px;
+  }
+  .header-contents {
+    max-width: 65%;
+  }
+  .header-contents p {
+    display: none;
+  }
+  .header-contents button {
+    padding: 2vw 4vw;
+  }
+}
+
+@media (max-width: 600px) {
+  .header-contents {
+    max-width: 85%;
+  }
+  .header-contents p {
+    display: none;
+  }
+  .header-contents button {
+    padding: 2vw 3.5vw;
+  }
+}
