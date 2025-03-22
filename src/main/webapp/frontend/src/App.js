@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
-import './css/App.css';
-import './css/styles.css';
+import 'css/App.css';
+import 'css/styles.css';
 
+import StoreContextProvider from '../src/component/context/StoreContext';
 // description : Modal.Dialog  Alert
 import MyModialog from 'component/common/MyModialog';
 import MyAlert from 'component/common/MyAlert';
@@ -25,21 +26,21 @@ import Dashboard from 'component/main/Dashboard';
 import Home from 'component/main/Home';
 
 // description : component/member
-import Join from 'component/member/Join';
-import Login from 'component/member/Login';
+//import Login from 'component/member/Login';
 import Profile from 'component/member/Profile';
 
 // description : component/dev
 import DevMain from 'component/dev/DevMain';
 import TodoList from 'component/dev/todo/TodoList';
 import DevDetail from 'component/dev/hm/DevDetail';
-import DevMypage from 'component/dev/hm/DevMypage';
+//import DevMypage from 'component/dev/hm/DevMypage';
 import DevSearchList from 'component/dev/hm/DevSearchList';
 import DevWrite from 'component/dev/hm/DevWrite';
 import DevAssembl from 'component/dev/sj/DevAssembl';
 import DevCalendar from 'component/dev/sj/DevCalendar';
 import DevListScroll from 'component/dev/sj/DevListScroll';
 import DevSjSearchList from 'component/dev/sj/DevSearchList';
+import LoginPopup from 'component/popup/LoginPopup';
 
 //          component App       //
 function App() {
@@ -191,11 +192,11 @@ function App() {
       storeLogout();
     }
   };
-
+  const [showLogin, setShowLogin] = useState(false);
   //          effect          //
   useEffect(() => {
     //토글 저장
-    localStorage.setItem('sb|sidebar-toggle', 'true');
+    localStorage.setItem('sb|sidebar-toggle', 'false');
 
     //개발자 호스트 확인
     let chk_hostname = window.location.hostname;
@@ -221,10 +222,11 @@ function App() {
   }, [getMenuList, initCodData, initColorMode, initMenuData, isMenuData, islogIn]);
 
   return (
-    <>
+    <div>
       {/* // description : 개발 BrowserRouter 운영 HashRouter 모든 url 시작에 # 자동으로 붙인다. */}
       {APP_GB === 'DEV' ? (
         <BrowserRouter>
+          {/* <StoreContextProvider> */}
           <div className="masked" style={{ display: maskShow ? 'block' : 'none' }}></div>
           <div className={modialogShow ? 'modal show' : 'modal'} style={{ display: modialogShow ? 'block' : 'none', position: 'initial' }}>
             {MyModialog(modialogShow, myModialogInfo.backdrop, myModialogInfo.modialogTitle, myModialogInfo.modialogBody, setModialogShow, myModialogInfo.btnNm1, myModialogInfo.btnNm2, myModialogInfo.callbackFn1, myModialogInfo.callbackFn2, myModialogInfo.callbackCd, setMyModialogClose)}
@@ -232,8 +234,9 @@ function App() {
           <div style={{ display: alertShow ? '' : 'none' }} className="myAlertArea">
             {MyAlert(myAlertInfo.alertShow, myAlertInfo.alertVariant, myAlertInfo.alertHeading, myAlertInfo.alertMsg, myAlertInfo.setAlertShow, myAlertInfo.setMaskShow, myAlertInfo.callbackFn, myAlertInfo.callbackCd)}
           </div>
-          <Header myAlertInfo={myAlertInfo} setMyAlertInfo={setMyAlertInfo} />
-          <div id="layoutSidenav">
+          {showLogin ? <LoginPopup setShowLogin={setShowLogin} myAlertInfo={myAlertInfo} setMyAlertInfo={setMyAlertInfo} /> : <></>}
+          <Header myAlertInfo={myAlertInfo} setMyAlertInfo={setMyAlertInfo} setShowLogin={setShowLogin} />
+          <div id="layoutSidenav" className="app">
             <Sidebar />
             <div id="layoutSidenav_content">
               <main id="main">
@@ -242,10 +245,6 @@ function App() {
                     {/* // description : 로그인과 무관 접근 가능 */}
                     <Route path="/" element={<Home />} />
                     <Route path="/bootstrap/Dashboard" element={<Dashboard />} />
-                    <Route element={<PrivateRoute userAuthentication={false} setMyAlerts={setMyAlerts} />}>
-                      <Route path="/Login" element={<Login myAlertInfo={myAlertInfo} setMyAlertInfo={setMyAlertInfo} />} />
-                      <Route path="/Join" element={<Join />} />
-                    </Route>
                     {/* // description : 로그인 시에만 접근 가능 */}
                     <Route element={<PrivateRoute userAuthentication={true} setMyAlerts={setMyAlerts} />}>
                       <Route path="/:topMenuSeq/dev/DevMain" element={<DevMain />} />
@@ -266,6 +265,7 @@ function App() {
             </div>
           </div>
           <Footer />
+          {/* </StoreContextProvider> */}
         </BrowserRouter>
       ) : (
         <HashRouter>
@@ -286,10 +286,6 @@ function App() {
                     {/* // description : 로그인과 무관 접근 가능 */}
                     <Route path="/" element={<Dashboard />} />
                     <Route path="/bootstrap/Dashboard" element={<Dashboard />} />
-                    <Route element={<PrivateRoute userAuthentication={false} setMyAlerts={setMyAlerts} />}>
-                      <Route path="/Login" element={<Login myAlertInfo={myAlertInfo} setMyAlertInfo={setMyAlertInfo} />} />
-                      <Route path="/Join" element={<Join />} />
-                    </Route>
                     {/* // description : 로그인 시에만 접근 가능 */}
                     <Route element={<PrivateRoute userAuthentication={true} setMyAlerts={setMyAlerts} />}>
                       <Route path="/:topMenuSeq/dev/DevMain" element={<DevMain />} />
@@ -312,7 +308,7 @@ function App() {
           <Footer />
         </HashRouter>
       )}
-    </>
+    </div>
   );
 }
 export default App;

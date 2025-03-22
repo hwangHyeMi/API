@@ -7,6 +7,7 @@ import menuStore from 'store/menuStore';
 import codeStore from 'store/codeStore';
 import colorModeStore from 'store/colorModeStore';
 
+import { Image } from 'react-bootstrap';
 //          component: Header 컴포넌트          //
 function Header(props) {
   const HOME_PATH = `${process.env.REACT_APP_HOME_PATH}`;
@@ -41,7 +42,7 @@ function Header(props) {
   const pathname = location.pathname;
   const { topMenuSeq } = useParams();
 
-  //          event handler: onClickLoginButton         //
+  //          event handler        //
   //로고
   const onLogoClickHandler = () => {
     navigate('/');
@@ -61,11 +62,8 @@ function Header(props) {
 
   //로그인 버튼
   const onClickLogInButton = () => {
-    navigate('/Login');
-  };
-  //로그인 버튼
-  const onClickJoinButton = () => {
-    navigate('/Join');
+    //navigate('/Login');
+    props.setShowLogin(true);
   };
 
   //메뉴토글
@@ -74,7 +72,7 @@ function Header(props) {
 
     if (sidebarToggle) {
       document.body.classList.toggle('sb-sidenav-toggled');
-      localStorage.setItem('sb|sidebar-toggle', 'true');
+      localStorage.setItem('sb|sidebar-toggle', 'false');
     }
   };
   //모드변경
@@ -82,6 +80,10 @@ function Header(props) {
     setColor(colorMode);
     // sb-sidenav : react-bootstrap 패턴이 아닌 bootstrap 패턴이라 추가 작업 > 추후 변경 고민
     // sidenavAccordion 에 [sb-sidenav-light, sb-sidenav-dark] 토글 처리
+    //  const sbSidenav = document.getElementById('body');
+    //  sbSidenav.removeAttribute('class');
+    //  sbSidenav.setAttribute('class', 'sb-nav-fixed sb-sidenav-toggled');
+
     const sidenavAccordion = document.getElementById('sidenavAccordion');
     sidenavAccordion.removeAttribute('class');
     sidenavAccordion.setAttribute('class', 'top-menus sb-sidenav accordion sb-sidenav-' + colorMode);
@@ -90,12 +92,17 @@ function Header(props) {
     sidenavAccordionTopLevel.removeAttribute('class');
     sidenavAccordionTopLevel.setAttribute('class', 'top-level-menus sb-sidenav accordion sb-sidenav-' + colorMode);
 
+    const sidenavFooter = document.getElementById('sbSidenavFooter');
+    sidenavFooter.removeAttribute('class');
+    sidenavFooter.setAttribute('class', '' + colorMode + ' bg-' + colorMode);
+
     const topNav = document.getElementById('topNav');
     topNav.removeAttribute('class');
     topNav.setAttribute('class', 'sb-topnav navbar navbar-expand menus navbar-' + colorMode + ' bg-' + colorMode);
 
-    const layoutSidenav = document.getElementById('layoutSidenav');
-    layoutSidenav.setAttribute('class', '' + colorMode + ' bg-' + colorMode + ' text-bg-' + colorMode);
+    const layoutSidenav_content = document.getElementById('layoutSidenav_content');
+    layoutSidenav_content.removeAttribute('class');
+    layoutSidenav_content.setAttribute('class', '' + colorMode + ' bg-' + colorMode);
 
     const footer = document.getElementById('footer');
     footer.removeAttribute('class');
@@ -156,13 +163,21 @@ function Header(props) {
     // setMyAlerts 추가 하면 무한 루프
   }, [getMenuList, isMenuData, islogIn, navigate, pathname]);
   return (
-    <>
-      <nav id="topNav" className="sb-topnav navbar navbar-expand navbar-dark bg-dark menus">
+    <div style={{ width: '90%', justifyContent: 'center', display: 'flex' }}>
+      <nav id="topNav" className="sb-topnav navbar navbar-expand navbar-dark bg-dark menus" style={{ justifyContent: 'center' }}>
         <button className="btn btn-link btn-sm" style={{ marginTop: '0px', marginLeft: '5px' }} id="sidebarToggle" onClick={onToggleClickHandler}>
           <i className="fas fa-bars"></i>
         </button>
-        <div className="navbar-brand ps-3" onClick={onLogoClickHandler}>
-          {process.env.REACT_APP_HEADER_TITLE}
+        <div className="navbar-brand ps-3">
+          {/* {process.env.REACT_APP_HEADER_TITLE} */}
+          <Image
+            src={`${process.env.REACT_APP_PUBLIC_URL}/assets/image/logo_white_eng.png`}
+            width={150}
+            height={38}
+            onClick={(evt) => {
+              onLogoClickHandler();
+            }}
+          />
         </div>
         {/*
           <button className='btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0' id='sidebarToggle' onClick={onToggleClickHandler}><i className='fas fa-bars'></i></button>
@@ -202,14 +217,14 @@ function Header(props) {
           )}
         </ul>
 
-        <form className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+        {/* <form className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
           <div className="input-group">
             <input className="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
             <button className="btn btn-primary" id="btnNavbarSearch" type="button">
               <i className="fas fa-search" />
             </button>
           </div>
-        </form>
+        </form> */}
         <ul className="navbar-nav ms-auto ms-md-0">
           <li className="nav-item dropdown">
             <Link className="nav-link dropdown-toggle" id="navbarDropdown" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -262,11 +277,6 @@ function Header(props) {
                       Login
                     </Link>
                   </li>
-                  <li onClick={onClickJoinButton}>
-                    <Link className="dropdown-item" to="#">
-                      Join
-                    </Link>
-                  </li>
                 </>
               )}
               {islogIn && (
@@ -287,7 +297,7 @@ function Header(props) {
           </li>
         </ul>
       </nav>
-    </>
+    </div>
   );
 }
 

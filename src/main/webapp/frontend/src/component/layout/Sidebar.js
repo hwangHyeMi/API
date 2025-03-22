@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom'; // path 접근시 active 처리 자동화
 // import { IconName } from 'react-icons/fa';
-import colorModeStore from 'store/colorModeStore';
-import menuStore from 'store/menuStore';
 import useLoginStore from 'store/useLoginStore';
+import menuStore from 'store/menuStore';
+import colorModeStore from 'store/colorModeStore';
 //import Icons from 'bootstrap-icons';
 
 function Sidebar() {
@@ -276,9 +276,9 @@ function Sidebar() {
               })}
           </div>
         </div>
-        {/* <div className="sb-sidenav-footer">
+        <div id="sbSidenavFooter" className="sb-sidenav-footer">
           <div className="small"></div>
-        </div> */}
+        </div>
       </nav>
     </div>
   );

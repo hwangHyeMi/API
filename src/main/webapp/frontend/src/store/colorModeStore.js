@@ -22,6 +22,13 @@ const colorModeStore = create((set) => ({
     document.documentElement.setAttribute('data-bs-theme', colorMode);
     // sb-sidenav : react-bootstrap 패턴이 아닌 bootstrap 패턴이라 추가 작업 > 추후 변경 고민
     // sidenavAccordion 에 [sb-sidenav-light, sb-sidenav-dark] 토글 처리
+    // const sbSidenav = document.getElementById('body');
+    // sbSidenav.removeAttribute('class');
+    // sbSidenav.setAttribute('class', 'sb-nav-fixed sb-sidenav-toggled');
+
+    document.documentElement.setAttribute('data-bs-theme', colorMode);
+    // sb-sidenav : react-bootstrap 패턴이 아닌 bootstrap 패턴이라 추가 작업 > 추후 변경 고민
+    // sidenavAccordion 에 [sb-sidenav-light, sb-sidenav-dark] 토글 처리
     const sidenavAccordion = document.getElementById('sidenavAccordion');
     sidenavAccordion.removeAttribute('class');
     sidenavAccordion.setAttribute('class', 'top-menus sb-sidenav accordion sb-sidenav-' + colorMode);
@@ -30,12 +37,17 @@ const colorModeStore = create((set) => ({
     sidenavAccordionTopLevel.removeAttribute('class');
     sidenavAccordionTopLevel.setAttribute('class', 'top-level-menus sb-sidenav accordion sb-sidenav-' + colorMode);
 
+    const sidenavFooter = document.getElementById('sbSidenavFooter');
+    sidenavFooter.removeAttribute('class');
+    sidenavFooter.setAttribute('class', '' + colorMode + ' bg-' + colorMode);
+
     const topNav = document.getElementById('topNav');
     topNav.removeAttribute('class');
     topNav.setAttribute('class', 'sb-topnav navbar navbar-expand menus navbar-' + colorMode + ' bg-' + colorMode);
 
-    const layoutSidenav = document.getElementById('layoutSidenav');
-    layoutSidenav.setAttribute('class', '' + colorMode + ' bg-' + colorMode + ' text-bg-' + colorMode);
+    const layoutSidenav_content = document.getElementById('layoutSidenav_content');
+    layoutSidenav_content.removeAttribute('class');
+    layoutSidenav_content.setAttribute('class', '' + colorMode + ' bg-' + colorMode);
 
     const footer = document.getElementById('footer');
     footer.removeAttribute('class');
