@@ -1,14 +1,14 @@
-import { assets } from 'assets/assets';
 import axios from 'axios';
+import { assets } from 'assets/images';
 import { useEffect, useState } from 'react';
+import { Button, Col, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import UseLoginStore from 'store/UseLoginStore';
 import './LoginPopup.css';
-import { Button, Col, Container, Form, Row } from 'react-bootstrap';
-import useLoginStore from 'store/useLoginStore';
 //          component: Login 컴포넌트          //
 const LoginPopup = (props) => {
   const [currentState, setCurrentState] = useState('Login');
-  const { storeLogin } = useLoginStore((state) => {
+  const { storeLogin } = UseLoginStore((state) => {
     return state;
   });
   //네비게이트

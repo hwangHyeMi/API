@@ -1,11 +1,12 @@
 header {
   height: 34vw;
   margin: 30px auto;
-  background: url('../../public/assets/image/home.png') no-repeat;
+  background: url('../../assets/image/home.png') no-repeat;
   background-size: cover;
   position: relative;
   border-radius: 24px;
 }
+
 .header-contents {
   position: absolute;
   display: flex;
