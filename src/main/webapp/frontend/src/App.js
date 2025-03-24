@@ -4,47 +4,46 @@ import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
 import 'css/App.css';
 import 'css/styles.css';
 
-import StoreContextProvider from '../src/component/context/StoreContext';
 // description : Modal.Dialog  Alert
 import MyModialog from 'component/common/MyModialog';
 import MyAlert from 'component/common/MyAlert';
 import PrivateRoute from 'component/common/PrivateRoute';
+import ContextStoreProvider from 'store/ContextStore';
 
 // description : store
-import codeStore from 'store/codeStore';
-import colorModeStore from 'store/colorModeStore';
-import menuStore from 'store/menuStore';
-import useLoginStore from 'store/useLoginStore';
+import CodeStore from 'store/CodeStore';
+import ColorModeStore from 'store/ColorModeStore';
+import MenuStore from 'store/MenuStore';
+import UseLoginStore from 'store/UseLoginStore';
 
 // description : layout
-import Footer from 'component/layout/Footer';
+import Footer from 'component/layout/Footer/Footer';
 import Header from 'component/layout/Header';
 import Sidebar from 'component/layout/Sidebar';
 
 // description : component/main
-import Dashboard from 'component/main/Dashboard';
-import Home from 'component/main/Home';
+import Dashboard from 'view/main/Dashboard';
+import Home from 'view/main/Home';
 
 // description : component/member
 //import Login from 'component/member/Login';
-import Profile from 'component/member/Profile';
+import Profile from 'view/member/Profile';
 
 // description : component/dev
-import DevMain from 'component/dev/DevMain';
-import TodoList from 'component/dev/todo/TodoList';
-import DevDetail from 'component/dev/hm/DevDetail';
+import DevMain from 'view/dev/DevMain';
+import TodoList from 'view/dev/todo/TodoList';
+import DevDetail from 'view/dev/hm/DevDetail';
 //import DevMypage from 'component/dev/hm/DevMypage';
-import DevSearchList from 'component/dev/hm/DevSearchList';
-import DevWrite from 'component/dev/hm/DevWrite';
-import DevAssembl from 'component/dev/sj/DevAssembl';
-import DevCalendar from 'component/dev/sj/DevCalendar';
-import DevListScroll from 'component/dev/sj/DevListScroll';
-import DevSjSearchList from 'component/dev/sj/DevSearchList';
-import LoginPopup from 'component/popup/LoginPopup';
+import DevSearchList from 'view/dev/hm/DevSearchList';
+import DevWrite from 'view/dev/hm/DevWrite';
+import DevAssembl from 'view/dev/sj/DevAssembl';
+import DevCalendar from 'view/dev/sj/DevCalendar';
+import DevListScroll from 'view/dev/sj/DevListScroll';
+import DevSjSearchList from 'view/dev/sj/DevSearchList';
+import LoginPopup from 'component/LoginPopup/LoginPopup';
 
 //          component App       //
-function App() {
-  const APP_GB = `${process.env.REACT_APP_GB}`;
+function App(props) {
   const HOME_PATH = `${process.env.REACT_APP_HOME_PATH}`;
 
   // axios
@@ -161,16 +160,16 @@ function App() {
   const [alertShow, setAlertShow] = useState(false);
   const [myAlertInfo, setMyAlertInfo] = useState({ alertShow: alertShow, alertVariant: 'info', alertHeading: '', alertMsg: '', setAlertShow: setAlertShow, setMaskShow: setMaskShow, callbackFn: null, callbackCd: '' });
 
-  const { islogIn, storeLogout } = useLoginStore((state) => {
+  const { islogIn, storeLogout } = UseLoginStore((state) => {
     return state;
   });
-  const { isMenuData, getMenuList, initMenuData } = menuStore((state) => {
+  const { isMenuData, getMenuList, initMenuData } = MenuStore((state) => {
     return state;
   });
-  const { initCodData } = codeStore((state) => {
+  const { initCodData } = CodeStore((state) => {
     return state;
   });
-  const { initColorMode } = colorModeStore((state) => {
+  const { initColorMode } = ColorModeStore((state) => {
     return state;
   });
 
@@ -188,7 +187,8 @@ function App() {
   };
   const MyAlertCallbackFn = (callbackCd) => {
     if ('NO' === callbackCd) {
-      window.location.replace(HOME_PATH + '/Login');
+      //window.location.replace(HOME_PATH + '/Login');
+      props.setShowLogin(true);
       storeLogout();
     }
   };
@@ -215,100 +215,55 @@ function App() {
       localStorage.setItem('chkVersion', appVersion);
       initMenuData();
       initCodData();
-      alert(`${process.env.REACT_APP_VERSION_MSG}`);
+      //alert(`${process.env.REACT_APP_VERSION_MSG}`);
       setTimeout(() => window.location.replace(HOME_PATH + '/'), 1000);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getMenuList, initCodData, initColorMode, initMenuData, isMenuData, islogIn]);
 
   return (
-    <div>
-      {/* // description : 개발 BrowserRouter 운영 HashRouter 모든 url 시작에 # 자동으로 붙인다. */}
-      {APP_GB === 'DEV' ? (
-        <BrowserRouter>
-          {/* <StoreContextProvider> */}
-          <div className="masked" style={{ display: maskShow ? 'block' : 'none' }}></div>
-          <div className={modialogShow ? 'modal show' : 'modal'} style={{ display: modialogShow ? 'block' : 'none', position: 'initial' }}>
-            {MyModialog(modialogShow, myModialogInfo.backdrop, myModialogInfo.modialogTitle, myModialogInfo.modialogBody, setModialogShow, myModialogInfo.btnNm1, myModialogInfo.btnNm2, myModialogInfo.callbackFn1, myModialogInfo.callbackFn2, myModialogInfo.callbackCd, setMyModialogClose)}
+    <>
+      <div className="masked" style={{ display: maskShow ? 'block' : 'none' }}></div>
+      <div className={modialogShow ? 'modal show' : 'modal'} style={{ display: modialogShow ? 'block' : 'none', position: 'initial' }}>
+        {MyModialog(modialogShow, myModialogInfo.backdrop, myModialogInfo.modialogTitle, myModialogInfo.modialogBody, setModialogShow, myModialogInfo.btnNm1, myModialogInfo.btnNm2, myModialogInfo.callbackFn1, myModialogInfo.callbackFn2, myModialogInfo.callbackCd, setMyModialogClose)}
+      </div>
+      <div style={{ display: alertShow ? '' : 'none' }} className="myAlertArea">
+        {MyAlert(myAlertInfo.alertShow, myAlertInfo.alertVariant, myAlertInfo.alertHeading, myAlertInfo.alertMsg, myAlertInfo.setAlertShow, myAlertInfo.setMaskShow, myAlertInfo.callbackFn, myAlertInfo.callbackCd)}
+      </div>
+      {showLogin ? <LoginPopup setShowLogin={setShowLogin} myAlertInfo={myAlertInfo} setMyAlertInfo={setMyAlertInfo} /> : <></>}
+      <div className="app">
+        <Header myAlertInfo={myAlertInfo} setMyAlertInfo={setMyAlertInfo} setShowLogin={setShowLogin} />
+        <div id="layoutSidenav">
+          <Sidebar />
+          <div id="layoutSidenav_content">
+            <main id="main">
+              <div className="container-fluid px-4">
+                <Routes>
+                  {/* // description : 로그인과 무관 접근 가능 */}
+                  <Route path="/" element={<Home />} />
+                  <Route path="/bootstrap/Dashboard" element={<Dashboard />} />
+                  {/* // description : 로그인 시에만 접근 가능 */}
+                  <Route element={<PrivateRoute userAuthentication={true} setMyAlerts={setMyAlerts} />}>
+                    <Route path="/:topMenuSeq/dev/DevMain" element={<DevMain />} />
+                    <Route path="/:topMenuSeq/dev/TodoList" element={<TodoList myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} setMaskShow={setMaskShow} />} />
+                    <Route path="/:topMenuSeq/dev/TodoList/:compressParams" element={<TodoList myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} setMaskShow={setMaskShow} />} />
+                    <Route path="/:topMenuSeq/sj/DevAssembl" element={<DevAssembl myAlertInfo={myAlertInfo} setMyAlertInfo={setMyAlertInfo} myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} />} />
+                    <Route path="/:topMenuSeq/sj/DevCalendar" element={<DevCalendar />} />
+                    <Route path="/:topMenuSeq/sj/DevSearchList" element={<DevSjSearchList />} />
+                    <Route path="/:topMenuSeq/sj/DevListScroll" element={<DevListScroll />} />
+                    <Route path="/:topMenuSeq/hm/DevSearchList" element={<DevSearchList />} />
+                    <Route path="/:topMenuSeq/hm/DevDetail/:boardId" element={<DevDetail myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} />} />
+                    <Route path="/:topMenuSeq/hm/DevWrite" element={<DevWrite myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} />} />
+                    <Route path="/Profile" element={<Profile myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} />} />
+                  </Route>
+                </Routes>
+              </div>
+            </main>
           </div>
-          <div style={{ display: alertShow ? '' : 'none' }} className="myAlertArea">
-            {MyAlert(myAlertInfo.alertShow, myAlertInfo.alertVariant, myAlertInfo.alertHeading, myAlertInfo.alertMsg, myAlertInfo.setAlertShow, myAlertInfo.setMaskShow, myAlertInfo.callbackFn, myAlertInfo.callbackCd)}
-          </div>
-          {showLogin ? <LoginPopup setShowLogin={setShowLogin} myAlertInfo={myAlertInfo} setMyAlertInfo={setMyAlertInfo} /> : <></>}
-          <Header myAlertInfo={myAlertInfo} setMyAlertInfo={setMyAlertInfo} setShowLogin={setShowLogin} />
-          <div id="layoutSidenav" className="app">
-            <Sidebar />
-            <div id="layoutSidenav_content">
-              <main id="main">
-                <div className="container-fluid px-4">
-                  <Routes>
-                    {/* // description : 로그인과 무관 접근 가능 */}
-                    <Route path="/" element={<Home />} />
-                    <Route path="/bootstrap/Dashboard" element={<Dashboard />} />
-                    {/* // description : 로그인 시에만 접근 가능 */}
-                    <Route element={<PrivateRoute userAuthentication={true} setMyAlerts={setMyAlerts} />}>
-                      <Route path="/:topMenuSeq/dev/DevMain" element={<DevMain />} />
-                      <Route path="/:topMenuSeq/dev/TodoList" element={<TodoList myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} setMaskShow={setMaskShow} />} />
-                      <Route path="/:topMenuSeq/dev/TodoList/:compressParams" element={<TodoList myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} setMaskShow={setMaskShow} />} />
-                      <Route path="/:topMenuSeq/sj/DevAssembl" element={<DevAssembl myAlertInfo={myAlertInfo} setMyAlertInfo={setMyAlertInfo} myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} />} />
-                      <Route path="/:topMenuSeq/sj/DevCalendar" element={<DevCalendar />} />
-                      <Route path="/:topMenuSeq/sj/DevSearchList" element={<DevSjSearchList />} />
-                      <Route path="/:topMenuSeq/sj/DevListScroll" element={<DevListScroll />} />
-                      <Route path="/:topMenuSeq/hm/DevSearchList" element={<DevSearchList />} />
-                      <Route path="/:topMenuSeq/hm/DevDetail/:boardId" element={<DevDetail myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} />} />
-                      <Route path="/:topMenuSeq/hm/DevWrite" element={<DevWrite myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} />} />
-                      <Route path="/Profile" element={<Profile myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} />} />
-                    </Route>
-                  </Routes>
-                </div>
-              </main>
-            </div>
-          </div>
-          <Footer />
-          {/* </StoreContextProvider> */}
-        </BrowserRouter>
-      ) : (
-        <HashRouter>
-          <div className="masked" style={{ display: maskShow ? 'block' : 'none' }}></div>
-          <div className={modialogShow ? 'modal show' : 'modal'} style={{ display: modialogShow ? 'block' : 'none', position: 'initial' }}>
-            {MyModialog(modialogShow, myModialogInfo.backdrop, myModialogInfo.modialogTitle, myModialogInfo.modialogBody, setModialogShow, myModialogInfo.btnNm1, myModialogInfo.btnNm2, myModialogInfo.callbackFn1, myModialogInfo.callbackFn2, myModialogInfo.callbackCd, setMyModialogClose)}
-          </div>
-          <div style={{ display: alertShow ? '' : 'none' }} className="myAlertArea">
-            {MyAlert(myAlertInfo.alertShow, myAlertInfo.alertVariant, myAlertInfo.alertHeading, myAlertInfo.alertMsg, myAlertInfo.setAlertShow, myAlertInfo.setMaskShow, myAlertInfo.callbackFn, myAlertInfo.callbackCd)}
-          </div>
-          <Header myAlertInfo={myAlertInfo} setMyAlertInfo={setMyAlertInfo} />
-          <div id="layoutSidenav">
-            <Sidebar />
-            <div id="layoutSidenav_content">
-              <main>
-                <div className="container-fluid px-4">
-                  <Routes>
-                    {/* // description : 로그인과 무관 접근 가능 */}
-                    <Route path="/" element={<Dashboard />} />
-                    <Route path="/bootstrap/Dashboard" element={<Dashboard />} />
-                    {/* // description : 로그인 시에만 접근 가능 */}
-                    <Route element={<PrivateRoute userAuthentication={true} setMyAlerts={setMyAlerts} />}>
-                      <Route path="/:topMenuSeq/dev/DevMain" element={<DevMain />} />
-                      <Route path="/:topMenuSeq/dev/TodoList" element={<TodoList myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} setMaskShow={setMaskShow} />} />
-                      <Route path="/:topMenuSeq/dev/TodoList/:compressParams" element={<TodoList myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} setMaskShow={setMaskShow} />} />
-                      <Route path="/:topMenuSeq/sj/DevAssembl" element={<DevAssembl myAlertInfo={myAlertInfo} setMyAlertInfo={setMyAlertInfo} myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} />} />
-                      <Route path="/:topMenuSeq/sj/DevCalendar" element={<DevCalendar />} />
-                      <Route path="/:topMenuSeq/sj/DevSearchList" element={<DevSjSearchList />} />
-                      <Route path="/:topMenuSeq/sj/DevListScroll" element={<DevListScroll />} />
-                      <Route path="/:topMenuSeq/hm/DevSearchList" element={<DevSearchList />} />
-                      <Route path="/:topMenuSeq/hm/DevDetail/:boardId" element={<DevDetail myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} />} />
-                      <Route path="/:topMenuSeq/hm/DevWrite" element={<DevWrite myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} />} />
-                      <Route path="/Profile" element={<Profile myModialogInfo={myModialogInfo} setMyModialogInfo={setMyModialogInfo} />} />
-                    </Route>
-                  </Routes>
-                </div>
-              </main>
-            </div>
-          </div>
-          <Footer />
-        </HashRouter>
-      )}
-    </div>
+        </div>
+      </div>
+      <Footer />
+    </>
   );
 }
 export default App;
