@@ -11236,7 +11236,7 @@ body {
   flex-grow: 1;
   min-height: calc(100vh - 70px);
   margin-left: -225px;
-  background-color: --bs-;
+  background-color: var(--bs-light);
 }
 
 .sb-sidenav-toggled #layoutSidenav #layoutSidenav_nav {

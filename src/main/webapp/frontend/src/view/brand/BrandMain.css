@@ -1,0 +1,21 @@
+.carousel img {
+  height: 48vw;
+  margin: 30px auto;
+  background-size: cover;
+  position: relative;
+  border-radius: 24px;
+  align-items: left;
+}
+.carousel button {
+  border: none;
+  border-radius: 50px;
+  color: var(--gray);
+  font-weight: 500;
+  font-size: max(1vw, 13px);
+  padding: 1vw 2.3vw;
+  background-color: #fff;
+  cursor: pointer;
+}
+.wrapText {
+  margin-left: 12%;
+}

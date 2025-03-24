@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { assets } from 'assets/images';
+import { useContext, useEffect, useState } from 'react';
 import { Link, NavLink, useLocation, useNavigate, useParams } from 'react-router-dom'; // NavLink path 접근시 active 처리 자동화
-
 import CodeStore from 'store/CodeStore';
 import ColorModeStore from 'store/ColorModeStore';
+import { ContextStore } from 'store/ContextStore';
 import MenuStore from 'store/MenuStore';
 import UseLoginStore from 'store/UseLoginStore';
-
 //          component: Header 컴포넌트          //
 function Header(props) {
   const HOME_PATH = `${process.env.REACT_APP_HOME_PATH}`;
@@ -39,6 +39,8 @@ function Header(props) {
   const location = useLocation(); // useLocation 훅 사용
   const pathname = location.pathname;
   const { topMenuSeq } = useParams();
+  const { getTotalQuantity } = useContext(ContextStore);
+  const totalQuantity = getTotalQuantity();
 
   //          event handler        //
   //로고
@@ -218,6 +220,12 @@ function Header(props) {
             </button>
           </div>
         </form> */}
+        <ul className="navbar-nav ms-auto ms-md-0">
+          <Link className="nav-link dropdown-item" to="/cart">
+            <i className="fas fa-shopping-cart fa-fw"></i>
+            &nbsp;{totalQuantity === 0 ? ' ' : totalQuantity}
+          </Link>
+        </ul>
         <ul className="navbar-nav ms-auto ms-md-0">
           <li className="nav-item dropdown">
             <Link className="nav-link dropdown-toggle" id="navbarDropdown" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

@@ -42,6 +42,10 @@ import DevListScroll from 'view/dev/sj/DevListScroll';
 import DevSjSearchList from 'view/dev/sj/DevSearchList';
 import LoginPopup from 'component/LoginPopup/LoginPopup';
 
+import Cart from 'view/cart/Cart';
+import Order from 'view/order/Order';
+import BrandMain from 'view/brand/BrandMain';
+
 //          component App       //
 function App(props) {
   const HOME_PATH = `${process.env.REACT_APP_HOME_PATH}`;
@@ -242,6 +246,10 @@ function App(props) {
                   {/* // description : 로그인과 무관 접근 가능 */}
                   <Route path="/" element={<Home />} />
                   <Route path="/bootstrap/Dashboard" element={<Dashboard />} />
+                  <Route path="/cart" element={<Cart />} />
+                  <Route path="/order" element={<Order />} />
+                  <Route path="/:topMenuSeq/front/brand/BrandMain" element={<BrandMain />} />
+                  <Route path="/:topMenuSeq/front/brand/Brand" element={<BrandMain />} />
                   {/* // description : 로그인 시에만 접근 가능 */}
                   <Route element={<PrivateRoute userAuthentication={true} setMyAlerts={setMyAlerts} />}>
                     <Route path="/:topMenuSeq/dev/DevMain" element={<DevMain />} />

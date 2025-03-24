@@ -1,13 +1,14 @@
-import React, { useContext } from 'react';
-import './FoodDisplay.css';
-import { ContextStore } from 'store/ContextStore';
 import FoodItem from 'component/FoodItem/FoodItem';
+import { useContext } from 'react';
+import { ContextStore } from 'store/ContextStore';
+import './FoodDisplay.css';
 
 const FoodDisplay = ({ category }) => {
   const { food_list } = useContext(ContextStore);
   return (
     <div className="food-display" id="food-display">
-      <h2>Top Dishes Near You</h2>
+      {category !== 'All' ? <h2>{category}</h2> : <h2></h2>}
+
       <div className="food-display-list">
         {food_list.map((item, index) => {
           if (category === 'All' || category === item.category) {

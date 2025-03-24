@@ -11,7 +11,7 @@ const Footer = () => {
           <NavLink to={'/'} className="link">
             {process.env.REACT_APP_HEADER_TITLE}
           </NavLink>
-          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugit ratione fugiat vitae quisquam dolores sint id, nisi veniam repellendus. Tempore, expedita. At praesentium deserunt minima! Porro iste beatae maxime voluptatem?</p>
+          {/* <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. </p> */}
           <div className="footer-social-icons">
             <a href="https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=%EC%8A%A4%EC%8B%9C%EC%BF%A0%EC%95%BC">
               <img src={assets.naver_icon} alt="naver" />
