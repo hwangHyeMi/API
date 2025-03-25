@@ -3984,6 +3984,7 @@ fieldset:disabled .btn {
 .navbar-brand:hover,
 .navbar-brand:focus {
   color: var(--bs-navbar-brand-hover-color);
+  cursor: pointer;
 }
 
 .navbar-nav {

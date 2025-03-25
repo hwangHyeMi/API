@@ -202,6 +202,7 @@ function App(props) {
   useEffect(() => {
     //토글 저장
     localStorage.setItem('sb|sidebar-toggle', 'false');
+    localStorage.setItem('data-bs-theme', 'light');
 
     //개발자 호스트 확인
     let chk_hostname = window.location.hostname;
