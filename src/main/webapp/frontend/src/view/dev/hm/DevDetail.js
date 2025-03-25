@@ -1,5 +1,5 @@
 import axios from 'axios';
-import httpHeaderStore from 'store/HttpHeaderStore';
+import httpHeaderStore from 'stores/HttpHeaderStore';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 

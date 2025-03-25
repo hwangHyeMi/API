@@ -1,19 +1,19 @@
-import { Carousel } from 'react-bootstrap';
 import './BrandMain.css';
 import { brand_list } from 'assets/images';
+import { Carousel } from 'react-bootstrap';
 const BrandMain = () => {
   return (
     <Carousel fade className="carousel">
       {brand_list.map((item, index) => {
         return (
           <Carousel.Item interval={1200}>
-            <img src={item.image} alt="Image" />
+            <img src={item.image} alt="Image" height="300px" />
             <Carousel.Caption>
               <h3>{item.title}</h3>
               <p>{item.desc}</p>
-              <a href="/">
+              {/* <a href="/">
                 <button>{item.button}</button>
-              </a>
+              </a> */}
             </Carousel.Caption>
           </Carousel.Item>
         );

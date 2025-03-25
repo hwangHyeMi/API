@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, HashRouter } from 'react-router-dom';
-import ContextStoreProvider from 'store/ContextStore';
+import ContextStoreProvider from 'stores/ContextStore';
 import App from './App';
 const APP_GB = `${process.env.REACT_APP_GB}`;
 

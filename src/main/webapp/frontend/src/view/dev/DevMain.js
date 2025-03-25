@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import CodeStore from 'store/CodeStore';
-import UseLoginStore from 'store/UseLoginStore';
+import CodeStore from 'stores/CodeStore';
+import UseLoginStore from 'stores/UseLoginStore';
 import { Col, Row, Table, Container } from 'react-bootstrap';
 //          component: DevMain 컴포넌트          //
 function DevMain() {

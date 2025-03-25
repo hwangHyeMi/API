@@ -12,7 +12,7 @@
 
 .cart-items-item {
   margin: 10px 0;
-  color: var(--dark);
+  color: var(--bs-navbar-brand-color);
 }
 
 .cart-items-item img {
@@ -34,7 +34,7 @@
 
 .NoItems {
   padding: 10px 0;
-  color: var(--gray);
+  color: var(--bs-navbar-brand-color);
 }
 
 .cart-bottom {

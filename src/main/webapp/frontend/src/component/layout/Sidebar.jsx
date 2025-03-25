@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom'; // path 접근시 active 처리 자동화
 // import { IconName } from 'react-icons/fa';
-import UseLoginStore from 'store/UseLoginStore';
-import MenuStore from 'store/MenuStore';
-import ColorModeStore from 'store/ColorModeStore';
+import UseLoginStore from 'stores/UseLoginStore';
+import MenuStore from 'stores/MenuStore';
+import ColorModeStore from 'stores/ColorModeStore';
 //import Icons from 'bootstrap-icons';
 
 function Sidebar() {

@@ -12,10 +12,10 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom'; // path 접근시 active 처리 자동화
 import { useParams } from 'react-router-dom';
 
-import HttpHeaderStore from 'store/HttpHeaderStore';
-import UseLoginStore from 'store/UseLoginStore';
-import CodeStore from 'store/CodeStore';
-import FileStore from 'store/FileStore';
+import HttpHeaderStore from 'stores/HttpHeaderStore';
+import UseLoginStore from 'stores/UseLoginStore';
+import CodeStore from 'stores/CodeStore';
+import FileStore from 'stores/FileStore';
 
 // Toast 관련
 import MyToast from 'component/common/MyToast';

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import httpHeaderStore from 'store/HttpHeaderStore';
+import httpHeaderStore from 'stores/HttpHeaderStore';
 
 import { Col, Row, Form, Button, Container } from 'react-bootstrap';
 

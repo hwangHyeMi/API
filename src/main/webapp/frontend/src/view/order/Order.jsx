@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ContextStore } from 'store/ContextStore';
+import { ContextStore } from 'stores/ContextStore';
 import { deliveryFee } from '../cart/Cart';
 import './Order.css';
 

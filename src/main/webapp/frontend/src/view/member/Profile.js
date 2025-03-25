@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect, useRef } from 'react';
-import HttpHeaderStore from 'store/HttpHeaderStore';
-import UseLoginStore from 'store/UseLoginStore';
+import HttpHeaderStore from 'stores/HttpHeaderStore';
+import UseLoginStore from 'stores/UseLoginStore';
 
 import { Col, Row, Form, Button, Container, Image } from 'react-bootstrap';
 import * as Icon from 'react-bootstrap-icons';

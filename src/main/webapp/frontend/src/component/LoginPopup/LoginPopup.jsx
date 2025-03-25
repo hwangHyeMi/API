@@ -3,7 +3,7 @@ import { assets } from 'assets/images';
 import { useEffect, useState } from 'react';
 import { Button, Col, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import UseLoginStore from 'store/UseLoginStore';
+import UseLoginStore from 'stores/UseLoginStore';
 import './LoginPopup.css';
 //          component: Login 컴포넌트          //
 const LoginPopup = (props) => {

@@ -1,6 +1,7 @@
 .carousel img {
-  height: 48vw;
-  margin: 30px auto;
+  height: 40vw;
+  width: 100%;
+  margin: 20px auto;
   background-size: cover;
   position: relative;
   border-radius: 24px;

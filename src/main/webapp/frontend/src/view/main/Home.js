@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import HomeTop from 'component/HomeTop/HomeTop';
+import MenuTop from 'component/MenuTop/MenuTop';
 import FoodDisplay from 'component/FoodDisplay/FoodDisplay';
 import ExploreMenu from 'component/ExploreMenu/ExploreMenu';
 
@@ -8,7 +8,7 @@ function Home() {
   const [category, setCategory] = useState('All');
   return (
     <div>
-      <HomeTop />
+      <MenuTop />
       <ExploreMenu category={category} setCategory={setCategory} />
       <FoodDisplay category={category} />
     </div>

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import './FoodItem.css';
 import { assets } from 'assets/images';
-import { ContextStore } from 'store/ContextStore';
+import { ContextStore } from 'stores/ContextStore';
 
 const FoodItem = ({ id, name, price, description, image }) => {
   const { cartItems, addToCart, removeFromCart } = useContext(ContextStore);

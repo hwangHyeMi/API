@@ -1,11 +1,11 @@
 import { assets } from 'assets/images';
 import { useContext, useEffect, useState } from 'react';
 import { Link, NavLink, useLocation, useNavigate, useParams } from 'react-router-dom'; // NavLink path 접근시 active 처리 자동화
-import CodeStore from 'store/CodeStore';
-import ColorModeStore from 'store/ColorModeStore';
-import { ContextStore } from 'store/ContextStore';
-import MenuStore from 'store/MenuStore';
-import UseLoginStore from 'store/UseLoginStore';
+import CodeStore from 'stores/CodeStore';
+import ColorModeStore from 'stores/ColorModeStore';
+import { ContextStore } from 'stores/ContextStore';
+import MenuStore from 'stores/MenuStore';
+import UseLoginStore from 'stores/UseLoginStore';
 //          component: Header 컴포넌트          //
 function Header(props) {
   const HOME_PATH = `${process.env.REACT_APP_HOME_PATH}`;

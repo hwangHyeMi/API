@@ -1,7 +1,7 @@
 import { assets } from 'assets/images';
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ContextStore } from 'store/ContextStore';
+import { ContextStore } from 'stores/ContextStore';
 import './Cart.css';
 
 export const deliveryFee = 3000;

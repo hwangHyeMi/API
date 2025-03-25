@@ -1,6 +1,6 @@
 import FoodItem from 'component/FoodItem/FoodItem';
 import { useContext } from 'react';
-import { ContextStore } from 'store/ContextStore';
+import { ContextStore } from 'stores/ContextStore';
 import './FoodDisplay.css';
 
 const FoodDisplay = ({ category }) => {
