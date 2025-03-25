@@ -8,7 +8,7 @@ import ColorModeStore from 'stores/ColorModeStore';
 
 function Sidebar() {
   //로그인상태
-  const { islogIn } = UseLoginStore((state) => {
+  const { islogIn, getMbrRoles } = UseLoginStore((state) => {
     return state;
   });
   const { isMenuData, getMenuList } = MenuStore((state) => {
@@ -18,13 +18,15 @@ function Sidebar() {
     return state;
   });
 
-  const [liftMenuList, setLiftMenuList] = useState([]);
+  const [leftMenuList, setLeftMenuList] = useState([]);
   //1 뎁스 path 세팅
   const [depth1path, setDepth1path] = useState('');
   //2 뎁스 path 세팅
   const [depth2path, setDepth2path] = useState('');
   //3 뎁스 path 세팅
   const [depth3path, setDepth3path] = useState('');
+  //다중권한
+  const [roles, setRoles] = useState('EVERY');
 
   // sb-sidenav : react-bootstrap 패턴이 아닌 bootstrap 패턴이라 추가 작업 > 추후 변경 고민
   const [colorMode, setColorMode] = useState('light');
@@ -60,9 +62,9 @@ function Sidebar() {
       let all_menu_list = getMenuList();
 
       if (islogIn) {
-        if (all_menu_list && all_menu_list.userMenuList) setLiftMenuList(all_menu_list.userMenuList);
+        if (all_menu_list && all_menu_list.userMenuList) setLeftMenuList(all_menu_list.userMenuList);
       } else {
-        if (all_menu_list && all_menu_list.frontMenuList) setLiftMenuList(all_menu_list.frontMenuList);
+        if (all_menu_list && all_menu_list.frontMenuList) setLeftMenuList(all_menu_list.frontMenuList);
       }
 
       // pathname 으로 상위 [bootstrap, menu] 뎁스 show 세팅
@@ -88,6 +90,10 @@ function Sidebar() {
       }
     }
     setColorMode(getColor());
+
+    if (islogIn) {
+      setRoles(getMbrRoles());
+    }
   }, [getColor, getMenuList, isMenuData, islogIn, pathname]);
 
   return (
@@ -96,8 +102,8 @@ function Sidebar() {
       <nav className={'top-level-menus sb-sidenav accordion sb-sidenav-' + colorMode} id="sidenavAccordionTopLevel">
         <div className="sb-sidenav-menu bg-light text-bg-light">
           <div className="nav">
-            {liftMenuList
-              .filter((data) => data.level === 1) // 1뎁스 (Top level)
+            {leftMenuList
+              .filter((data) => data.level === 1 && (roles.includes(data.authorityCd) || data.authorityCd === 'EVERY')) // 1뎁스 (Top level)
               .map((topMenu, i) => {
                 return (
                   <div key={topMenu.menuSeq} className="collapse show" id={'Menus_' + topMenu.topMenuSeq} aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionTopLevel">
@@ -113,7 +119,7 @@ function Sidebar() {
                           </div>
                         </NavLink>
                         <div className={fnChkDepthByPath(1, topMenu.topMenuSeq) ? 'collapse show' : 'collapse'} id={'menu_topuser_' + topMenu.menuSeq + 'Sub0Menus'} aria-labelledby="headingOne" data-bs-parent={'#Menus_' + topMenu.topMenuSeq}>
-                          {liftMenuList
+                          {leftMenuList
                             .filter((data1) => {
                               if (data1.level === 2 && topMenu.topMenuSeq === data1.topMenuSeq) {
                                 // 2뎁스
@@ -138,7 +144,7 @@ function Sidebar() {
 
                                     <div className={fnChkDepthByPath(2, menu1.viewNm) ? 'collapse show' : 'collapse'} id={'menu_topuser_' + menu1.menuSeq + 'Sub1Menus'} aria-labelledby="headingOne" data-bs-parent={'#menu_topuser_' + topMenu.menuSeq + 'Sub0Menus'}>
                                       <nav className="sb-sidenav-menu-nested nav">
-                                        {liftMenuList
+                                        {leftMenuList
                                           .filter((data2) => {
                                             if (data2.level === 3 && menu1.menuSeq === data2.parentMenuSeq) {
                                               // 3뎁스
@@ -198,14 +204,14 @@ function Sidebar() {
           {/* // description : DB 메뉴 구성 */}
           <div className="nav">
             {/* // description : topMenuSeq 그룹({topMenuSeq} + Menus) */}
-            {liftMenuList
+            {leftMenuList
               .filter((data) => data.level === 1) // 1뎁스 (Top level)
               .map((topMenu, i) => {
                 return (
                   // description : className 'show' 노출 제어
                   <div key={topMenu.menuSeq} className={fnChkDepthByPath(1, topMenu.topMenuSeq) ? 'collapse show' : 'collapse'} id={'Menus_' + topMenu.topMenuSeq} aria-labelledby="headingOne">
                     <nav className="nav">
-                      {liftMenuList
+                      {leftMenuList
                         .filter((data1) => {
                           if (data1.level === 2 && topMenu.topMenuSeq === data1.topMenuSeq) {
                             // 2뎁스
@@ -230,7 +236,7 @@ function Sidebar() {
 
                                 <div className={fnChkDepthByPath(2, menu1.viewNm) ? 'collapse show' : 'collapse'} id={'menu_user_' + menu1.menuSeq + 'Sub1Menus'} aria-labelledby="headingOne" data-bs-parent={'#Menus_' + topMenu.topMenuSeq}>
                                   <nav className="sb-sidenav-menu-nested nav">
-                                    {liftMenuList
+                                    {leftMenuList
                                       .filter((data2) => {
                                         if (data2.level === 3 && menu1.menuSeq === data2.parentMenuSeq) {
                                           // 3뎁스
