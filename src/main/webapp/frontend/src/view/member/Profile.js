@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState, useEffect, useRef } from 'react';
 import HttpHeaderStore from 'stores/HttpHeaderStore';
 import UseLoginStore from 'stores/UseLoginStore';
-
+import { assets } from 'assets/images';
 import { Col, Row, Form, Button, Container, Image } from 'react-bootstrap';
 import * as Icon from 'react-bootstrap-icons';
 
@@ -12,7 +12,7 @@ import ToastContainer from 'react-bootstrap/ToastContainer';
 //          component (props) App.js확인         //
 function Profile(props) {
   const MBR_URL = `${process.env.REACT_APP_MBR_URL}`;
-  const defaultProfileImg = `${process.env.REACT_APP_PUBLIC_URL}` + '/assets/image/default_profile_img.png';
+  const defaultProfileImg = assets.default_prifile_img;
 
   const COM_API_URL = `${process.env.REACT_APP_API_URL}`;
   const { getHeaders } = HttpHeaderStore((state) => {

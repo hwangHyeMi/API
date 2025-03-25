@@ -38,6 +38,9 @@ import remove_icon_cross from 'assets/image/remove_icon_cross.png';
 import remove_icon_red from 'assets/image/remove_icon_red.png';
 import selector_icon from 'assets/image/selector_icon.png';
 
+import logo_white_kor from 'assets/image/logo_white_kor.png';
+import logo_black_kor from 'assets/image/logo_black_kor.png';
+
 export const assets = {
   default_prifile_img,
   home_img,
@@ -52,6 +55,8 @@ export const assets = {
   selector_icon,
   profile_icon,
   parcel_icon,
+  logo_white_kor,
+  logo_black_kor,
 };
 
 export const menu_list = [

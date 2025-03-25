@@ -1,11 +1,12 @@
-import { assets } from 'assets/images';
 import { useContext, useEffect, useState } from 'react';
+import { Image } from 'react-bootstrap';
 import { Link, NavLink, useLocation, useNavigate, useParams } from 'react-router-dom'; // NavLink path 접근시 active 처리 자동화
 import CodeStore from 'stores/CodeStore';
 import ColorModeStore from 'stores/ColorModeStore';
 import { ContextStore } from 'stores/ContextStore';
 import MenuStore from 'stores/MenuStore';
 import UseLoginStore from 'stores/UseLoginStore';
+import { assets } from 'assets/images';
 //          component: Header 컴포넌트          //
 function Header(props) {
   //로그인상태
@@ -18,9 +19,10 @@ function Header(props) {
   const { initCodData } = CodeStore((state) => {
     return state;
   });
-  const { setColor } = ColorModeStore((state) => {
+  const { setColor, getColor } = ColorModeStore((state) => {
     return state;
   });
+  const { getTotalQuantity } = useContext(ContextStore);
 
   const [topMenuList, setTopMenuList] = useState([]);
 
@@ -38,8 +40,11 @@ function Header(props) {
   const location = useLocation(); // useLocation 훅 사용
   const pathname = location.pathname;
   const { topMenuSeq } = useParams();
-  const { getTotalQuantity } = useContext(ContextStore);
+
   const totalQuantity = getTotalQuantity();
+  const theme = getColor();
+
+  console.log(theme);
 
   //          event handler        //
   //로고
@@ -77,7 +82,6 @@ function Header(props) {
   //모드변경
   const onClickModeBtn = (colorMode) => {
     setColor(colorMode);
-    // sb-sidenav : react-bootstrap 패턴이 아닌 bootstrap 패턴이라 추가 작업 > 추후 변경 고민
 
     const sidenavAccordion = document.getElementById('sidenavAccordion');
     sidenavAccordion.removeAttribute('class');
@@ -161,17 +165,25 @@ function Header(props) {
           <i className="fas fa-bars"></i>
         </button>
         <div className="navbar-brand ps-3">
-          <NavLink to={'/'} className="nav-link">
-            {process.env.REACT_APP_HEADER_TITLE}
-          </NavLink>
-          {/* <Image
-            src={`${process.env.REACT_APP_PUBLIC_URL}/assets/image/logo_white_eng.png`}
-            width={150}
-            height={38}
-            onClick={(evt) => {
-              onLogoClickHandler();
-            }}
-          /> */}
+          {theme === 'dark' ? (
+            <Image
+              src={assets.logo_black_kor}
+              width={150}
+              height={50}
+              onClick={(evt) => {
+                onLogoClickHandler();
+              }}
+            />
+          ) : (
+            <Image
+              src={assets.logo_white_kor}
+              width={150}
+              height={50}
+              onClick={(evt) => {
+                onLogoClickHandler();
+              }}
+            />
+          )}
         </div>
         {/*
           <button className='btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0' id='sidebarToggle' onClick={onToggleClickHandler}><i className='fas fa-bars'></i></button>
