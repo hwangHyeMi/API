@@ -50,7 +50,7 @@ import StoreMain from 'view/store/StoreMain';
 import CustomerMain from 'view/customer/CustomerMain';
 //          component App       //
 function App(props) {
-  const HOME_PATH = `${process.env.REACT_APP_HOME_PATH}`;
+  const HOME_PATH = `${process.env.REACT_APP_PUBLIC_URL}`;
 
   // axios
   axios.defaults.baseURL = `${process.env.REACT_APP_API_URL}`;
@@ -193,7 +193,6 @@ function App(props) {
   };
   const MyAlertCallbackFn = (callbackCd) => {
     if ('NO' === callbackCd) {
-      //window.location.replace(HOME_PATH + '/Login');
       props.setShowLogin(true);
       storeLogout();
     }

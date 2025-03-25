@@ -5,7 +5,7 @@ import * as Icon from 'react-bootstrap-icons';
 
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-const HOME_PATH = `${process.env.REACT_APP_HOME_PATH}`;
+const HOME_PATH = `${process.env.REACT_APP_PUBLIC_URL}`;
 
 // 통신 데이터 샘플
 // https://canvasjs.com/react-charts/json-data-api-ajax-chart/

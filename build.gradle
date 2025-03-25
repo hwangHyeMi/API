@@ -10,6 +10,19 @@ version = '0.0.1-SNAPSHOT'
 java {
     sourceCompatibility = '17'
 }
+/* 외부 tomcat war 배포 설정 */
+apply plugin: 'war'
+/* 윈도우 탐색기 \findMe-API\build\libs\api.war */
+/* XXX War 배포용 시도... > 배포 결과 > 실패 */
+war.enabled = true
+/* 외부용 */
+war {
+    archiveBaseName = 'api'
+    archiveFileName = 'api.war'
+    rootSpec.exclude("**/_doc**")
+    rootSpec.exclude("**/frontend**")
+}
+bootWar.enabled = false
 
 configurations {
     compileOnly {
@@ -43,58 +56,10 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test:3.1.0'
     testImplementation 'org.springframework.security:spring-security-test:6.0.2'
   
+    /* 외부 tomcat war 배포 설정 (Runtime 전용이라 안지워도 무관) */
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
-}
-
-/*
-react 설정
-*/
-def reactDir = "$projectDir/src/main/webapp/frontend";
-
-sourceSets{
-	main{
-		resources{
-			srcDirs = ["$projectDir/src/main/resources"]
-		}
-	}
-}
-
-processResources{
-	dependsOn "copyReactBuildFiles"
-}
-
-task installReact(type:Exec){
-	workingDir "$reactDir"
-	inputs.dir "$reactDir"
-	group = BasePlugin.BUILD_GROUP
-	
-	if(System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')){
-		commandLine "npm.cmd", "audit", "fix"
-		commandLine 'npm.cmd', 'install'
-	}else{
-		commandLine "npm", "audit", "fix"
-		commandLine 'npm', 'install'
-	}
-}
-
-task buildReact(type:Exec){
-	dependsOn "installReact"
-	workingDir "$reactDir"
-	inputs.dir "$reactDir"
-	group = BasePlugin.BUILD_GROUP
-	
-	if(System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')){
-		commandLine "npm.cmd", "run-script", "build"
-	}else{
-		commandLine "npm", "run-script", "build"
-	}
-}
-
-task copyReactBuildFiles(type:Copy){
-	dependsOn "buildReact"
-	from "$reactDir/build"
-	into "$projectDir/src/main/resources/static"
 }

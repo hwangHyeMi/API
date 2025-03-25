@@ -8,7 +8,6 @@ import MenuStore from 'stores/MenuStore';
 import UseLoginStore from 'stores/UseLoginStore';
 //          component: Header 컴포넌트          //
 function Header(props) {
-  const HOME_PATH = `${process.env.REACT_APP_HOME_PATH}`;
   //로그인상태
   const { islogIn, storeLogout, getMbrId, getMbrRoles } = UseLoginStore((state) => {
     return state;
@@ -133,7 +132,7 @@ function Header(props) {
       navigate('/');
       setTimeout(() => storeLogout(), 1000);
     } else if ('RSET' === callbackCd) {
-      setTimeout(() => window.location.replace(HOME_PATH + '/'), 1000);
+      navigate('/');
     }
   };
   //          effect          //

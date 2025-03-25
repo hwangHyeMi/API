@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev # default profile
+    active: dev
     group:
       dev:
         - common
@@ -74,10 +74,10 @@ spring:
 
 cors:
   allow:
-    origins: http://localhost:3000,http://jisub1.iptime.org:3000
+    origins: http://jisub1.iptime.org:3000
 
 server:
-  port: 8080
+  port: 9090
   servlet:
     context-path: /api
     encoding:
@@ -93,24 +93,24 @@ spring:
     name: Spring-Boot-MyBatis
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:4306/database_sushikooya
-    username: dbuser_sushikooya
-    password: go4868203@
+    url: jdbc:mariadb://gaja.iptime.org:36/db_hm
+    username: user_hm
+    password: hm_1234!@
 
 cors:
   allow:
-    origins: http://jisub1.iptime.org:3000
+    origins: http://jisub1.iptime.org:8080
 
 server:
-  port: 81
+  port: 8080
   servlet:
     context-path: /api
     encoding:
       charset: utf-8
-# //XXX War 배포용 시도... > 배포 결과 > 실패
+
 services:
  tomcat:
    container_name: tomcat
-   image: tomcat:9.0.102
+   image: tomcat:10.1.39
    ports:
-     - "9090:9090"
+     - "8080:8080"
