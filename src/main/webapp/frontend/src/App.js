@@ -200,15 +200,20 @@ function App(props) {
   const [showLogin, setShowLogin] = useState(false);
   //          effect          //
   useEffect(() => {
-    //토글 저장
-    localStorage.setItem('sb|sidebar-toggle', 'false');
-    localStorage.setItem('data-bs-theme', 'light');
-
     //개발자 호스트 확인
     let chk_hostname = window.location.hostname;
     if ('localhost' !== chk_hostname) {
       if (`${process.env.REACT_APP_API_URL}`.indexOf(chk_hostname) === -1) {
         setMyAlerts('warning', '개발자 확인!!', '개발 환경 세팅 확인\n[접근 hostname, API hostname 다름]\nREACT_APP_API_URL 체킹', '');
+      }
+    }
+
+    //모바일 기준으로 변경 후 데스크탑일때 처리해줌(userAgent로 처리고민)
+    if (typeof window !== 'undefined') {
+      if (window.innerWidth > 768) {
+        // desktop
+        document.body.classList.toggle('sb-sidenav-toggled');
+        localStorage.setItem('sb|sidebar-toggle', 'false');
       }
     }
     //color모드

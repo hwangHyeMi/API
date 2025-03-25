@@ -44,8 +44,6 @@ function Header(props) {
   const totalQuantity = getTotalQuantity();
   const theme = getColor();
 
-  console.log(theme);
-
   //          event handler        //
   //로고
   const onLogoClickHandler = () => {
@@ -164,12 +162,12 @@ function Header(props) {
         <button className="btn btn-link btn-sm" style={{ marginTop: '0px', marginLeft: '5px' }} id="sidebarToggle" onClick={onToggleClickHandler}>
           <i className="fas fa-bars"></i>
         </button>
-        <div className="navbar-brand ps-3">
+        <div className="navbar-brand ps-3 pt-2">
           {theme === 'dark' ? (
             <Image
               src={assets.logo_black_kor}
-              width={150}
-              height={50}
+              width={180}
+              height={55}
               onClick={(evt) => {
                 onLogoClickHandler();
               }}
@@ -177,8 +175,8 @@ function Header(props) {
           ) : (
             <Image
               src={assets.logo_white_kor}
-              width={150}
-              height={50}
+              width={180}
+              height={55}
               onClick={(evt) => {
                 onLogoClickHandler();
               }}

@@ -7145,6 +7145,7 @@ fieldset:disabled .btn {
 .sb-nav-fixed #layoutSidenav #layoutSidenav_nav,
 .sb-nav-fixed .sb-topnav {
   position: fixed;
+  /* 햄수정 */
   top: 0;
   right: 0;
   left: 0;
@@ -11323,7 +11324,7 @@ body {
 }
 .sb-topnav .navbar-brand {
   width: 225px;
-  margin: 0;
+  /* margin: 0; */
 }
 .sb-topnav.navbar-dark #sidebarToggle {
   color: rgba(255, 255, 255, 0.5);

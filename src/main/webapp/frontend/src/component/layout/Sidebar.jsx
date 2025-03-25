@@ -94,7 +94,7 @@ function Sidebar() {
     <div id="layoutSidenav_nav" className="menus">
       {/* TopMenu 포함 버전 menus.top-level-menus 으로 반응형 디스플레이 제어*/}
       <nav className={'top-level-menus sb-sidenav accordion sb-sidenav-' + colorMode} id="sidenavAccordionTopLevel">
-        <div className="sb-sidenav-menu">
+        <div className="sb-sidenav-menu bg-light text-bg-light">
           <div className="nav">
             {liftMenuList
               .filter((data) => data.level === 1) // 1뎁스 (Top level)
