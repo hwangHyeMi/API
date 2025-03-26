@@ -85,7 +85,7 @@ function DevMypage(props) {
     formData.append('mbrSeq', mbrSeq);
 
     console.log(headers);
-    await axios.post(MBR_URL + '/mypage', formData, { headers: headers }).then((resp) => {
+    await axios.post(MBR_URL + '/profile', formData, { headers: headers }).then((resp) => {
       setMbrDetail(resp.data.mbr);
       setFileList(resp.data.file);
 

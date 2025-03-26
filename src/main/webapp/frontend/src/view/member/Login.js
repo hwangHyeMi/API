@@ -6,12 +6,12 @@ import * as Bts from 'react-bootstrap';
 
 import { useNavigate } from 'react-router-dom';
 
-import useLoginStore from 'store/useLoginStore';
+import UseLoginStore from 'stores/UseLoginStore';
 
 //          component: Login 컴포넌트          //
 function Login(props) {
   //          component: useLoginStore          //
-  const { storeLogin } = useLoginStore((state) => {
+  const { storeLogin } = UseLoginStore((state) => {
     return state;
   });
   //네비게이트
