@@ -9,12 +9,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import api.base.com.util.LoginUtil;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,9 +26,8 @@ public class DevInfoController {
 
 	@Value("${server.servlet.context-path}")
 	private String contextPath;
-
+	@Hidden
 	@GetMapping("/info-list")
-	@PostMapping("/info-list")
 	public ResponseEntity<Map<String, Object>> infoList() {
 
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -158,7 +157,7 @@ public class DevInfoController {
 		map.put("urlList", urlList);
 		return ResponseEntity.status(HttpStatus.OK).body(map);
 	}
-
+	@Hidden
 	@GetMapping("/expired")
 	public Map<String, Object> expired() {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -166,7 +165,7 @@ public class DevInfoController {
 		map.put("isLogin", LoginUtil.isLogin());
 		return map;
 	}
-
+	@Hidden
 	@GetMapping("/invalid")
 	public Map<String, Object> invalid() {
 		Map<String, Object> map = new HashMap<String, Object>();

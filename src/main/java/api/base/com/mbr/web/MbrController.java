@@ -36,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 //@RequestMapping("/user")
 //@RequestMapping(value = "/mbr", method = {RequestMethod.GET, RequestMethod.POST})
-@RequestMapping(value = "/mbr", method = {RequestMethod.POST})
+@RequestMapping(value = "/mbr")
 @RequiredArgsConstructor
 @Slf4j
 public class MbrController {
@@ -100,7 +100,6 @@ public class MbrController {
 	
 	//수정(저장)
 	@SuppressWarnings({ "unchecked" })
-	@GetMapping("/update")
 	@PostMapping("/update")
 	public ResponseEntity<MbrDto> updateMbr(MbrDto dto, @RequestParam("mutipartFiles") List<MultipartFile> multipartFiles) {
 

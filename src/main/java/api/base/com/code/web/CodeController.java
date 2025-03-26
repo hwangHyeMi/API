@@ -18,12 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 import api.base.com.code.service.CodeService;
 import api.base.com.code.vo.CodeDto;
 import api.base.com.code.vo.CodeVO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
+@Tag(name = "Code", description = "공통코드")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/com", method = {RequestMethod.GET, RequestMethod.POST})
+@RequestMapping(value = "/com")
 @Slf4j
 public class CodeController {
 
@@ -31,8 +34,8 @@ public class CodeController {
 	private CodeService codeService;
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Operation(summary = "공통코드 전체 리스트", description = "param 없음")
 	@GetMapping("/codeAllList")
-	@PostMapping("/codeAllList")
 	public ResponseEntity<List<Map<String, Object>>> codeAllList(CodeVO vo) {
 		CodeDto codeDto = null;
 		CodeVO detailVo = null;
@@ -57,8 +60,9 @@ public class CodeController {
 	}
 
 	@SuppressWarnings({ "unchecked" })
+	@Operation(summary = "공통코드 전체 리스트", description = "CodeVO")
+	@Parameter(name = "codeGroupCd", description = "그룹코드")
 	@GetMapping("/codeDetailList")
-	@PostMapping("/codeDetailList")
 	public ResponseEntity<List<CodeDto>> codeDetailList(CodeVO detailVo) {
 		List<CodeDto> codeDetailList = (List<CodeDto>) codeService.selectCodeDetailList(detailVo);
 

@@ -8,16 +8,18 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import api.base.com.mbr.service.MbrService;
 import api.base.com.util.LoginUtil;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
+@Tag(name = "Main", description = "메인화면")
 @RestController
 //@RequestMapping("/")
 @RequiredArgsConstructor
@@ -29,8 +31,8 @@ public class MainController {
 
 	private final MbrService mbrService;
 
-	@GetMapping("/")
-	@PostMapping("/")
+//	@GetMapping("/")
+//	@PostMapping("/")
 	public ResponseEntity<Map<String, Object>> main() {
 
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -40,7 +42,7 @@ public class MainController {
 
 		return ResponseEntity.status(HttpStatus.OK).body(map);
 	}
-
+	@Operation(summary = "차트", description = "param 없음 fetch")
 	@RequestMapping(value="/com/dashboard/getChart1", method = {RequestMethod.GET, RequestMethod.POST})
 	public ResponseEntity<Map<String, Object>> getChart1() {
 
@@ -57,7 +59,7 @@ public class MainController {
 
 		return ResponseEntity.status(HttpStatus.OK).body(rsMap);
 	}
-
+	@Hidden
 	@GetMapping("/expired")
 	public Map<String, Object> expired() {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -65,7 +67,7 @@ public class MainController {
 		map.put("isLogin", LoginUtil.isLogin());
 		return map;
 	}
-
+	@Hidden
 	@GetMapping("/invalid")
 	public Map<String, Object> invalid() {
 		Map<String, Object> map = new HashMap<String, Object>();

@@ -22,7 +22,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,13 +32,16 @@ import api.base.com.file.service.FileService;
 import api.base.com.file.vo.FileDto;
 import api.base.com.file.vo.FileVO;
 import api.base.com.util.FileUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
+@Tag(name = "File", description = "첨부파일")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/com/file", method = { RequestMethod.GET, RequestMethod.POST })
+@RequestMapping(value = "/com/file")
 @Slf4j
 public class FileController {
 
@@ -56,6 +58,8 @@ public class FileController {
 	 * @param vo
 	 * @return
 	 */
+	@Operation(summary = "첨부파일 리스트", description = "FileVO")
+	@Parameter(name = "attachId", description = "첨부파일ID(필수)")
 	@GetMapping("/list")
 	@PostMapping("/list")
 	public ResponseEntity<?> selectListFile(FileVO vo) {
@@ -74,6 +78,9 @@ public class FileController {
 	 * @return
 	 * @throws MalformedURLException
 	 */
+	@Operation(summary = "첨부파일 다운로드 이미지", description = "FileVO")
+	@Parameter(name = "attachId", description = "첨부파일ID(필수)")
+	@Parameter(name = "fileSeq", description = "첨부파일 Seq(필수)")
 	@GetMapping("/images/{attachId}/{fileSeq}")
 	public ResponseEntity<UrlResource> downloadImage(FileVO vo) throws MalformedURLException {
 		FileDto dto = fileService.selectDetailFile(vo);
@@ -90,7 +97,9 @@ public class FileController {
 	 * @return
 	 * @throws MalformedURLException
 	 */
-	@GetMapping("/download")
+	@Operation(summary = "첨부파일 다운로드", description = "FileVO")
+	@Parameter(name = "attachId", description = "첨부파일ID(필수)")
+	@Parameter(name = "fileSeq", description = "첨부파일 Seq(필수)")
 	@PostMapping("/download")
 	public ResponseEntity<UrlResource> downloadFile(FileVO vo) throws MalformedURLException {
 		if (!StringUtils.hasText(vo.getAttachKey()))
@@ -122,7 +131,8 @@ public class FileController {
 	 * @return
 	 * @throws IOException
 	 */
-	@GetMapping(value = "/downloadAll", produces = APPLICATION_ZIP)
+	@Operation(summary = "첨부파일 전체 다운로드(zip)", description = "FileVO")
+	@Parameter(name = "attachId", description = "첨부파일ID(필수)")
 	@PostMapping(value = "/downloadAll", produces = APPLICATION_ZIP)
 	public ResponseEntity<byte[]> downloadFileAll(FileVO vo, HttpServletResponse response) throws IOException {
 
@@ -169,7 +179,8 @@ public class FileController {
 	 * @param multipartFiles
 	 * @return
 	 */
-	@GetMapping("/upLoad")
+	@Operation(summary = "첨부파일 업로드", description = "FileVO,FileDto,mutipartFiles")
+	@Parameter(name = "mutipartFiles", description = "mutipart file data")
 	@PostMapping("/upLoad")
 	public ResponseEntity<Map<String, Object>> upLoad(FileVO vo, FileDto dto, @RequestParam("mutipartFiles") List<MultipartFile> multipartFiles) {
 		if (!StringUtils.hasText(vo.getAttachKey()))
@@ -207,7 +218,9 @@ public class FileController {
 	 * @param dto
 	 * @return
 	 */
-	@GetMapping("/delete")
+	@Operation(summary = "첨부파일 삭제", description = "FileVO,FileDto")
+	@Parameter(name = "attachId", description = "첨부파일ID(필수)")
+	@Parameter(name = "fileSeq", description = "첨부파일 Seq")
 	@PostMapping("/delete")
 	public ResponseEntity<Map<String, Object>> delete(FileVO vo, FileDto dto) {
 		if (!StringUtils.hasText(vo.getAttachKey()))
@@ -235,6 +248,8 @@ public class FileController {
 	 * @param vo
 	 * @return
 	 */
+	@Operation(summary = "첨부파일 전체 삭제", description = "FileVO")
+	@Parameter(name = "attachId", description = "첨부파일ID(필수)")
 	@GetMapping("/deleteAll")
 	@PostMapping("/deleteAll")
 	public ResponseEntity<Map<String, Object>> deleteAll(FileVO vo) {

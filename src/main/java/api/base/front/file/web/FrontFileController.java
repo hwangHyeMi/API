@@ -8,10 +8,8 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriUtils;
 
@@ -19,6 +17,7 @@ import api.base.com.file.service.FileService;
 import api.base.com.file.vo.FileDto;
 import api.base.com.file.vo.FileVO;
 import api.base.com.util.FileUtil;
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = { "/user/file", "/front/file" }, method = { RequestMethod.GET, RequestMethod.POST })
+@RequestMapping(value = { "/front/file" })
 @Slf4j
 public class FrontFileController {
 
@@ -39,7 +38,7 @@ public class FrontFileController {
 
 	//목록
 	@SuppressWarnings({ "unchecked" })
-	@GetMapping("/list")
+	@Hidden
 	@PostMapping("/list")
 	public ResponseEntity<?> selectListFile(FileVO vo) {
 
@@ -49,7 +48,7 @@ public class FrontFileController {
 
 	//첨부파일 다운로드
 	@SuppressWarnings({ "unchecked" })
-	@GetMapping("/download")
+	@Hidden
 	@PostMapping("/download")
 	public ResponseEntity<UrlResource> downloadFile(FileVO vo, HttpServletResponse response) throws MalformedURLException{
 

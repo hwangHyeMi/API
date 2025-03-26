@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,12 +23,16 @@ import api.base.com.file.vo.FileVO;
 import api.base.front.board.service.BoardService;
 import api.base.front.board.vo.BoardDto;
 import api.base.front.board.vo.BoardVO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+@Tag(name = "Board", description = "게시판")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = { "/user/board", "/front/board" }, method = { RequestMethod.GET, RequestMethod.POST })
+@RequestMapping(value = { "/front/board" })
 @Slf4j
 public class BoardController {
 
@@ -39,9 +42,12 @@ public class BoardController {
 	@Autowired
 	private FileService fileService;
 
-	//페이징 목록
+	//페이징 목록 @Hidden 무시되는 api
+	@Operation(summary = "게시판 리스트", description = "BoardVO, Pageable")
+	@Parameter(name = "searchCondition", description = "검색조건")
+	@Parameter(name = "searchWord", description = "검색어")
+	@Parameter(name = "Pageable", description = "Pagenation 정보")
 	@GetMapping("/list")
-	@PostMapping("/list")
 	public ResponseEntity<?> selectListBoard(BoardVO vo, Pageable pageable) {
 
 		vo.setPageable(pageable);
@@ -49,8 +55,9 @@ public class BoardController {
 	}
 
 	//상세보기
+	@Operation(summary = "게시판 리스트", description = "@RequestBody BoardVO 전송")
+	@Parameter(name = "boardId", description = "게시판ID")
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@GetMapping("/detail")
 	@PostMapping("/detail")
 	public ResponseEntity<Map<String, Object>> selectDetailBoard(@RequestBody BoardVO vo) {
 
@@ -73,7 +80,7 @@ public class BoardController {
 	}
 
 	//등록
-	@GetMapping("/insert")
+	@Operation(summary = "게시판 등록", description = "BoardDto ,@RequestParam mutipartFiles 전송")
 	@PostMapping("/insert")
 	public ResponseEntity<BoardDto> insertBoard(BoardDto dto, @RequestParam("mutipartFiles") List<MultipartFile> multipartFiles) {
 
@@ -87,7 +94,7 @@ public class BoardController {
 	}
 
 	//수정(저장)
-	@GetMapping("/update")
+	@Operation(summary = "게시판 수정", description = "BoardDto ,@RequestParam deleteFileSeqs[],mutipartFiles 전송")
 	@PostMapping("/update")
 	public ResponseEntity<BoardDto> updateBoard(BoardDto dto, @RequestParam(value = "deleteFileSeqs[]", required = false) ArrayList<String> deleteFileSeqs, @RequestParam("mutipartFiles") List<MultipartFile> multipartFiles) {
 
@@ -101,7 +108,7 @@ public class BoardController {
 	}
 
 	//삭제
-	@GetMapping("/delete")
+	@Operation(summary = "게시판 삭제", description = "@RequestBody BoardDto 전송")
 	@PostMapping("/delete")
 	public ResponseEntity<BoardDto> deleteBoard(@RequestBody BoardDto dto) {
 

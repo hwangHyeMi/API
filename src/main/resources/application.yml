@@ -14,6 +14,16 @@ spring:
     activate:
       on-profile: common
 
+springdoc:
+  packages-to-scan: api.base
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  swagger-ui:
+    path: /
+    disable-swagger-default-url: true
+    display-request-duration: true
+    operations-sorter: alpha
+
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     properties:

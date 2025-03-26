@@ -48,6 +48,11 @@ public class SecurityConfig {
 						, new MvcRequestMatcher(introspector, "/com/**")
 						, new MvcRequestMatcher(introspector, "/mbr/**")
 						, new MvcRequestMatcher(introspector, "/demo/**")
+						, new MvcRequestMatcher(introspector, "/h2-console/**")//swagger
+						, new MvcRequestMatcher(introspector, "/error")
+						, new MvcRequestMatcher(introspector, "/swagger-ui/**")
+						, new MvcRequestMatcher(introspector, "/swagger-resources/**")
+						, new MvcRequestMatcher(introspector, "/v3/api-docs/**")
 						).permitAll()
 						// .requestMatchers("/dev-info/**", "/front/**", "/com/**", "/mbr/**", "/login", "/logout", "/expired", "/invalid").permitAll()
 						.requestMatchers(new MvcRequestMatcher(introspector, "/user/**")).hasRole("USER")

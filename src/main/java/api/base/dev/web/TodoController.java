@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/dev/todo", method = { RequestMethod.GET, RequestMethod.POST })
+@RequestMapping(value = "/dev/todo")
 @Slf4j
 public class TodoController {
 
@@ -29,7 +29,6 @@ public class TodoController {
 	private TodoService todoService;
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@GetMapping("/list")
 	@PostMapping("/list")
 	public ResponseEntity<List<Map>> todoList(TodoVO vo) {
 		// String servletPath = request.getServletPath();
@@ -39,7 +38,6 @@ public class TodoController {
 		return ResponseEntity.status(HttpStatus.OK).body(todoList);
 	}
 
-	@GetMapping("/save")
 	@PostMapping("/save")
 	public ResponseEntity<TodoDto> todoSave(TodoDto dto) {
 		// String servletPath = request.getServletPath();
@@ -73,7 +71,6 @@ public class TodoController {
 		return ResponseEntity.status(HttpStatus.OK).body(dto);
 	}
 
-	@GetMapping("/delete")
 	@PostMapping("/delete")
 	public ResponseEntity<TodoDto> todoDelete(TodoDto dto) {
 		// String servletPath = request.getServletPath();
