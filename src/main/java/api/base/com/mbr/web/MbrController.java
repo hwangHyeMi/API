@@ -29,13 +29,14 @@ import api.base.com.mbr.vo.MbrVO;
 import api.base.front.board.vo.BoardDto;
 import api.base.front.board.web.BoardController;
 import api.base.front.cmm.exceptions.MemberException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
+@Tag(name = "Member", description = "사용자")
 @RestController
-//@RequestMapping("/user")
-//@RequestMapping(value = "/mbr", method = {RequestMethod.GET, RequestMethod.POST})
 @RequestMapping(value = "/mbr")
 @RequiredArgsConstructor
 @Slf4j
@@ -46,7 +47,10 @@ public class MbrController {
 	
 	@Autowired
 	private FileService fileService;
-
+	@Operation(summary = "로그인", description = "@RequestBody MbrLoginVO, request")
+	@Parameter(name = "userId", description = "아이디")
+	@Parameter(name = "userPwd", description = "패스워드")
+	@Parameter(name = "groupCode", description = "그룹코드(GROUP-CODE)")
 	@PostMapping("/login")
 	public ResponseEntity<MbrTokenDto> mbrLogin(@RequestBody MbrLoginVO mbrLoginVO, HttpServletRequest request) {
 		ResponseEntity<MbrTokenDto> rsEntity = null;
@@ -77,8 +81,9 @@ public class MbrController {
 		}
 		return rsEntity;
 	}
-
-	@PostMapping("/mypage")
+	@Operation(summary = "프로필", description = "MbrVO, request")
+	@Parameter(name = "mbrSeq", description = "사용자seq")
+	@PostMapping("/profile")
 	public ResponseEntity<Map<String, Object>> mbrMypage(MbrVO mbrVO, HttpServletRequest request) {
 
 		FileVO filevo = new FileVO();
@@ -100,6 +105,11 @@ public class MbrController {
 	
 	//수정(저장)
 	@SuppressWarnings({ "unchecked" })
+	@Operation(summary = "프로필 수정", description = "MbrDto, mutipartFiles")
+	@Parameter(name = "mbrSeq", description = "사용자seq")
+	@Parameter(name = "mbrNm", description = "이름")
+	@Parameter(name = "email", description = "이메일")
+	@Parameter(name = "mbrPon", description = "휴대폰번호")
 	@PostMapping("/update")
 	public ResponseEntity<MbrDto> updateMbr(MbrDto dto, @RequestParam("mutipartFiles") List<MultipartFile> multipartFiles) {
 
