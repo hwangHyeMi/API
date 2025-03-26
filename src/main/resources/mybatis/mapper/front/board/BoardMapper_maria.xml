@@ -35,6 +35,7 @@
 			,A.MBR_SEQ
 			,B.MBR_NM
 			,A.ATTACH_ID
+			,B.ATTACH_ID AS MBR_ATTACH_ID
 			FROM COM_BOARD A, COM_MEMBER B
 			WHERE 1=1
 			<include refid = "selectListBoardCondition"/>
@@ -67,6 +68,7 @@
 			,A.MBR_SEQ
 			,B.MBR_NM
 			,A.ATTACH_ID
+			,B.ATTACH_ID AS MBR_ATTACH_ID
 			FROM COM_BOARD A, COM_MEMBER B
 			WHERE A.MBR_SEQ = B.MBR_SEQ
 				<if test="@api.base.com.util.MybatisUtils@isNotEmpty(boardId)">

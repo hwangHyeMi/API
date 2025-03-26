@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { assets } from 'assets/image/images';
+import { assets } from 'assets/images';
 import { useState, useEffect, useRef } from 'react';
 import httpHeaderStore from 'stores/HttpHeaderStore';
-import useLoginStore from 'store/useLoginStore';
+import UseLoginStore from 'stores/UseLoginStore';
 
 import { Col, Row, Form, Button, Container, Image } from 'react-bootstrap';
 import * as Icon from 'react-bootstrap-icons';
@@ -13,13 +13,12 @@ import ToastContainer from 'react-bootstrap/ToastContainer';
 //          component (props) App.js확인         //
 function DevMypage(props) {
   const MBR_URL = `${process.env.REACT_APP_MBR_URL}`;
-
-  const COM_API_URL = `${process.env.REACT_APP_API_URL}`;
+  const API_URL = `${process.env.REACT_APP_API_URL}`;
   const { getHeaders } = httpHeaderStore((state) => {
     return state;
   });
   //로그인상태
-  const { getMbrSeq } = useLoginStore((state) => {
+  const { getMbrSeq } = UseLoginStore((state) => {
     return state;
   });
   let formSave;
@@ -91,7 +90,7 @@ function DevMypage(props) {
       setFileList(resp.data.file);
 
       if (resp.data.file.length > 0) {
-        setImageSrc(COM_API_URL + '/com/file/images/' + resp.data.mbr.attachId + '/1'); //api/com/file/images
+        setImageSrc(API_URL + '/com/file/images/' + resp.data.mbr.attachId + '/1'); //api/com/file/images
       }
     });
   };

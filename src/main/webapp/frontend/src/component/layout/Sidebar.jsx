@@ -37,7 +37,7 @@ function Sidebar() {
   const todoParams = localStorage.getItem('todoParams');
 
   const fnChkDepthByPath = (depthGb, chkPath) => {
-    //console.log('fnChkDepthByPath '+depthGb+' chkPath='+chkPath +' [depth1path='+depth1path +' ,depth2path='+depth2path +' ,depth3path='+depth3path +']');
+    // console.log('fnChkDepthByPath ' + depthGb + ' chkPath=' + chkPath + ' [depth1path=' + depth1path + ' ,depth2path=' + depth2path + ' ,depth3path=' + depth3path + ']');
     if (depthGb === 1) {
       if (depth1path && depth1path !== '' && '' + depth1path === '' + chkPath) {
         return true;
@@ -57,6 +57,16 @@ function Sidebar() {
     }
   };
 
+  //메뉴토글
+  const onToggleClickHandler = (event) => {
+    const sidebarToggle = document.body.querySelector('#sidebarToggle');
+
+    if (sidebarToggle) {
+      document.body.classList.toggle('sb-sidenav-toggled');
+      localStorage.setItem('sb|sidebar-toggle', 'false');
+    }
+  };
+
   useEffect(() => {
     if (isMenuData) {
       let all_menu_list = getMenuList();
@@ -66,7 +76,7 @@ function Sidebar() {
       } else {
         if (all_menu_list && all_menu_list.frontMenuList) setLeftMenuList(all_menu_list.frontMenuList);
       }
-
+      //console.log(all_menu_list.userMenuList);
       // pathname 으로 상위 [bootstrap, menu] 뎁스 show 세팅
       if (pathname) {
         if (pathname.indexOf('/') > -1) {
@@ -109,7 +119,7 @@ function Sidebar() {
                   <div key={topMenu.menuSeq} className="collapse show" id={'Menus_' + topMenu.topMenuSeq} aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionTopLevel">
                     <nav className="nav">
                       <div key={topMenu.menuSeq}>
-                        <NavLink className={fnChkDepthByPath(1, topMenu.topMenuSeq) ? 'nav-link active' : 'nav-link collapsed'} to={'/' + topMenu.topMenuSeq + topMenu.viewNm} data-bs-toggle="collapse" data-bs-target={'#menu_topuser_' + topMenu.menuSeq + 'Sub0Menus'} aria-expanded={fnChkDepthByPath(1, topMenu.topMenuSeq) ? 'true' : 'false'} aria-controls={'menu_topuser_' + topMenu.menuSeq + 'Sub0Menus'}>
+                        <NavLink className="nav-link" to={'/' + topMenu.topMenuSeq + topMenu.viewNm} onClick={onToggleClickHandler}>
                           <div className="sb-nav-link-icon">
                             <i className="fas fa-folder-open"></i>
                           </div>
@@ -132,7 +142,7 @@ function Sidebar() {
                               if (menu1.menuType === 'FOLDER') {
                                 return (
                                   <nav key={menu1.menuSeq} className="sb-sidenav-menu-nested nav">
-                                    <NavLink className={fnChkDepthByPath(2, menu1.viewNm) ? 'nav-link active' : 'nav-link collapsed'} to={'/' + menu1.topMenuSeq + menu1.viewNm} data-bs-toggle="collapse" data-bs-target={'#menu_topuser_' + menu1.menuSeq + 'Sub1Menus'} aria-expanded={fnChkDepthByPath(2, menu1.viewNm) ? 'true' : 'false'} aria-controls={'menu_topuser_' + menu1.menuSeq + 'Sub1Menus'}>
+                                    <NavLink className={fnChkDepthByPath(2, menu1.viewNm) ? 'nav-link active' : 'nav-link collapsed'} to={'/' + menu1.topMenuSeq + menu1.viewNm} data-bs-toggle="collapse" data-bs-target={'#menu_topuser_' + menu1.menuSeq + 'Sub1Menus'} aria-expanded={fnChkDepthByPath(2, menu1.viewNm) ? 'true' : 'false'} aria-controls={'menu_topuser_' + menu1.menuSeq + 'Sub1Menus'} onClick={onToggleClickHandler}>
                                       <div className="sb-nav-link-icon">
                                         <i className="fas fa-folder-open"></i>
                                       </div>
@@ -157,7 +167,7 @@ function Sidebar() {
                                             return (
                                               <div key={menu2.menuSeq}>
                                                 {/* 키에러 발생 방지 */}
-                                                <NavLink className="nav-link" to={'/' + menu2.topMenuSeq + menu2.viewNm}>
+                                                <NavLink className="nav-link" to={'/' + menu2.topMenuSeq + menu2.viewNm} onClick={onToggleClickHandler}>
                                                   <div className="sb-nav-link-icon">
                                                     <i className="fas fa-file"></i>
                                                   </div>
@@ -174,7 +184,7 @@ function Sidebar() {
                                 return (
                                   <nav key={menu1.menuSeq} className="sb-sidenav-menu-nested nav">
                                     {/* 키에러 발생 방지 */}
-                                    <NavLink className="nav-link" to={'/' + menu1.topMenuSeq + menu1.viewNm + (menu1.viewNm === '/dev/TodoList' && todoParams ? '/' + todoParams : '')}>
+                                    <NavLink className="nav-link" to={'/' + menu1.topMenuSeq + menu1.viewNm + (menu1.viewNm === '/dev/TodoList' && todoParams ? '/' + todoParams : '')} onClick={onToggleClickHandler}>
                                       <div className="sb-nav-link-icon">
                                         <i className="fas fa-file"></i>
                                       </div>

@@ -1,4 +1,4 @@
-header {
+#store-header {
   height: 34vw;
   margin: 30px auto;
   background: url('../../assets/image/menuTop.png') no-repeat;
@@ -7,33 +7,33 @@ header {
   border-radius: 24px;
 }
 
-.header-contents {
+.store-contents {
   position: absolute;
   display: flex;
   flex-direction: column;
   align-items: start;
   gap: 1.5vw;
   max-width: 50%;
-  bottom: 10%;
+  bottom: 43%;
   left: 6vw;
   animation: fadeIn 3s;
 }
 
-.header-contents h2 {
+.store-contents h2 {
   font-weight: 500;
   color: #fff;
   font-size: max(3.9vw, 22px);
   text-shadow: 4px 4px 4px #00000030;
 }
 
-.header-contents p {
+.store-contents p {
   text-align: justify;
   color: #fff;
   font-size: 1vw;
   text-shadow: 2px 2px 2px #00000030;
 }
 
-.header-contents button {
+.store-contents button {
   border: none;
   border-radius: 50px;
   color: var(--gray);
@@ -45,37 +45,37 @@ header {
 }
 
 @media (max-width: 1050px) {
-  header {
+  #store-header {
     height: 40vw;
   }
 
-  .header-contents {
+  .store-contents {
     max-width: 45%;
   }
 }
 @media (max-width: 750px) {
-  header {
+  #store-header {
     border-radius: 16px;
   }
-  .header-contents {
+  .store-contents {
     max-width: 65%;
   }
-  .header-contents p {
+  .store-contents p {
     display: none;
   }
-  .header-contents button {
+  .store-contents button {
     padding: 2vw 4vw;
   }
 }
 
 @media (max-width: 600px) {
-  .header-contents {
+  .store-contents {
     max-width: 85%;
   }
-  .header-contents p {
+  .store-contents p {
     display: none;
   }
-  .header-contents button {
+  .store-contents button {
     padding: 2vw 3.5vw;
   }
 }

@@ -1,16 +1,10 @@
-import { useState } from 'react';
-import MenuTop from 'component/MenuTop/MenuTop';
-import FoodDisplay from 'component/FoodDisplay/FoodDisplay';
-import ExploreMenu from 'component/ExploreMenu/ExploreMenu';
+import HomeTop from 'component/HomeTop/HomeTop';
 
 //          component: Join 컴포넌트          //
 function Home() {
-  const [category, setCategory] = useState('All');
   return (
     <div>
-      <MenuTop />
-      <ExploreMenu category={category} setCategory={setCategory} />
-      <FoodDisplay category={category} />
+      <HomeTop />
     </div>
   );
 }

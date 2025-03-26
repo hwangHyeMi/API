@@ -18,4 +18,5 @@ public class BoardDto extends MessageDto{
     private Long mbrSeq;
     private String viewYn;
     private String attachId;
+    private String mbrAttachId;
 }

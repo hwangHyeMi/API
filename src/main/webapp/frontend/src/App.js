@@ -48,6 +48,7 @@ import BrandMain from 'view/brand/BrandMain';
 import MenuMain from 'view/menu/MenuMain';
 import StoreMain from 'view/store/StoreMain';
 import CustomerMain from 'view/customer/CustomerMain';
+import CustomerDetail from 'view/customer/CustomerDetail';
 //          component App       //
 function App(props) {
   const HOME_PATH = `${process.env.REACT_APP_PUBLIC_URL}`;
@@ -259,6 +260,7 @@ function App(props) {
                   <Route path="/:topMenuSeq/front/menu/MenuMain" element={<MenuMain />} />
                   <Route path="/:topMenuSeq/front/store/StoreMain" element={<StoreMain />} />
                   <Route path="/:topMenuSeq/front/customer/CustomerMain" element={<CustomerMain />} />
+                  <Route path="/:topMenuSeq/front/customer/CustomerDetail/:boardId" element={<CustomerDetail />} />
                   {/* // description : 로그인 시에만 접근 가능 */}
                   <Route element={<PrivateRoute userAuthentication={true} setMyAlerts={setMyAlerts} />}>
                     <Route path="/:topMenuSeq/dev/DevMain" element={<DevMain />} />

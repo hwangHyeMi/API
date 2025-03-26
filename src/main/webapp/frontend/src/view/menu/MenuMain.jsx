@@ -1,16 +1,23 @@
 import './MenuMain.css';
-
+import { useState } from 'react';
+import MenuFoodDisplay from 'component/MenuFoodDisplay/MenuFoodDisplay';
+import MenuExplore from 'component/MenuExplore/MenuExplore';
 const MenuMain = () => {
+  const [category, setCategory] = useState('All');
   return (
-    <header>
-      <div className="header-contents">
-        <h2>SushiKooya Menu&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
-        <p>Choose from a diverse menu featuring a delectable array of dishes crafted with the finest ingredients and culinary expertise. </p>
-        <a href="#explore-menu">
-          <button>View More</button>
-        </a>
-      </div>
-    </header>
+    <div>
+      <header id="menu-header">
+        <div className="menu-contents">
+          <h2>Menu</h2>
+          <p>Choose from a diverse menu featuring </p>
+          <a href="#explore-menu">
+            <button>View More</button>
+          </a>
+        </div>
+      </header>
+      <MenuExplore category={category} setCategory={setCategory} />
+      <MenuFoodDisplay category={category} />
+    </div>
   );
 };
 

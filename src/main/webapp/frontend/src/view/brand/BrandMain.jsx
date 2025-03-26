@@ -1,24 +1,16 @@
 import './BrandMain.css';
-import { brand_list } from 'assets/images';
-import { Carousel } from 'react-bootstrap';
+
 const BrandMain = () => {
   return (
-    <Carousel fade className="carousel">
-      {brand_list.map((item, index) => {
-        return (
-          <Carousel.Item interval={1200}>
-            <img src={item.image} alt="Image" height="300px" />
-            <Carousel.Caption>
-              <h3>{item.title}</h3>
-              <p>{item.desc}</p>
-              {/* <a href="/">
-                <button>{item.button}</button>
-              </a> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-        );
-      })}
-    </Carousel>
+    <header id="brand-header">
+      <div className="brand-contents">
+        <h2>Brand</h2>
+        <p>Choose from a diverse menu featuring a delectable array of dishes crafted with the finest ingredients and culinary expertise. </p>
+        <a href="#explore-menu">
+          <button>View More</button>
+        </a>
+      </div>
+    </header>
   );
 };
 
