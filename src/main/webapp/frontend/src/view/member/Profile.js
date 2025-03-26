@@ -86,7 +86,7 @@ function Profile(props) {
     formData.append('mbrSeq', mbrSeq);
 
     console.log(headers);
-    await axios.post(MBR_URL + '/mypage', formData, { headers: headers }).then((resp) => {
+    await axios.post(MBR_URL + '/profile', formData, { headers: headers }).then((resp) => {
       setMbrDetail(resp.data.mbr);
       setFileList(resp.data.file);
 
@@ -159,6 +159,7 @@ function Profile(props) {
           </ToastContainer>
         </div>
         <Form noValidate validated={validated} onSubmit={formSubmitHandler} method="post" name="submitForm">
+          <Row className="m-4"></Row>
           <Row>
             <Col style={{ justifyContent: 'center', display: 'flex' }}>
               <Image
