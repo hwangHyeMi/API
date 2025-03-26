@@ -215,7 +215,7 @@ const CustomerDetail = (props) => {
                     </small>
                   </div>
                 </Card.Text>
-                <Card.Text>{bbsDetail.content || ''} </Card.Text>
+                <Card.Text style={{ whiteSpace: 'pre-wrap' }}>{bbsDetail.content || ''} </Card.Text>
                 &nbsp;
                 <Card.Text>
                   {' '}

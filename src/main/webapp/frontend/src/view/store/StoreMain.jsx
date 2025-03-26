@@ -6,9 +6,9 @@ const StoreMain = () => {
       <div className="store-contents">
         <h2>Store</h2>
         <p>Choose from a diverse menu featuring a delectable </p>
-        <a href="#explore-menu">
+        {/* <a href="">
           <button>View More</button>
-        </a>
+        </a> */}
       </div>
     </header>
   );

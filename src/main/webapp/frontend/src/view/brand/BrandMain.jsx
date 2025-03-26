@@ -6,9 +6,9 @@ const BrandMain = () => {
       <div className="brand-contents">
         <h2>Brand</h2>
         <p>Choose from a diverse menu featuring a delectable array of dishes crafted with the finest ingredients and culinary expertise. </p>
-        <a href="#explore-menu">
+        {/* <a href="#explore-menu">
           <button>View More</button>
-        </a>
+        </a> */}
       </div>
     </header>
   );

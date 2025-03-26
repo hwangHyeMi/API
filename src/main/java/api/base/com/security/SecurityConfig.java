@@ -43,9 +43,11 @@ public class SecurityConfig {
 			try {
 				authz.requestMatchers(
 						new MvcRequestMatcher(introspector, "/dev-info/**")
+						, new MvcRequestMatcher(introspector, "/index.html")
 						, new MvcRequestMatcher(introspector, "/front/**")
 						, new MvcRequestMatcher(introspector, "/com/**")
 						, new MvcRequestMatcher(introspector, "/mbr/**")
+						, new MvcRequestMatcher(introspector, "/demo/**")
 						).permitAll()
 						// .requestMatchers("/dev-info/**", "/front/**", "/com/**", "/mbr/**", "/login", "/logout", "/expired", "/invalid").permitAll()
 						.requestMatchers(new MvcRequestMatcher(introspector, "/user/**")).hasRole("USER")
