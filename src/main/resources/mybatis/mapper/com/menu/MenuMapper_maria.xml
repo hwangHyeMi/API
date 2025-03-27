@@ -76,7 +76,7 @@
 				, AGM.view_nm
 				, 1 AS LEVEL
 				, AGM.menu_seq as top_menu_seq
-				, CONCAT('0,', CAST(AGM.menu_sort AS CHAR)) as order_string
+				, CONCAT('0,', A.authority_cd, CAST(AGM.menu_sort AS CHAR)) as order_string /*복합 권한 전체 목록 정렬을 위한 A.authority_cd 추가*/
 			, A.authority_cd
 			FROM 
 				com_authority_group_menu AGM
