@@ -198,6 +198,15 @@ function App(props) {
       storeLogout();
     }
   };
+  //사이드 메뉴 밖 영역 클릭시 닫기
+  const onClickOffSidenav = (event) => {
+    const sidebarToggle = document.body.querySelector('#sidebarToggle');
+
+    if (sidebarToggle) {
+      document.body.classList.remove('sb-sidenav-toggled');
+      localStorage.setItem('sb|sidebar-toggle', 'true');
+    }
+  };
   const [showLogin, setShowLogin] = useState(false);
   //          effect          //
   useEffect(() => {
@@ -247,7 +256,7 @@ function App(props) {
         <Header myAlertInfo={myAlertInfo} setMyAlertInfo={setMyAlertInfo} setShowLogin={setShowLogin} />
         <div id="layoutSidenav">
           <Sidebar />
-          <div id="layoutSidenav_content">
+          <div id="layoutSidenav_content" onClick={onClickOffSidenav}>
             <main id="main">
               <div className="container-fluid px-4">
                 <Routes>
