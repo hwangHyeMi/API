@@ -11257,7 +11257,8 @@ body {
   opacity: 0.5;
   transition: opacity 0.3s ease-in-out;
 }
-
+/*
+창 사이즈 조정에 따라 사이드 바 자동노출 미사용
 @media (min-width: 992px) {
   #layoutSidenav #layoutSidenav_nav {
     transform: translateX(0);
@@ -11276,6 +11277,7 @@ body {
     display: none;
   }
 }
+*/
 .sb-nav-fixed .sb-topnav {
   z-index: 1039;
 }
