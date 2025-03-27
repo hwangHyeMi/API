@@ -143,7 +143,7 @@ function Sidebar() {
                                 if (menu1.menuType === 'FOLDER') {
                                   return (
                                     <nav key={menu1.menuSeq} className="sb-sidenav-menu-nested nav">
-                                      <NavLink className={fnChkDepthByPath(2, menu1.viewNm) ? 'nav-link active' : 'nav-link collapsed'} to={'/' + menu1.topMenuSeq + menu1.viewNm} data-bs-toggle="collapse" data-bs-target={'#menu_topuser_' + menu1.menuSeq + 'Sub1Menus'} aria-expanded={fnChkDepthByPath(2, menu1.viewNm) ? 'true' : 'false'} aria-controls={'menu_topuser_' + menu1.menuSeq + 'Sub1Menus'} onClick={onToggleClickHandler}>
+                                      <NavLink className={fnChkDepthByPath(2, menu1.viewNm) ? 'nav-link active' : 'nav-link collapsed'} to={'/' + menu1.topMenuSeq + menu1.viewNm} data-bs-toggle="collapse" data-bs-target={'#menu_topuser_' + menu1.menuSeq + 'Sub1Menus'} aria-expanded={fnChkDepthByPath(2, menu1.viewNm) ? 'true' : 'false'} aria-controls={'menu_topuser_' + menu1.menuSeq + 'Sub1Menus'}>
                                         <div className="sb-nav-link-icon">
                                           <i className="fas fa-folder-open"></i>
                                         </div>
@@ -170,7 +170,7 @@ function Sidebar() {
                                                   {/* 키에러 발생 방지 */}
                                                   <NavLink className="nav-link" to={'/' + menu2.topMenuSeq + menu2.viewNm} onClick={onToggleClickHandler}>
                                                     <div className="sb-nav-link-icon">
-                                                      <i className="fas fa-file"></i>
+                                                      <i className="fas fa-door-open"></i>
                                                     </div>
                                                     {menu2.menuNm}
                                                   </NavLink>
@@ -187,7 +187,7 @@ function Sidebar() {
                                       {/* 키에러 발생 방지 */}
                                       <NavLink className="nav-link" to={'/' + menu1.topMenuSeq + menu1.viewNm + (menu1.viewNm === '/dev/TodoList' && todoParams ? '/' + todoParams : '')} onClick={onToggleClickHandler}>
                                         <div className="sb-nav-link-icon">
-                                          <i className="fas fa-file"></i>
+                                          <i className="fas fa-door-open"></i>
                                         </div>
                                         {menu1.menuNm}
                                       </NavLink>
@@ -207,7 +207,7 @@ function Sidebar() {
                         <div key={topMenu.menuSeq}>
                           <NavLink className="nav-link" to={'/' + topMenu.topMenuSeq + topMenu.viewNm} onClick={onToggleClickHandler}>
                             <div className="sb-nav-link-icon">
-                              <i className="fas fa-file"></i>
+                              <i className="fas fa-door-open"></i>
                             </div>
                             {topMenu.menuNm}
                           </NavLink>
@@ -278,7 +278,7 @@ function Sidebar() {
                                             {/* 키에러 발생 방지 */}
                                             <NavLink className="nav-link" to={'/' + menu2.topMenuSeq + menu2.viewNm}>
                                               <div className="sb-nav-link-icon">
-                                                <i className="fas fa-file"></i>
+                                                <i className="fas fa-door-open"></i>
                                               </div>
                                               {menu2.menuNm}
                                             </NavLink>
@@ -295,7 +295,7 @@ function Sidebar() {
                                 {/* 키에러 발생 방지 */}
                                 <NavLink className="nav-link" to={'/' + menu1.topMenuSeq + menu1.viewNm + (menu1.viewNm === '/dev/TodoList' && todoParams ? '/' + todoParams : '')}>
                                   <div className="sb-nav-link-icon">
-                                    <i className="fas fa-file"></i>
+                                    <i className="fas fa-door-open"></i>
                                   </div>
                                   {menu1.menuNm}
                                 </NavLink>
