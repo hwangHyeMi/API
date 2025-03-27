@@ -165,34 +165,62 @@ function Sidebar() {
                                               }
                                             })
                                             .map((menu2, k) => {
-                                              return (
-                                                <div key={menu2.menuSeq}>
-                                                  {/* 키에러 발생 방지 */}
-                                                  <NavLink className="nav-link" to={'/' + menu2.topMenuSeq + menu2.viewNm} onClick={onToggleClickHandler}>
-                                                    <div className="sb-nav-link-icon">
-                                                      <i className="fas fa-door-open"></i>
-                                                    </div>
-                                                    {menu2.menuNm}
-                                                  </NavLink>
-                                                </div>
-                                              );
+                                              if (menu2.menuType === 'LINK') {
+                                                return (
+                                                  <div key={menu2.menuSeq}>
+                                                    {/* 키에러 발생 방지 */}
+                                                    <NavLink className="nav-link" to={menu2.url} target="_blank" rel="noreferrer">
+                                                      <div className="sb-nav-link-icon">
+                                                        <i className="fas fa-door-open"></i>
+                                                      </div>
+                                                      {menu2.menuNm}
+                                                    </NavLink>
+                                                  </div>
+                                                );
+                                              } else {
+                                                return (
+                                                  <div key={menu2.menuSeq}>
+                                                    {/* 키에러 발생 방지 */}
+                                                    <NavLink className="nav-link" to={'/' + menu2.topMenuSeq + menu2.viewNm} onClick={onToggleClickHandler}>
+                                                      <div className="sb-nav-link-icon">
+                                                        <i className="fas fa-door-open"></i>
+                                                      </div>
+                                                      {menu2.menuNm}
+                                                    </NavLink>
+                                                  </div>
+                                                );
+                                              }
                                             })}
                                         </nav>
                                       </div>
                                     </nav>
                                   );
                                 } else {
-                                  return (
-                                    <nav key={menu1.menuSeq} className="sb-sidenav-menu-nested nav">
-                                      {/* 키에러 발생 방지 */}
-                                      <NavLink className="nav-link" to={'/' + menu1.topMenuSeq + menu1.viewNm + (menu1.viewNm === '/dev/TodoList' && todoParams ? '/' + todoParams : '')} onClick={onToggleClickHandler}>
-                                        <div className="sb-nav-link-icon">
-                                          <i className="fas fa-door-open"></i>
-                                        </div>
-                                        {menu1.menuNm}
-                                      </NavLink>
-                                    </nav>
-                                  );
+                                  if (menu1.menuType === 'LINK') {
+                                    return (
+                                      <nav key={menu1.menuSeq} className="sb-sidenav-menu-nested nav">
+                                        {/* 키에러 발생 방지 */}
+                                        <NavLink className="nav-link" to={menu1.url} target="_blank" rel="noreferrer">
+                                          <div className="sb-nav-link-icon">
+                                            <i className="fas fa-door-open"></i>
+                                          </div>
+                                          {menu1.menuNm}
+                                        </NavLink>
+                                      </nav>
+                                    );
+                                  } else {
+                                    return (
+                                      <nav key={menu1.menuSeq} className="sb-sidenav-menu-nested nav">
+                                        {/* 키에러 발생 방지 */}
+                                        <NavLink className="nav-link" to={'/' + menu1.topMenuSeq + menu1.viewNm + (menu1.viewNm === '/dev/TodoList' && todoParams ? '/' + todoParams : '')} onClick={onToggleClickHandler}>
+                                          <div className="sb-nav-link-icon">
+                                            <i className="fas fa-door-open"></i>
+                                          </div>
+                                          {menu1.menuNm}
+                                        </NavLink>
+                                      </nav>
+                                    );
+                                  }
                                 }
                               })}
                           </div>
@@ -201,20 +229,37 @@ function Sidebar() {
                     </div>
                   );
                 } else {
-                  return (
-                    <div key={topMenu.menuSeq} className="collapse show" id={'Menus_' + topMenu.topMenuSeq} aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionTopLevel">
-                      <nav className="nav">
-                        <div key={topMenu.menuSeq}>
-                          <NavLink className="nav-link" to={'/' + topMenu.topMenuSeq + topMenu.viewNm} onClick={onToggleClickHandler}>
-                            <div className="sb-nav-link-icon">
-                              <i className="fas fa-door-open"></i>
-                            </div>
-                            {topMenu.menuNm}
-                          </NavLink>
-                        </div>
-                      </nav>
-                    </div>
-                  );
+                  if (topMenu.menuType === 'LINK') {
+                    return (
+                      <div key={topMenu.menuSeq} className="collapse show" id={'Menus_' + topMenu.topMenuSeq} aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionTopLevel">
+                        <nav className="nav">
+                          <div key={topMenu.menuSeq}>
+                            <NavLink className="nav-link" to={topMenu.url} target="_blank" rel="noreferrer">
+                              <div className="sb-nav-link-icon">
+                                <i className="fas fa-door-open"></i>
+                              </div>
+                              {topMenu.menuNm}
+                            </NavLink>
+                          </div>
+                        </nav>
+                      </div>
+                    );
+                  } else {
+                    return (
+                      <div key={topMenu.menuSeq} className="collapse show" id={'Menus_' + topMenu.topMenuSeq} aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionTopLevel">
+                        <nav className="nav">
+                          <div key={topMenu.menuSeq}>
+                            <NavLink className="nav-link" to={'/' + topMenu.topMenuSeq + topMenu.viewNm} onClick={onToggleClickHandler}>
+                              <div className="sb-nav-link-icon">
+                                <i className="fas fa-door-open"></i>
+                              </div>
+                              {topMenu.menuNm}
+                            </NavLink>
+                          </div>
+                        </nav>
+                      </div>
+                    );
+                  }
                 }
               })}
           </div>
@@ -290,17 +335,31 @@ function Sidebar() {
                               </div>
                             );
                           } else {
-                            return (
-                              <div key={menu1.menuSeq}>
-                                {/* 키에러 발생 방지 */}
-                                <NavLink className="nav-link" to={'/' + menu1.topMenuSeq + menu1.viewNm + (menu1.viewNm === '/dev/TodoList' && todoParams ? '/' + todoParams : '')}>
-                                  <div className="sb-nav-link-icon">
-                                    <i className="fas fa-door-open"></i>
-                                  </div>
-                                  {menu1.menuNm}
-                                </NavLink>
-                              </div>
-                            );
+                            if (menu1.menuType === 'LINK') {
+                              return (
+                                <div key={menu1.menuSeq}>
+                                  {/* 키에러 발생 방지 */}
+                                  <NavLink className="nav-link" to={menu1.url} target="_blank" rel="noreferrer">
+                                    <div className="sb-nav-link-icon">
+                                      <i className="fas fa-door-open"></i>
+                                    </div>
+                                    {menu1.menuNm}
+                                  </NavLink>
+                                </div>
+                              );
+                            } else {
+                              return (
+                                <div key={menu1.menuSeq}>
+                                  {/* 키에러 발생 방지 */}
+                                  <NavLink className="nav-link" to={'/' + menu1.topMenuSeq + menu1.viewNm + (menu1.viewNm === '/dev/TodoList' && todoParams ? '/' + todoParams : '')}>
+                                    <div className="sb-nav-link-icon">
+                                      <i className="fas fa-door-open"></i>
+                                    </div>
+                                    {menu1.menuNm}
+                                  </NavLink>
+                                </div>
+                              );
+                            }
                           }
                         })}
                     </nav>
