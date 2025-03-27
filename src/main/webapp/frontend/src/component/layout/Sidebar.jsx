@@ -115,12 +115,12 @@ function Sidebar() {
             {leftMenuList
               .filter((data) => data.level === 1 && (roles.includes(data.authorityCd) || data.authorityCd === 'EVERY')) // 1뎁스 (Top level)
               .map((topMenu, i) => {
-                if (topMenu.menuType === 'FOLDER') {
+                if (topMenu.menuType === 'FOLDER' || topMenu.menuType === 'TOP') {
                   return (
                     <div key={topMenu.menuSeq} className="collapse show" id={'Menus_' + topMenu.topMenuSeq} aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionTopLevel">
                       <nav className="nav">
                         <div key={topMenu.menuSeq}>
-                          <NavLink className="nav-link" to={'/' + topMenu.topMenuSeq + topMenu.viewNm} onClick={onToggleClickHandler}>
+                          <NavLink className={fnChkDepthByPath(1, topMenu.topMenuSeq) ? 'nav-link active' : 'nav-link collapsed'} to={'/' + topMenu.topMenuSeq + topMenu.viewNm} data-bs-toggle="collapse" data-bs-target={'#menu_topuser_' + topMenu.menuSeq + 'Sub0Menus'} aria-expanded={fnChkDepthByPath(1, topMenu.topMenuSeq) ? 'true' : 'false'} aria-controls={'menu_topuser_' + topMenu.menuSeq + 'Sub0Menus'}>
                             <div className="sb-nav-link-icon">
                               <i className="fas fa-folder-open"></i>
                             </div>
