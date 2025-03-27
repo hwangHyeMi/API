@@ -55,9 +55,10 @@ public class MenuController {
 	}
 	@SuppressWarnings({ "unchecked" })
 	@Operation(summary = "메뉴 리스트", description = "CustomUserDetails, MenuVO")
-	@Parameter(name = "userType", description = "유저구분 (USER/ADMIN/SYSTEMADMIN")
+	@Parameter(required=true,name = "userType", description = "유저구분")
+	@Parameter(required=false,name = "topMenuSeq", description = "상단메뉴SEQ")
 	@GetMapping("/allRolMenuList")
-	public ResponseEntity<Map> allRolMenuList(@AuthenticationPrincipal CustomUserDetails member, MenuVO vo) {
+	public ResponseEntity<Map> allRolMenuList(@AuthenticationPrincipal CustomUserDetails member,MenuVO vo) {
 		// String servletPath = request.getServletPath();
 
 		vo.setUserType("FRONT");
@@ -74,7 +75,8 @@ public class MenuController {
 	
 	@SuppressWarnings({ "unchecked" })
 	@Operation(summary = "전체 메뉴 리스트", description = "CustomUserDetails, MenuVO")
-	@Parameter(name = "userType", description = "유저구분 (USER/ADMIN/SYSTEMADMIN")
+	@Parameter(required=true,name = "userType", description = "유저구분")
+	@Parameter(required=false,name = "topMenuSeq", description = "상단메뉴SEQ")
 	@GetMapping("/allMenuList")
 	public ResponseEntity<List<MenuDto>> allMenuList(@AuthenticationPrincipal CustomUserDetails member, MenuVO vo) {
 		// String servletPath = request.getServletPath();
@@ -93,7 +95,7 @@ public class MenuController {
 
 	@SuppressWarnings({ "unchecked" })
 	@Operation(summary = "Top 메뉴 리스트", description = "HttpServletRequest, MenuVO")
-	@Parameter(name = "userType", description = "유저구분 (USER/ADMIN/SYSTEMADMIN")
+	@Parameter(required=true,name = "userType", description = "유저구분")
 	@GetMapping("/topMenuList")
 	@PostMapping("/topMenuList")
 	public ResponseEntity<List<MenuDto>> topMenuList(HttpServletRequest request, MenuVO vo) {
@@ -111,8 +113,8 @@ public class MenuController {
 
 	@SuppressWarnings({ "unchecked" })
 	@Operation(summary = "Sub 메뉴 리스트", description = "HttpServletRequest, MenuVO")
-	@Parameter(name = "userType", description = "유저구분 USER/ADMIN/SYSTEMADMIN")
-	@Parameter(name = "topMenuSeq", description = "Top메뉴seq")
+	@Parameter(required=true,name = "userType", description = "유저구분")
+	@Parameter(required=false,name = "topMenuSeq", description = "Top메뉴seq")
 	@GetMapping("/subMenuList")
 	@PostMapping("/subMenuList")
 	public ResponseEntity<List<MenuDto>> subMenuList(HttpServletRequest request, MenuVO vo) {
