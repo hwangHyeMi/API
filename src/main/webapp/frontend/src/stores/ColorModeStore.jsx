@@ -17,7 +17,10 @@ const colorModeStore = create((set) => ({
   },
   initColorMode: () => {
     let colorMode = getColorMode();
-    if (!colorMode) colorMode = 'light';
+    if (!colorMode) {
+      colorMode = 'light';
+      setColorMode(colorMode);
+    }
 
     document.documentElement.setAttribute('data-bs-theme', colorMode);
     // sb-sidenav : react-bootstrap 패턴이 아닌 bootstrap 패턴이라 추가 작업 > 추후 변경 고민
