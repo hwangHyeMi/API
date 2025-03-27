@@ -200,11 +200,9 @@ function App(props) {
   };
   //사이드 메뉴 밖 영역 클릭시 닫기
   const onClickOffSidenav = (event) => {
-    const sidebarToggle = document.body.querySelector('#sidebarToggle');
-
-    if (sidebarToggle) {
+    if (document.body.classList.contains('sb-sidenav-toggled')) {
       document.body.classList.remove('sb-sidenav-toggled');
-      localStorage.setItem('sb|sidebar-toggle', 'true');
+      localStorage.setItem('sb|sidebar-toggle', 'false');
     }
   };
   const [showLogin, setShowLogin] = useState(false);
@@ -218,14 +216,15 @@ function App(props) {
       }
     }
 
+    // styles.css(11261 라인) 창 사이즈 조정에 따라 사이드 바 자동노출 미사용 처리로 저이상 추가 작업 필요 없어짐.
     //모바일 기준으로 변경 후 데스크탑일때 처리해줌(userAgent로 처리고민)
-    if (typeof window !== 'undefined') {
-      if (window.innerWidth > 768) {
-        // desktop
-        document.body.classList.toggle('sb-sidenav-toggled');
-        localStorage.setItem('sb|sidebar-toggle', 'false');
-      }
-    }
+    //if (typeof window !== 'undefined') {
+    //if (window.innerWidth > 768) {
+    // desktop
+    //document.body.classList.toggle('sb-sidenav-toggled');
+    //localStorage.setItem('sb|sidebar-toggle', 'false');
+    //}
+    //}
     //color모드
     initColorMode();
 
