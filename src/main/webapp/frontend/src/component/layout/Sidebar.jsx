@@ -115,90 +115,107 @@ function Sidebar() {
             {leftMenuList
               .filter((data) => data.level === 1 && (roles.includes(data.authorityCd) || data.authorityCd === 'EVERY')) // 1뎁스 (Top level)
               .map((topMenu, i) => {
-                return (
-                  <div key={topMenu.menuSeq} className="collapse show" id={'Menus_' + topMenu.topMenuSeq} aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionTopLevel">
-                    <nav className="nav">
-                      <div key={topMenu.menuSeq}>
-                        <NavLink className="nav-link" to={'/' + topMenu.topMenuSeq + topMenu.viewNm} onClick={onToggleClickHandler}>
-                          <div className="sb-nav-link-icon">
-                            <i className="fas fa-folder-open"></i>
-                          </div>
-                          {topMenu.menuNm}
-                          <div className="sb-sidenav-collapse-arrow">
-                            <i className="fas fa-angle-down"></i>
-                          </div>
-                        </NavLink>
-                        <div className={fnChkDepthByPath(1, topMenu.topMenuSeq) ? 'collapse show' : 'collapse'} id={'menu_topuser_' + topMenu.menuSeq + 'Sub0Menus'} aria-labelledby="headingOne" data-bs-parent={'#Menus_' + topMenu.topMenuSeq}>
-                          {leftMenuList
-                            .filter((data1) => {
-                              if (data1.level === 2 && topMenu.topMenuSeq === data1.topMenuSeq) {
-                                // 2뎁스
-                                return true;
-                              } else {
-                                return false;
-                              }
-                            })
-                            .map((menu1, j) => {
-                              if (menu1.menuType === 'FOLDER') {
-                                return (
-                                  <nav key={menu1.menuSeq} className="sb-sidenav-menu-nested nav">
-                                    <NavLink className={fnChkDepthByPath(2, menu1.viewNm) ? 'nav-link active' : 'nav-link collapsed'} to={'/' + menu1.topMenuSeq + menu1.viewNm} data-bs-toggle="collapse" data-bs-target={'#menu_topuser_' + menu1.menuSeq + 'Sub1Menus'} aria-expanded={fnChkDepthByPath(2, menu1.viewNm) ? 'true' : 'false'} aria-controls={'menu_topuser_' + menu1.menuSeq + 'Sub1Menus'} onClick={onToggleClickHandler}>
-                                      <div className="sb-nav-link-icon">
-                                        <i className="fas fa-folder-open"></i>
-                                      </div>
-                                      {menu1.menuNm}
-                                      <div className="sb-sidenav-collapse-arrow">
-                                        <i className="fas fa-angle-down"></i>
-                                      </div>
-                                    </NavLink>
+                if (topMenu.menuType === 'FOLDER') {
+                  return (
+                    <div key={topMenu.menuSeq} className="collapse show" id={'Menus_' + topMenu.topMenuSeq} aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionTopLevel">
+                      <nav className="nav">
+                        <div key={topMenu.menuSeq}>
+                          <NavLink className="nav-link" to={'/' + topMenu.topMenuSeq + topMenu.viewNm} onClick={onToggleClickHandler}>
+                            <div className="sb-nav-link-icon">
+                              <i className="fas fa-folder-open"></i>
+                            </div>
+                            {topMenu.menuNm}
+                            <div className="sb-sidenav-collapse-arrow">
+                              <i className="fas fa-angle-down"></i>
+                            </div>
+                          </NavLink>
+                          <div className={fnChkDepthByPath(1, topMenu.topMenuSeq) ? 'collapse show' : 'collapse'} id={'menu_topuser_' + topMenu.menuSeq + 'Sub0Menus'} aria-labelledby="headingOne" data-bs-parent={'#Menus_' + topMenu.topMenuSeq}>
+                            {leftMenuList
+                              .filter((data1) => {
+                                if (data1.level === 2 && topMenu.topMenuSeq === data1.topMenuSeq) {
+                                  // 2뎁스
+                                  return true;
+                                } else {
+                                  return false;
+                                }
+                              })
+                              .map((menu1, j) => {
+                                if (menu1.menuType === 'FOLDER') {
+                                  return (
+                                    <nav key={menu1.menuSeq} className="sb-sidenav-menu-nested nav">
+                                      <NavLink className={fnChkDepthByPath(2, menu1.viewNm) ? 'nav-link active' : 'nav-link collapsed'} to={'/' + menu1.topMenuSeq + menu1.viewNm} data-bs-toggle="collapse" data-bs-target={'#menu_topuser_' + menu1.menuSeq + 'Sub1Menus'} aria-expanded={fnChkDepthByPath(2, menu1.viewNm) ? 'true' : 'false'} aria-controls={'menu_topuser_' + menu1.menuSeq + 'Sub1Menus'} onClick={onToggleClickHandler}>
+                                        <div className="sb-nav-link-icon">
+                                          <i className="fas fa-folder-open"></i>
+                                        </div>
+                                        {menu1.menuNm}
+                                        <div className="sb-sidenav-collapse-arrow">
+                                          <i className="fas fa-angle-down"></i>
+                                        </div>
+                                      </NavLink>
 
-                                    <div className={fnChkDepthByPath(2, menu1.viewNm) ? 'collapse show' : 'collapse'} id={'menu_topuser_' + menu1.menuSeq + 'Sub1Menus'} aria-labelledby="headingOne" data-bs-parent={'#menu_topuser_' + topMenu.menuSeq + 'Sub0Menus'}>
-                                      <nav className="sb-sidenav-menu-nested nav">
-                                        {leftMenuList
-                                          .filter((data2) => {
-                                            if (data2.level === 3 && menu1.menuSeq === data2.parentMenuSeq) {
-                                              // 3뎁스
-                                              return true;
-                                            } else {
-                                              return false;
-                                            }
-                                          })
-                                          .map((menu2, k) => {
-                                            return (
-                                              <div key={menu2.menuSeq}>
-                                                {/* 키에러 발생 방지 */}
-                                                <NavLink className="nav-link" to={'/' + menu2.topMenuSeq + menu2.viewNm} onClick={onToggleClickHandler}>
-                                                  <div className="sb-nav-link-icon">
-                                                    <i className="fas fa-file"></i>
-                                                  </div>
-                                                  {menu2.menuNm}
-                                                </NavLink>
-                                              </div>
-                                            );
-                                          })}
-                                      </nav>
-                                    </div>
-                                  </nav>
-                                );
-                              } else {
-                                return (
-                                  <nav key={menu1.menuSeq} className="sb-sidenav-menu-nested nav">
-                                    {/* 키에러 발생 방지 */}
-                                    <NavLink className="nav-link" to={'/' + menu1.topMenuSeq + menu1.viewNm + (menu1.viewNm === '/dev/TodoList' && todoParams ? '/' + todoParams : '')} onClick={onToggleClickHandler}>
-                                      <div className="sb-nav-link-icon">
-                                        <i className="fas fa-file"></i>
+                                      <div className={fnChkDepthByPath(2, menu1.viewNm) ? 'collapse show' : 'collapse'} id={'menu_topuser_' + menu1.menuSeq + 'Sub1Menus'} aria-labelledby="headingOne" data-bs-parent={'#menu_topuser_' + topMenu.menuSeq + 'Sub0Menus'}>
+                                        <nav className="sb-sidenav-menu-nested nav">
+                                          {leftMenuList
+                                            .filter((data2) => {
+                                              if (data2.level === 3 && menu1.menuSeq === data2.parentMenuSeq) {
+                                                // 3뎁스
+                                                return true;
+                                              } else {
+                                                return false;
+                                              }
+                                            })
+                                            .map((menu2, k) => {
+                                              return (
+                                                <div key={menu2.menuSeq}>
+                                                  {/* 키에러 발생 방지 */}
+                                                  <NavLink className="nav-link" to={'/' + menu2.topMenuSeq + menu2.viewNm} onClick={onToggleClickHandler}>
+                                                    <div className="sb-nav-link-icon">
+                                                      <i className="fas fa-file"></i>
+                                                    </div>
+                                                    {menu2.menuNm}
+                                                  </NavLink>
+                                                </div>
+                                              );
+                                            })}
+                                        </nav>
                                       </div>
-                                      {menu1.menuNm}
-                                    </NavLink>
-                                  </nav>
-                                );
-                              }
-                            })}
+                                    </nav>
+                                  );
+                                } else {
+                                  return (
+                                    <nav key={menu1.menuSeq} className="sb-sidenav-menu-nested nav">
+                                      {/* 키에러 발생 방지 */}
+                                      <NavLink className="nav-link" to={'/' + menu1.topMenuSeq + menu1.viewNm + (menu1.viewNm === '/dev/TodoList' && todoParams ? '/' + todoParams : '')} onClick={onToggleClickHandler}>
+                                        <div className="sb-nav-link-icon">
+                                          <i className="fas fa-file"></i>
+                                        </div>
+                                        {menu1.menuNm}
+                                      </NavLink>
+                                    </nav>
+                                  );
+                                }
+                              })}
+                          </div>
                         </div>
-                      </div>
-                    </nav>
-                  </div>
-                );
+                      </nav>
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div key={topMenu.menuSeq} className="collapse show" id={'Menus_' + topMenu.topMenuSeq} aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionTopLevel">
+                      <nav className="nav">
+                        <div key={topMenu.menuSeq}>
+                          <NavLink className="nav-link" to={'/' + topMenu.topMenuSeq + topMenu.viewNm} onClick={onToggleClickHandler}>
+                            <div className="sb-nav-link-icon">
+                              <i className="fas fa-file"></i>
+                            </div>
+                            {topMenu.menuNm}
+                          </NavLink>
+                        </div>
+                      </nav>
+                    </div>
+                  );
+                }
               })}
           </div>
         </div>

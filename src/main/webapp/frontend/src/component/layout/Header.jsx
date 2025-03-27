@@ -191,7 +191,7 @@ function Header(props) {
           {!islogIn && (
             <>
               {topMenuList
-                .filter((data) => data.menuType === 'TOP' && data.authorityCd === 'EVERY')
+                .filter((data) => data.level === 1 && data.authorityCd === 'EVERY')
                 .map((menu, i) => {
                   //console.log('2 menu.menuSeq ' + i + ' ' + menu.menuSeq);
                   return (
@@ -207,7 +207,7 @@ function Header(props) {
           {islogIn && (
             <>
               {topMenuList
-                .filter((data) => data.menuType === 'TOP' && roles.includes(data.authorityCd))
+                .filter((data) => data.level === 1 && roles.includes(data.authorityCd))
                 .map((menu, i) => {
                   return (
                     <li key={menu.menuSeq} className="nav-item" style={{ padding: '4px' }}>

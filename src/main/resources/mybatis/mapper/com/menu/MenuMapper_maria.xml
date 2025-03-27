@@ -89,7 +89,6 @@
 			WHERE
 				AGM.use_yn ='Y'
 				AND AGM.del_yn ='N'
-				AND AGM.menu_type = 'TOP'
 				AND AG.use_yn ='Y'
 				AND AG.del_yn ='N'
 				AND G.use_yn ='Y'
