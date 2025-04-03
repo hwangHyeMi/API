@@ -55,7 +55,7 @@ public class BoardController {
 	}
 
 	//상세보기
-	@Operation(summary = "게시판 리스트", description = "@RequestBody BoardVO 전송")
+	@Operation(summary = "게시판 상세보기", description = "@RequestBody BoardVO 전송")
 	@Parameter(name = "boardId", description = "게시판ID")
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@PostMapping("/detail")
