@@ -14,7 +14,7 @@ const setAuth = (data) => {
   localStorage.setItem('mbrAuthorities', JSON.stringify(data.mbrAuthorities)); //멀티권한 맵
   console.log(data);
   data.mbrAuthorities.forEach((i) => {
-    if (authorityCd != '') {
+    if (authorityCd !== '') {
       authorityCd = authorityCd + ',' + i.authority;
     } else {
       authorityCd = i.authority;
