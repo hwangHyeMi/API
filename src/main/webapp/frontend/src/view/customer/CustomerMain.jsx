@@ -93,33 +93,26 @@ const CustomerMain = () => {
       <Form noValidate validated={validated} onSubmit={formSubmitHandler} method="post" name="submitForm">
         <Container fluid>
           <Row className="m-2">
-            <Col>
-              <Form.Group controlId="searchCondition">
-                <Form.Select name="searchCondition" value={condition} onChange={changeCondition}>
-                  <option value="">검색</option>
-                  <option value="1">제목</option>
-                  <option value="2">내용</option>
-                  <option value="3">작성자명</option>
-                </Form.Select>
-                <Form.Control.Feedback type="invalid">검색항목을 선택하세요.</Form.Control.Feedback>
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row className="m-3">
-            <Col>
-              <Form.Group controlId="searchKeyword">
-                <Form.Control name="searchKeyword" value={keyword} onChange={changeKeyword} defaultValue={''} width={500} />
-              </Form.Group>
-            </Col>
-            <Col className="pe-sm-2">
+            <Form.Group as={Col} md="2" controlId="searchCondition">
+              <Form.Select name="searchCondition" value={condition} onChange={changeCondition}>
+                <option value="">검색</option>
+                <option value="1">제목</option>
+                <option value="2">내용</option>
+                <option value="3">작성자명</option>
+              </Form.Select>
+              {/* <Form.Control.Feedback type="invalid">검색항목을 선택하세요.</Form.Control.Feedback>*/}
+            </Form.Group>
+            <Form.Group as={Col} md="8" controlId="searchKeyword">
+              <Form.Control name="searchKeyword" value={keyword} onChange={changeKeyword} defaultValue={''} />
+            </Form.Group>
+            <Form.Group as={Col} md="2" style={{ justifyContent: ' right', display: 'flex' }}>
               <Button type="submit" variant="primary">
                 검색
               </Button>
-              {'    '}&nbsp;
-              {/* <Button variant="success" onClick={BbsWrite}>
+              {/*{'    '}&nbsp; <Button variant="success" onClick={BbsWrite}>
                 글쓰기
               </Button> */}
-            </Col>
+            </Form.Group>
           </Row>
           <Row className="m-2">
             <div className="list-group p-2">
