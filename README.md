@@ -1,21 +1,23 @@
 <head>
-	<title>Example Web Page</title>
-	<style type="text/css">
-		table {
-			width: 100%;
-			border-collapse: collapse;
-		}
-		table th, td {
-			border: 1px solid #ddd;
-			padding: 8px;
-			text-align: left;
-		}
-		table th {
-			background-color: #f2f2f2;
-			color: black;
-			text-align: center;
-		}
-	</style>
+<!--
+<title>Example Web Page</title>
+<style type="text/css">
+	table {
+		width: 100%;
+		border-collapse: collapse;
+	}
+	table th, td {
+		border: 1px solid #ddd;
+		padding: 8px;
+		text-align: left;
+	}
+	table th {
+		background-color: #f2f2f2;
+		color: black;
+		text-align: center;
+	}
+</style>
+-->
 </head>
 
 ## (Spring boot + Security) API
