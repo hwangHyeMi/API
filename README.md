@@ -1,7 +1,7 @@
 <head>
-<!--
 <title>Example Web Page</title>
 <style type="text/css">
+<!--
 	table {
 		width: 100%;
 		border-collapse: collapse;
@@ -16,8 +16,8 @@
 		color: black;
 		text-align: center;
 	}
-</style>
 -->
+</style>
 </head>
 
 ## (Spring boot + Security) API
